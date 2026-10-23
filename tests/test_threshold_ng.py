@@ -47,3 +47,17 @@ def test_log_template_expands_to_fnl():
     assert Logarithmic(2.5).bounds() == (-np.inf, 2.5)
     assert Logarithmic(-2.5).bounds() == (-2.5, np.inf)
     assert Gaussian().is_gaussian and Quadratic(0.0).is_gaussian
+
+
+def test_curvaton_template():
+    from ngpbh.nongaussian import Curvaton
+
+    z = np.array([-0.3, 0.0, 0.4])
+    assert np.allclose(Curvaton(1.0).F(z), (2.0 / 3.0) * np.log(1.0 + 1.5 * z), rtol=1e-12)  # 2211.01728 eq. (8)
+    for r in (0.1, 0.5, 0.9):
+        c = Curvaton(r)
+        h = 1e-3
+        assert abs(c.F(0.0)) < 1e-14
+        assert (c.F(h) + c.F(-h)) / (1.2 * h**2) == pytest.approx(c.f_nl, rel=1e-4)  # eq. (9)
+        zz = np.linspace(-0.5, 0.5, 5)
+        assert np.allclose(c.dF(zz), (c.F(zz + 1e-5) - c.F(zz - 1e-5)) / 2e-5, rtol=1e-6)

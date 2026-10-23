@@ -59,3 +59,16 @@ def test_amplitude_converged_under_grid_doubling(ng):
         **kw,
     )
     assert fine.solve_amplitude(1.0) == pytest.approx(base.solve_amplitude(1.0), rel=2e-4)
+
+
+@pytest.mark.parametrize("r_dec, a_ref", [(0.5, 9.5e-3), (0.1, 2.8e-3)])
+def test_ferrante_curvaton_benchmark(r_dec, a_ref):
+    """2211.01728 Fig. 8 (right): curvaton NG, same setup as the Gaussian benchmark."""
+    from ngpbh.nongaussian import Curvaton
+
+    hz = HorizonMass("ferrante", g_star=106.75)
+    mom = compaction_moments(FlatBand(1.0, 1e6, 1e15), float(hz.r_of_mh(1e-15)), MomentsConfig(transfer=True))
+    col = CollapseModel(C_th=0.56, K=4.36, gamma=0.36)
+    ng = Curvaton(r_dec)
+    a = np.exp(brentq(lambda la: log_beta(mom.scaled(np.exp(la)), col, ng) - np.log(1e-16), np.log(1e-4), np.log(0.1)))
+    assert a == pytest.approx(a_ref, rel=0.02)

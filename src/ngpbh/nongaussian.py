@@ -116,3 +116,64 @@ class Logarithmic(LocalNG):
 
     def bounds(self):
         return (-np.inf, self.mu) if self.mu > 0 else (self.mu, np.inf)
+
+
+@dataclass(frozen=True)
+class Curvaton(LocalNG):
+    """Sudden-decay curvaton with quadratic potential, zeta = ln X (2211.01728 eqs. 4-6).
+
+    X = e^zeta is the positive root of X^4 - g X - (1 - Omega) = 0, with
+    g = Omega (2 r + 3 zeta_g)^2 / (4 r^2) and Omega = 4 r / (3 + r) the curvaton density
+    fraction at decay (r = r_dec).  This is the quartic behind the closed form of eq. (5); for
+    r = 1 it gives zeta = (2/3) ln(1 + 3 zeta_g / 2) (eq. 8), and to quadratic order
+    f_NL = (5/3)(3/(4r) - 1 - r/2) (eq. 9).
+    """
+
+    r_dec: float
+
+    def __post_init__(self):
+        if not 0.0 < self.r_dec <= 1.0:
+            raise ValueError("r_dec must be in (0, 1]")
+
+    @property
+    def omega(self):
+        return 4.0 * self.r_dec / (3.0 + self.r_dec)
+
+    @property
+    def f_nl(self):
+        r = self.r_dec
+        return 5.0 / 3.0 * (3.0 / (4.0 * r) - 1.0 - 0.5 * r)
+
+    def _g(self, z):
+        r = self.r_dec
+        return self.omega * (2.0 * r + 3.0 * np.asarray(z, dtype=float)) ** 2 / (4.0 * r**2)
+
+    def _X(self, z):
+        g = self._g(z)
+        c = 1.0 - self.omega
+        x = 1.0 + np.cbrt(g) + c**0.25  # right of the root; f is convex on X > 0
+        for _ in range(100):
+            step = (x**4 - g * x - c) / (4.0 * x**3 - g)
+            x = x - step
+            if np.all(np.abs(step) <= 1e-15 * x):
+                break
+        return x
+
+    def F(self, z):
+        return np.log(self._X(z))
+
+    def dF(self, z):
+        r = self.r_dec
+        g = self._g(z)
+        dg = 3.0 * self.omega * (2.0 * r + 3.0 * np.asarray(z, dtype=float)) / (2.0 * r**2)
+        return dg / (4.0 * self._X(z) ** 3 - g)
+
+    def d2F(self, z, h=1e-6):
+        return (self.dF(np.asarray(z) + h) - self.dF(np.asarray(z) - h)) / (2.0 * h)
+
+    def d3F(self, z, h=1e-4):
+        return (self.d2F(np.asarray(z) + h) - self.d2F(np.asarray(z) - h)) / (2.0 * h)
+
+    def bounds(self):
+        # for r = 1 the root X vanishes at zeta_g = -2/3 (zeta -> -infinity)
+        return (-2.0 / 3.0, np.inf) if self.r_dec == 1.0 else (-np.inf, np.inf)
