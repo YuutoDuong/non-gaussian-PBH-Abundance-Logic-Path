@@ -29,6 +29,7 @@ python -m venv .venv && .venv/bin/pip install -e ".[dev]"
 |---|---|
 | `compare_pbhstat.py` | `phase1_pbhstat_comparison_<mode>.csv`: A_* from ngpbh and pbhstat, PS and peaks |
 | `convention_spread.py` | `phase1_convention_spread.csv`: Gaussian R under four normalisation conventions |
+| `double_ratio_conventions.py` | (printed) R(NG)/R(Gaussian) under three conventions: they cancel to < 0.01 |
 | `scan_amplitudes.py` | `phase2_amplitudes.csv`: A_* over width × NG template × statistic (~5 min on 4 cores) |
 | `make_figures.py` | `fig_phase2_threshold_amplitudes.png`, `fig_phase3a_ratio_preview.png` from the CSVs |
 

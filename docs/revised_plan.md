@@ -10,7 +10,9 @@ GW explanation of the PTA signal?
 
 **Deliverables** (unchanged): an NG module for threshold statistics and peaks; the map
 R(Δ, NG) = A_*^peaks / A_*^threshold; the PTA tension per prescription; a tested repo and a note.
-Add: the double ratio R(Δ, NG)/R(Δ, Gaussian), which cancels most normalisation conventions.
+Add: the double ratio R(Δ, NG)/R(Δ, Gaussian). It cancels the PS-factor and peak-volume
+conventions to < 0.01, while the Gaussian R itself moves by 0.07 between them
+(`scripts/double_ratio_conventions.py`, table in `docs/conventions.md`).
 
 ## Phase 0: confirm the gap — done (one item left for you)
 

@@ -92,3 +92,15 @@ corrections yet). pbhstat preset: R = (M_H/M_eq)^{1/2}/k_eq, Ω_CDM = 0.26.
 | peak volume | 4πr³/3 | (2π)^{3/2} r³ (Young 2201.13345) | R → 0.751 |
 
 (`results/phase1_convention_spread.csv`, pbhstat physics setup.)
+
+The double ratio R(NG)/R(Gaussian) cancels these to < 0.01. Physics setup of the scan,
+PS factor 1 or 2 and V = 4πr³/3 or (2π)^{3/2} r³ (`scripts/double_ratio_conventions.py`):
+
+| case | Gaussian R | R/R_Gauss |
+|---|---|---|
+| Δ = 0.5, f_NL = +1 | 0.736–0.806 | 1.0240–1.0246 |
+| Δ = 0.5, f_NL = −2 | 0.736–0.806 | 1.0034–1.0048 |
+| Δ = 2, μ_* = 5/6 | 0.748–0.815 | 1.159–1.167 |
+
+The reason: at fixed f_PBH every template sits at nearly the same |ln β|, so a constant factor
+in β shifts A_* by nearly the same fraction for all of them.
