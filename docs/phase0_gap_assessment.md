@@ -5,8 +5,9 @@
 **Yes, but it has to be stated more narrowly than in the plan.** No paper up to October 2026
 computes peaks theory with local non-Gaussianity (NG) for broad spectra *on the compaction
 function, as the counterpart of the Ferrante / Ianniccari threshold statistics*, and compares the
-two prescriptions, let alone propagates the difference to the PTA tension. Four papers from
-2024–2026 say explicitly that this is unsolved. But peaks-with-NG work at finite width does
+two prescriptions, let alone propagates the difference to the PTA tension. Five papers from
+2024–2025 say explicitly that this is unsolved, and the INSPIRE scan (below) found nothing that
+closes it. But peaks-with-NG work at finite width does
 exist in other forms (Riccardi et al. 2021, Escrivà 2026), and a general formalism for peaks of
 local-NG fields appeared in 2025 (Germani et al.). The paper must cite these and say what it adds.
 
@@ -20,21 +21,49 @@ Sharpened claim (suggested wording):
 
 ## How this was checked, and its limits
 
-arXiv and INSPIRE are blocked from this environment, so the INSPIRE "cited by" scan in the plan
-could not be run. Instead: several semantic searches of the alphaXiv index (2.5M arXiv papers,
-covering up to Oct 2026) on peaks / threshold statistics / NG / broad spectra / PTA, plus full-text
-reads of every candidate. **Run the INSPIRE scan yourself before submitting** (queries below);
-it is cheap and catches papers that a semantic search misses.
+First pass: several semantic searches of the alphaXiv index (2.5M arXiv papers, covering up to
+Oct 2026) on peaks / threshold statistics / NG / broad spectra / PTA, plus full-text reads of
+every candidate.
 
-```
-refersto:arxiv:2402.11033 and date>2025
-refersto:arxiv:2508.19328
-refersto:arxiv:2509.14326
-refersto:arxiv:2201.13345 and date>2025
-refersto:arxiv:2109.00791 and date>2025
-refersto:arxiv:2607.08738
-refersto:arxiv:2503.05434
-```
+Second pass, the INSPIRE scan of the plan (run 23 Oct 2026 through the INSPIRE API; the
+`refersto:arxiv:` form is not parsed by the API, so each paper was resolved to its record id):
+
+| query | hits |
+|---|---|
+| `refersto:recid:2759520` (2402.11033), all years | 38 |
+| `refersto:recid:2964325` (2508.19328) | 13 |
+| `refersto:recid:2971120` (2509.14326, pbhstat) | 1 |
+| `refersto:recid:2022804` (2201.13345), all years | 83 |
+| `refersto:recid:1915684` (2109.00791), all years | 109 |
+| `refersto:recid:3178750` (2607.08738) | 4 |
+| `refersto:recid:2897904` (2503.05434) | 8 |
+| full text "threshold statistics" + "peak theory" + "non-Gaussianity", since Jun 2025 | 12 |
+| titles with "peak theory" / "peak statistics" / peaks + non-Gaussian, since 2025 | 4 |
+
+193 unique citing records. I read the abstracts of all 2025–2026 records that mention peaks, NG
+or finite width, and searched the LaTeX sources of the nine closest. **None computes peaks with local NG
+for broad spectra on the compaction function, or compares it with threshold statistics.** What
+the scan adds:
+
+* Iovino, Perna, Veermäe [2512.13648](https://arxiv.org/abs/2512.13648) (Dec 2025), a fifth
+  explicit statement of the gap: "there is no clear way to include NGs in the computation of the
+  abundance [in peaks theory] in the case of a generic functional form for the curvature
+  perturbation field … or for very large NGs. Hence, we limit our analysis to the TS approach,
+  assuming that approximately similar results hold for the PT approach." That assumption is
+  what this project tests.
+* Carr, Iovino, Perna, Vaskonen [2601.06024](https://arxiv.org/abs/2601.06024) (review, Jan
+  2026): "In the absence of strong primordial NG, the two methods differ only by a mild rescaling
+  of the power spectrum amplitude." Strong NG is left open.
+* Blas, Foster, Gouttenoire, Iovino [2602.12252](https://arxiv.org/abs/2602.12252): with the
+  high-peak formula of 2406.20089, Gaussian peaks need A ≈ 6×10⁻³ against 10⁻² for threshold
+  statistics, i.e. R ≈ 0.6–0.67. ngpbh gives 0.75–0.89 across the conventions in
+  `docs/conventions.md`, so the convention spread in the literature is wider still: one more
+  reason to lead with the double ratio.
+* Not overlapping, but cite if relevant: Drees & Wang 2609.07401 and Allegrini et al. 2606.28296
+  (NG to all orders, threshold statistics only); Mohammadi et al. 2609.07043 (numerical
+  thresholds for finite width, stiff epochs); Escrivà 2609.03051 (multiple-peak collapse).
+
+Re-run the scan just before submission.
 
 ## Papers that state the gap explicitly
 
@@ -44,6 +73,7 @@ refersto:arxiv:2503.05434
 | Gouttenoire, Trifinopoulos, Vanvlasselaer, [2508.19328](https://arxiv.org/abs/2508.19328) (v2 Jun 2026) | NG peaks exist only for a monochromatic spectrum (it credits **Kitajima, Tada, Yokoyama, Yoo [2109.00791](https://arxiv.org/abs/2109.00791)**, which answers Phase 0 step 3), so it uses Gaussian peaks. Conclusion asks for "one that incorporates primordial non-Gaussianities consistently within peak theory". |
 | Iovino, Perna, Riotto, Veermäe, [2406.20089](https://arxiv.org/abs/2406.20089) "Curbing PBHs with PTAs" (v3 Jun 2026) | "it is not clear how to include NGs in the computation of the abundance in [peaks theory] … we limit our analysis for the peak theory approach to the case of negligible primordial NGs." It also finds that Gaussian peaks relax the PTA bounds on f_PBH by a few orders of magnitude. **Not in the plan's reading list; add it.** |
 | Pi, Sasaki, Takhistov, Wang, [2501.00295](https://arxiv.org/abs/2501.00295) (JCAP 09 (2025) 045) | Gaussian peaks for finite width. "previous works primarily focused on a monochromatic spectrum … Simply replacing the Gaussian profile of R(r) by the non-Gaussian local relation seems not appropriate when the power spectrum is broad … This remains an open avenue." |
+| Iovino, Perna, Veermäe, [2512.13648](https://arxiv.org/abs/2512.13648) (Dec 2025) | "no clear way to include NGs" in peaks theory for a generic F or large NG; uses threshold statistics, "assuming that approximately similar results hold for the PT approach". |
 | Cole, Fumagalli, [2509.14326](https://arxiv.org/abs/2509.14326) (pbhstat) | Implementation limited to nearly Gaussian initial conditions; NG listed as future work. |
 | Kushwaha, Suyama, [2603.23025](https://arxiv.org/abs/2603.23025) (v2 16 Oct 2026) | Gaussian PS vs peaks for narrow and broad spectra; they agree for narrow and **differ for broad spectra**. No NG. |
 | Inui et al., [2411.07647](https://arxiv.org/abs/2411.07647) | Peaks with logarithmic NG and numerical thresholds, monochromatic only; PTA overproduction "serious for most of the parameter space"; notes that broad spectra could relax it. |

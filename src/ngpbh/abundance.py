@@ -17,7 +17,7 @@ from .cosmology import HorizonMass
 from .moments import MomentsConfig, compaction_moments
 from .nongaussian import LocalNG
 from .spectra import PowerSpectrum
-from .stats import CollapseModel, PeakGeometry, PeaksConfig, QuadratureConfig, log_beta
+from .stats import CollapseModel, PeaksConfig, QuadratureConfig, log_beta, make_peak_geometry
 
 
 @dataclass
@@ -45,7 +45,7 @@ class AbundanceModel:
         self.unit_moments = [compaction_moments(self._unit, float(r), self.moments_cfg) for r in self.r]
         self.geometries = None
         if self.statistic == "peaks":
-            self.geometries = [PeakGeometry.from_moments(m, self.peaks) for m in self.unit_moments]
+            self.geometries = [make_peak_geometry(m, self.peaks) for m in self.unit_moments]
         ln_mh = np.log(self.m_h)
         w = np.zeros_like(ln_mh)
         w[1:] += 0.5 * np.diff(ln_mh)
@@ -80,7 +80,7 @@ class AbundanceModel:
     def solve_amplitude(self, f_target=1.0, bracket=(1e-4, 1.0), xtol=1e-6):
         """A_* with f_PBH(A_*) = f_target, by root finding in ln A."""
         target = np.log(f_target)
-        g = lambda lnA: self.log_fpbh(np.exp(lnA)) - target
+        g = lambda lnA: max(self.log_fpbh(np.exp(lnA)), -1e300) - target  # brentq needs finite values
         lo, hi = np.log(bracket[0]), np.log(bracket[1])
         g_lo, g_hi = g(lo), g(hi)
         if not (g_lo < 0 < g_hi):

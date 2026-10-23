@@ -14,6 +14,13 @@ r^2-scaled spectral moments of C_g and the correlation of zeta_r with -lap C_g:
     s1^2 = (4 Phi^2/9) int dlnk x^6 W^2 P^T     (= r^2 <|grad C_g|^2>)
     s2^2 = (4 Phi^2/9) int dlnk x^8 W^2 P^T     (= r^4 <(lap C_g)^2>)
     scr1^2 = (2 Phi/3) int dlnk x^4 W W_s P^T   (= r^2 <(-lap C_g) zeta_r>)
+
+Peaks of the non-Gaussian C_l = F'(zeta_r) C_g (docs/phase3b_derivation.tex) also need the
+gradient and Laplacian moments of zeta_r:
+
+    s1r^2  =           int dlnk x^2 W_s^2 P^T   (= r^2 <|grad zeta_r|^2>)
+    s2cr^2 = (2 Phi/3) int dlnk x^6 W W_s P^T   (= r^4 <lap C_g lap zeta_r>)
+    s2r^2  =           int dlnk x^4 W_s^2 P^T   (= r^4 <(lap zeta_r)^2>)
 """
 
 from dataclasses import dataclass, replace
@@ -25,7 +32,7 @@ from scipy.integrate import simpson
 
 from . import windows
 
-MOMENT_NAMES = ("sigma_c2", "sigma_cr2", "sigma_r2", "s1_2", "s2_2", "scr1_2")
+MOMENT_NAMES = ("sigma_c2", "sigma_cr2", "sigma_r2", "s1_2", "s2_2", "scr1_2", "s1r_2", "s2cr_2", "s2r_2")
 
 
 @dataclass(frozen=True)
@@ -50,6 +57,9 @@ class CompactionMoments:
     s1_2: float
     s2_2: float
     scr1_2: float
+    s1r_2: float = np.nan
+    s2cr_2: float = np.nan
+    s2r_2: float = np.nan
 
     def scaled(self, factor):
         """Moments of A * P from moments of P (all are linear in the amplitude)."""
@@ -85,7 +95,7 @@ class CompactionMoments:
 
 
 def _kernels(x, cfg):
-    """The six integrands of MOMENT_NAMES divided by P(k), on an array x = k r."""
+    """The integrands of MOMENT_NAMES divided by P(k), on an array x = k r."""
     W = windows.WINDOWS[cfg.window](x)
     Ws = windows.shell(x)
     if cfg.transfer:
@@ -108,6 +118,9 @@ def _kernels(x, cfg):
             c * x4 * x2 * W * W * T2,
             c * x4 * x4 * W * W * T2,
             cr * x4 * W * Ws * T2,
+            x2 * Ws * Ws * T2,
+            cr * x4 * x2 * W * Ws * T2,
+            x4 * Ws * Ws * T2,
         ]
     )
 

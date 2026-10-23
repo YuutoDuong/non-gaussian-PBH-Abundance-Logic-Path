@@ -1,0 +1,319 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.4cm]{geometry}
+\usepackage{amsmath,amssymb,bm}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+
+\newcommand{\Cg}{C_{\rm g}}
+\newcommand{\Cl}{C_{\ell}}
+\newcommand{\zr}{\zeta_r}
+\newcommand{\zg}{\zeta_{\rm g}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\E}{\mathbb{E}}
+
+\title{Peaks of the non-Gaussian compaction function for broad spectra\\[2pt]
+\large Phase 3b derivation (Option A notes)}
+\date{23 October 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Peaks theory with local non-Gaussianity (NG) has so far imposed the peak condition on a Gaussian
+field (the Gaussian curvature $\zg$, $-\Delta\zg$, or the Gaussian part of the compaction $\Cg$) and
+mapped the result through $F$. For the compaction function this is exact only when the
+spectrum is narrow. Here the peak condition is imposed on the non-Gaussian linear compaction
+$\Cl=F'(\zr)\,\Cg$ itself, which is a local function of \emph{two} correlated Gaussian fields.
+The result is compact: at a point with $(\Cg,\zr)=(c,z)$, maxima of $\Cl$ are maxima of the
+Gaussian field $Y_\lambda=\Cg+\lambda\zr$ with $\lambda=cF''(z)/F'(z)$, corrected by a rank-one
+Hessian term proportional to $\kappa=-cF'(1/F')''$. The peak density is the BBKS expression for
+$Y_\lambda$, which reduces to the Gaussian-peak approximation (Phase 3a) when $\lambda=0$ or the
+spectrum is monochromatic, times a factor $1-\tau R_2$ for the rank-one term that is exact to
+first order. That factor is identically 1 for the logarithmic (ultra-slow-roll) template, below
+4\% for $|f_{\rm NL}|\le2$ at $\Delta\le0.3$, and up to tens of percent at individual nodes for
+$f_{\rm NL}=-2$ at $\Delta=1$. An independent Monte Carlo of the twenty-variable Gaussian confirms
+both pieces.
+\end{abstract}
+
+\section{Setup}
+
+The curvature perturbation is $\zeta(\bm x)=F(\zg(\bm x))$ with $\zg$ Gaussian, power
+spectrum $\mathcal P(k)$. At smoothing scale $r$ define two Gaussian fields,
+\begin{align}
+\Cg(\bm x;r)&=\int\!\frac{\dd^3k}{(2\pi)^3}\,e^{i\bm k\cdot\bm x}K_c(k)\,\zg(\bm k), &
+K_c(k)&=\tfrac{2\Phi}{3}(kr)^2W(kr)\,T(kr),\\
+\zr(\bm x;r)&=\int\!\frac{\dd^3k}{(2\pi)^3}\,e^{i\bm k\cdot\bm x}K_r(k)\,\zg(\bm k), &
+K_r(k)&=W_s(kr)\,T(kr),
+\end{align}
+with $W(y)=3(\sin y-y\cos y)/y^3$, $W_s(y)=\sin y/y$, the radiation transfer function
+$T(y)=W(y/\sqrt3)$ at $\tau=r$, $\Phi=2/3$, and optionally a hard cut $K_{c,r}\to0$ for
+$kr>y_{\rm cut}$. For a configuration that is spherically symmetric about $\bm x$,
+$\Cg=-2\Phi r\zg'(r)$ and $\zr=\zg(r)$, so the linear compaction of $\zeta=F(\zg)$ is
+\cite{Ferrante,Young}
+\begin{equation}
+\Cl(\bm x;r)=F'\big(\zr(\bm x;r)\big)\,\Cg(\bm x;r),\qquad
+C=\Cl-\frac{\Cl^2}{4\Phi}.
+\label{eq:Cl}
+\end{equation}
+Threshold statistics integrate the bivariate Gaussian $P_{\rm G}(c,z)$ of $(\Cg,\zr)$ over the
+type-I domain $\mathcal D=\{C>C_{\rm th},\ \Cl<2\Phi\}$:
+$\beta_{\rm th}=\int_{\mathcal D}\dd c\,\dd z\,P_{\rm G}(c,z)\,\mathcal K(C-C_{\rm th})^\gamma$.
+Peaks theory (prescription (i) of the gap assessment) counts local maxima in $\bm x$ of the field
+$\Cl(\bm x;r)$ at fixed $r$. Phase~3a counted maxima of $\Cg$ instead (minima where $F'<0$);
+here we count maxima of $\Cl$.
+
+\section{What is counted}
+
+By the Kac--Rice formula, the number density of maxima of $\Cl$ with $(\Cg,\zr)\in\dd c\,\dd z$ is
+\begin{equation}
+n(c,z)\,\dd c\,\dd z=\Big\langle\delta_{\rm D}(\Cg-c)\,\delta_{\rm D}(\zr-z)\,
+\delta^3_{\rm D}(\nabla\Cl)\,\big|\det\nabla\nabla\Cl\big|\,
+\Theta(-\nabla\nabla\Cl\succ0)\Big\rangle\,\dd c\,\dd z ,
+\label{eq:KR}
+\end{equation}
+and the mass fraction is
+\begin{equation}
+\beta_{\rm pk}=V\int_{\mathcal D}\dd c\,\dd z\;n(c,z)\,\mathcal K(C-C_{\rm th})^\gamma,
+\qquad V=\tfrac{4\pi}{3}r^3 ,
+\label{eq:beta}
+\end{equation}
+with the same domain, threshold, window, transfer function and cut as $\beta_{\rm th}$.
+
+\section{Gaussian statistics at a point}
+
+For $A,B\in\{\Cg,\zr\}$ define $\sigma^2_{n,AB}=\int\dd\ln k\;k^{2n}K_AK_B\,\mathcal P$.
+Homogeneity and isotropy give
+\begin{gather}
+\langle AB\rangle=\sigma^2_{0,AB},\qquad
+\langle\partial_iA\,\partial_jB\rangle=\tfrac13\delta_{ij}\sigma^2_{1,AB},\qquad
+\langle A\,\partial_i\partial_jB\rangle=-\tfrac13\delta_{ij}\sigma^2_{1,AB},\nonumber\\
+\langle\partial_i\partial_jA\,\partial_k\partial_lB\rangle=
+\tfrac1{15}\sigma^2_{2,AB}(\delta_{ij}\delta_{kl}+\delta_{ik}\delta_{jl}+\delta_{il}\delta_{jk}),\qquad
+\langle A\,\partial_iB\rangle=\langle\partial_iA\,\partial_j\partial_kB\rangle=0 .
+\label{eq:corr}
+\end{gather}
+The twenty variables $(\Cg,\zr,\nabla\Cg,\nabla\zr,\nabla\nabla\Cg,\nabla\nabla\zr)$ therefore
+split into two independent blocks: the six gradient components, and the two scalars with the
+twelve Hessian components. In the code's notation $\sigma^2_{0,cc}=\sigma_c^2$,
+$\sigma^2_{0,cr}=\sigma_{cr}^2$, $\sigma^2_{0,rr}=\sigma_r^2$, $r^2\sigma^2_{1,cc}=s_1^2$,
+$r^4\sigma^2_{2,cc}=s_2^2$, $r^2\sigma^2_{1,cr}=s_{cr1}^2$; Phase~3b needs three more,
+\begin{equation}
+r^2\sigma^2_{1,rr}=\int\dd\ln k\,x^2W_s^2T^2\mathcal P,\quad
+r^4\sigma^2_{2,cr}=\tfrac{2\Phi}{3}\int\dd\ln k\,x^6WW_sT^2\mathcal P,\quad
+r^4\sigma^2_{2,rr}=\int\dd\ln k\,x^4W_s^2T^2\mathcal P,
+\label{eq:newmoments}
+\end{equation}
+with $x=kr$. All three converge with the transfer function; $\sigma^2_{2,cc}$ diverges
+logarithmically without the cut, so the cut stays (for both statistics).
+
+\section{Derivatives of the non-Gaussian compaction}
+
+Differentiating \eqref{eq:Cl},
+\begin{align}
+\partial_i\Cl&=F'\,\partial_i\Cg+F''\,\Cg\,\partial_i\zr,\\
+\partial_i\partial_j\Cl&=F'\,\partial_i\partial_j\Cg+F''\,\Cg\,\partial_i\partial_j\zr
++F''\big(\partial_i\Cg\,\partial_j\zr+\partial_j\Cg\,\partial_i\zr\big)
++F'''\,\Cg\,\partial_i\zr\,\partial_j\zr ,
+\end{align}
+with $F^{(n)}$ evaluated at $\zr$. At a point where $(\Cg,\zr)=(c,z)$ define
+\begin{equation}
+\lambda\equiv\frac{c\,F''(z)}{F'(z)},\qquad Y_\lambda(\bm y)\equiv\Cg(\bm y)+\lambda\,\zr(\bm y),
+\label{eq:lambda}
+\end{equation}
+with $\lambda$ frozen at its value at the point, so that $Y_\lambda$ is a Gaussian field. Then
+$\nabla\Cl=F'(z)\,\nabla Y_\lambda$: the stationary points of $\Cl$ are stationary points of
+$Y_\lambda$, \emph{not} of $\Cg$. There $\nabla\Cg=-\lambda\nabla\zr$ and
+\begin{equation}
+\nabla\nabla\Cl=F'(z)\Big[\nabla\nabla Y_\lambda+\kappa\,\nabla\zr\,\nabla\zr^{\,T}\Big],\qquad
+\kappa\equiv\frac{c}{F'}\Big(F'''-\frac{2F''^2}{F'}\Big)=-c\,F'(z)\,\Big(\frac1{F'}\Big)''(z).
+\label{eq:kappa}
+\end{equation}
+For the templates in the code:
+\begin{itemize}
+\item quadratic, $F=\zg+\frac35f_{\rm NL}\zg^2$: $\lambda=\frac{6}{5}f_{\rm NL}c/(1+\frac65f_{\rm NL}z)$
+and $\kappa=-2\lambda^2/c$;
+\item logarithmic (USR), $F=-\mu_*\ln(1-\zg/\mu_*)$: $1/F'=1-z/\mu_*$ is linear, so
+$\kappa\equiv0$ and $\lambda=c/(\mu_*-z)$;
+\item curvaton: $\lambda$ and $\kappa$ from $F'$, $F''$, $F'''$ numerically.
+\end{itemize}
+
+\section{The gradient constraint}
+
+Since $\nabla\Cl=F'(z)\nabla Y_\lambda$, $\delta^3_{\rm D}(\nabla\Cl)=|F'(z)|^{-3}\delta^3_{\rm D}(\bm u)$
+with $\bm u\equiv\nabla Y_\lambda=\nabla\Cg+\lambda\nabla\zr$. The gradient block is independent of
+the scalars and Hessians, and \eqref{eq:corr} gives $\langle u_iu_j\rangle=\frac13\delta_{ij}\sigma^2_{1,\lambda}$ with
+\begin{equation}
+\sigma^2_{n,\lambda}\equiv\sigma^2_{n,cc}+2\lambda\,\sigma^2_{n,cr}+\lambda^2\sigma^2_{n,rr},
+\qquad P(\bm u=0)=\Big(\frac{3}{2\pi\sigma^2_{1,\lambda}}\Big)^{3/2}.
+\label{eq:siglam}
+\end{equation}
+Conditional on $\bm u=0$, $\bm g\equiv\nabla\zr$ is Gaussian with zero mean and covariance $v\,\mathbb{I}$,
+\begin{equation}
+v=\frac{\sigma^2_{1,cc}\sigma^2_{1,rr}-\sigma^4_{1,cr}}{3\,\sigma^2_{1,\lambda}} ,
+\label{eq:v}
+\end{equation}
+and $\nabla\Cg=-\lambda\bm g$. The factor $|F'|^3$ from $|\det\nabla\nabla\Cl|$ cancels
+$|F'|^{-3}$, and
+\begin{equation}
+n(c,z)=P_{\rm G}(c,z)\Big(\frac{3}{2\pi\sigma^2_{1,\lambda}}\Big)^{3/2}
+\E\Big[\big|\det(H_\lambda+\kappa\,\bm g\bm g^T)\big|\,\Theta_s(H_\lambda+\kappa\,\bm g\bm g^T)\,\Big|\,c,z\Big],
+\label{eq:nexact}
+\end{equation}
+where $H_\lambda=\nabla\nabla Y_\lambda$, $\bm g\sim\mathcal N(0,v\mathbb{I})$ independent of $H_\lambda$,
+$s={\rm sign}\,F'(z)$, and $\Theta_{+}$ ($\Theta_{-}$) requires a negative- (positive-) definite
+matrix: where $F'<0$ maxima of $\Cl$ are minima of the bracket. Equation \eqref{eq:nexact} is exact
+within the setup of Sec.~1.
+
+\section{Leading order: BBKS peaks of $Y_\lambda$}
+
+Set $\kappa=0$. $H_\lambda$ is the Hessian of the Gaussian field $Y_\lambda$; by isotropy the scalars
+correlate only with its trace,
+\begin{equation}
+b_c\equiv\langle-\nabla^2Y_\lambda\,\Cg\rangle=\sigma^2_{1,cc}+\lambda\sigma^2_{1,cr},\qquad
+b_r\equiv\langle-\nabla^2Y_\lambda\,\zr\rangle=\sigma^2_{1,cr}+\lambda\sigma^2_{1,rr},
+\end{equation}
+and the traceless part is independent of them, with the BBKS normalisation set by
+$\sigma^2_{2,\lambda}$. With $x\equiv-\nabla^2Y_\lambda/\sigma_{2,\lambda}$, given $(c,z)$,
+$x\sim\mathcal N(m_\lambda,s_\lambda^2)$,
+\begin{equation}
+m_\lambda=\frac{(b_c,b_r)\,\Sigma^{-1}(c,z)^T}{\sigma_{2,\lambda}},\qquad
+s_\lambda^2=1-\frac{(b_c,b_r)\,\Sigma^{-1}(b_c,b_r)^T}{\sigma^2_{2,\lambda}},\qquad
+\Sigma=\begin{pmatrix}\sigma^2_{0,cc}&\sigma^2_{0,cr}\\ \sigma^2_{0,cr}&\sigma^2_{0,rr}\end{pmatrix}.
+\end{equation}
+BBKS (their eqs.~A14--A19) give $\E[|\det H|\Theta_+\,|\,x]=\sigma^3_{2,\lambda}f(x)/27$, with
+$f(x)\to x^3-3x$ for $x\gg1$. Hence
+\begin{equation}
+\boxed{\;n(c,z)=P_{\rm G}(c,z)\,\frac{G(s\,m_\lambda,s_\lambda)}{(2\pi)^{3/2}R_{*,\lambda}^3},\qquad
+R_{*,\lambda}=\frac{\sqrt3\,\sigma_{1,\lambda}}{\sigma_{2,\lambda}},\qquad
+G(m,s)=\int_0^\infty\!\dd x\,f(x)\,\mathcal N(x;m,s^2).\;}
+\label{eq:n3b}
+\end{equation}
+This is the Phase~3a expression with $\Cg\to Y_\lambda$. In normalised variables
+$\nu=c/\sigma_{0,c}$, $\hat z=z/\sigma_{0,r}$, $m_\lambda=a_\lambda\nu+b_\lambda\hat z$ with
+$a_\lambda=(\gamma_\lambda-\rho\gamma_{z,\lambda})/(1-\rho^2)$,
+$b_\lambda=(\gamma_{z,\lambda}-\rho\gamma_\lambda)/(1-\rho^2)$,
+$s^2_\lambda=1-a_\lambda\gamma_\lambda-b_\lambda\gamma_{z,\lambda}$, where
+$\gamma_\lambda=b_c/(\sigma_{2,\lambda}\sigma_{0,c})$,
+$\gamma_{z,\lambda}=b_r/(\sigma_{2,\lambda}\sigma_{0,r})$ and
+$\rho=\sigma^2_{0,cr}/(\sigma_{0,c}\sigma_{0,r})$. At fixed $\lambda$ these coefficients and
+$R_{*,\lambda}$ do not depend on the amplitude of $\mathcal P$.
+
+Limits:
+\begin{enumerate}
+\item $\lambda=0$ (Gaussian $\zeta$, or $F''=0$): Phase~3a exactly.
+\item Monochromatic spectrum: $K_c$ and $K_r$ are evaluated at one $k$, so $Y_\lambda\propto\zr$
+and $\Cg\propto\zr$; $R_{*,\lambda}=\sqrt3/k_*$ and the peak positions do not depend on $\lambda$.
+3b and 3a coincide. The difference is a finite-width effect.
+\item $F'(z)\to0$ at fixed $c$: $|\lambda|\to\infty$, $Y_\lambda/\lambda\to\zr$, the peak condition
+becomes $\nabla\zr=0$, and $R_{*,\lambda}\to\sqrt3\sigma_{1,rr}/\sigma_{2,rr}$, $m_\lambda$,
+$s_\lambda$ stay finite.
+\end{enumerate}
+
+\section{The rank-one term}
+
+Work in units of $\sigma_{2,\lambda}$ and take $s=+1$ (for $s=-1$ replace $H\to-H$, $\kappa\to-\kappa$,
+$m_\lambda\to-m_\lambda$). The matrix determinant lemma gives, for $H\prec0$,
+$\det(-H-\kappa\bm g\bm g^T)=\det(-H)\,\big(1-\kappa\,\bm g^T(-H)^{-1}\bm g\big)$, which is
+\emph{exactly} linear in $\kappa|\bm g|^2$. Averaging over the isotropic direction of $\bm g$ and
+over $|\bm g|^2=v\chi^2_3$ turns $\bm g^T(-H)^{-1}\bm g$ into $v\,{\rm tr}(-H)^{-1}$, and
+$\det(-H)\,{\rm tr}(-H)^{-1}=e_2(-H)$, the second elementary symmetric polynomial of the
+eigenvalues. Hence
+\begin{equation}
+\E\big[|\det(H+\kappa\bm g\bm g^T)|\,\Theta_+\big]=\sigma_{2,\lambda}^3\Big[\E_x\frac{f(x)}{27}-\tau\,\E_xf_2(x)\Big]
++\mathcal O(\tau^2),\qquad
+\tau\equiv\frac{s\,\kappa\,v}{\sigma_{2,\lambda}},
+\label{eq:rankone}
+\end{equation}
+with $x\sim\mathcal N(m_\lambda,s^2_\lambda)$ and $f_2(x)\equiv\E[e_2(-\zeta)\Theta_+\,|\,x]$ for the
+standardised Hessian $\zeta$. In the BBKS shape variables ($x=\sum\lambda_i$,
+$y=(\lambda_1-\lambda_3)/2$, $z=(\lambda_1-2\lambda_2+\lambda_3)/2$, density
+$\propto y(y^2-z^2)e^{-\frac52(3y^2+z^2)}$, peak condition $x-3y+z>0$),
+$e_2=x^2/3-(3y^2+z^2)/3$, so $f_2$ follows from the same two-dimensional integral as $f$; that
+integral reproduces BBKS's $f$ to $10^{-10}$, and $f_2\to x^2/3-1/3$ for $x\gg1$. The peak
+density \eqref{eq:n3b} is multiplied by
+\begin{equation}
+Q=1-\tau\,R_2(s\,m_\lambda,s_\lambda),\qquad
+R_2(m,s)=\frac{27\int_0^\infty f_2\,\mathcal N(x;m,s^2)\,\dd x}{\int_0^\infty f\,\mathcal N(x;m,s^2)\,\dd x}
+\;\xrightarrow{\ m\gg1\ }\;\frac9m .
+\label{eq:Q}
+\end{equation}
+The remainder is a boundary effect. For $\tau>0$ (a positive semi-definite addition) maxima can
+only be lost, the exact factor is $\E[\det(-H)(1-\tau\,q)_+]/\E[\det(-H)]$ with $q\geq0$, and
+\eqref{eq:Q} is a lower bound. For $\tau<0$ the interior part is exactly \eqref{eq:Q} and
+configurations that become maxima add a positive $\mathcal O(\tau^2)$ piece. Where
+$\tau R_2>\frac12$ the code continues $Q$ smoothly and positively; such nodes carry no weight
+in practice.
+
+Size. $\tau\propto v/\sigma_{2,\lambda}\propto\mathcal A^{1/2}$ is formally one power of the r.m.s.\
+amplitude below the $\lambda$ effect, but $\kappa\simeq-2\lambda^2/c$ for the quadratic template,
+so it is not small when $\lambda$ is large and negative. $\kappa\equiv0$ for the logarithmic
+template. At nodes on the ridge $z=\rho\,\sigma_{0,r}\,c/\sigma_{0,c}$ with $\sigma_{0,c}=0.1$,
+$r=2.74/k_*$ (lognormal, transfer function, cut):
+
+\begin{center}
+\begin{tabular}{llcccc}
+$\Delta$ & template & $c$ & MC rank-one effect & $Q-1$, eq.~\eqref{eq:Q} & MC / eq.~\eqref{eq:n3b}$\times Q$\\\hline
+1.0 & $f_{\rm NL}=-2$ & 0.60 & $+0.359$ & $+0.341$ & 1.0085\\
+1.0 & $f_{\rm NL}=-2$ & 0.45 & $+0.223$ & $+0.219$ & 1.0019\\
+1.0 & $f_{\rm NL}=+2$ & 0.60 & $+0.0093$ & $+0.0093$ & 0.9997\\
+1.0 & curvaton $r_{\rm dec}=0.3$ & 0.45 & $+0.0287$ & $+0.0287$ & 0.9997\\
+1.0 & $\mu_*=5/6$ & 0.60 & $0$ & $0$ & 0.9997\\
+0.3 & $f_{\rm NL}=-2$ & 0.60 & $+0.0401$ & $+0.0401$ & 0.9998\\
+0.3 & $f_{\rm NL}=+2$ & 0.60 & $+0.0049$ & $+0.0049$ & 0.9999\\
+\end{tabular}
+\end{center}
+(Monte Carlo with $10^6$ samples, statistical error $(3$--$16)\times10^{-4}$.) Only the most
+extreme node, where the base density is already suppressed twentyfold, shows the
+$\mathcal O(\tau^2)$ remainder, at 0.85\%; it moves $A_*$ by $\sim0.02\%$.
+
+\section{Result}
+
+With $c=\Cl/F'(z)$, $\lambda=\Cl F''(z)/F'(z)^2$ and $s={\rm sign}F'(z)$,
+\begin{equation}
+\beta^{\rm 3b}_{\rm pk}=V\!\int\!\dd z\!\int_{C_{\ell,\rm th}}^{2\Phi}\!\dd\Cl\;
+\frac{P_{\rm G}(\Cl/F'(z),z)}{|F'(z)|}\;
+\frac{G(s\,m_\lambda,s_\lambda)}{(2\pi)^{3/2}R_{*,\lambda}^3}\;\big(1-\tau R_2\big)\;
+\mathcal K(C-C_{\rm th})^\gamma .
+\label{eq:final}
+\end{equation}
+In the code $Y_\lambda$ is normalised by $(1+\lambda^2)^{1/2}$, i.e.\ $\lambda=\tan\theta$, which leaves
+$R_{*,\lambda}$, $m_\lambda$, $s_\lambda$ and $\tau$ unchanged and keeps $F'\to0$ finite.
+Threshold statistics are the same integral without $V$ and without the peak factor. So,
+within this framework, the two statistics differ only through that factor, and NG enters the
+difference through $\lambda(\Cl,z)$, $R_{*,\lambda}$, $m_\lambda$ and $s_\lambda$.
+
+\section{Checks}
+
+\begin{enumerate}
+\item $\lambda=0$ and $F''=0$: identical to Phase~3a (unit tests: exact for Gaussian $\zeta$,
+$7\times10^{-7}$ in $\log\beta$ for $F=1.3\,\zg$).
+\item Narrow lognormal spectra: $|\log\beta^{\rm 3b}-\log\beta^{\rm 3a}|=0.0011$ at $\Delta=0.05$
+against $0.032$ at $\Delta=1$ ($f_{\rm NL}=1$, unit test).
+\item Conditional Monte Carlo of \eqref{eq:KR} at fixed $(c,z)$, written independently of
+Secs.~5--7 (\url{ngpbh.validation}): sample $\nabla\zr$ from its marginal and weight by the
+joint density of $(\nabla\Cg,\nabla\zr)$ at $\nabla\Cg=-\lambda\nabla\zr$; sample the twelve
+Hessian components from their joint Gaussian conditional on $(c,z)$, built directly from
+\eqref{eq:corr}; evaluate the exact $\nabla\nabla\Cl$, its determinant and definiteness. Without
+the rank-one term it reproduces \eqref{eq:n3b} within its statistical errors ($2\times10^{-4}$
+typically, $2\times10^{-3}$ at the most suppressed node); with it, the table of Sec.~7.
+\item Lattice: Gaussian random fields in a periodic box, $\Cg$ and $\zr$ by FFT filtering,
+$\Cl=F'(\zr)\Cg$, local maxima counted on the grid above several thresholds, compared with
+\eqref{eq:final} and with Phase~3a (\url{scripts/lattice_peaks.py}).
+\end{enumerate}
+
+\section{Not included (common to both statistics)}
+
+The spherical-symmetry step behind \eqref{eq:Cl}, which Young~\cite{Young} questions for broad
+spectra (high peaks of $C$ need not be high peaks of $\zeta$); the condition that $r$ maximises
+the compaction (prescription (iii)); profile dispersion around the mean profile
+(Escriv\`a~2607.08738); type-II perturbations. All of them affect threshold statistics in the
+same way, so the comparison stays like for like.
+
+\begin{thebibliography}{9}
+\bibitem{Ferrante} G.~Ferrante, G.~Franciolini, A.~Iovino, A.~Urbano, arXiv:2211.01728.
+\bibitem{Young} S.~Young, arXiv:2201.13345.
+\bibitem{BBKS} J.~M.~Bardeen, J.~R.~Bond, N.~Kaiser, A.~S.~Szalay, Astrophys.\ J.\ 304 (1986) 15.
+\bibitem{Germani} C.~Germani, M.~A.~Gorji, M.~Uwabo-Niibo, M.~Yamaguchi, arXiv:2503.05434 (peaks of
+a local function of \emph{one} Gaussian field, where peak positions coincide).
+\end{thebibliography}
+
+\end{document}

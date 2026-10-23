@@ -17,10 +17,12 @@ conventions to < 0.01, while the Gaussian R itself moves by 0.07 between them
 ## Phase 0: confirm the gap — done (one item left for you)
 
 * Gap open in the narrower form stated in the assessment. Add 2406.20089, 2607.08738,
-  2503.05434, 2603.23025 and 2501.00295 to the reading list.
-* **You still need to:** run the INSPIRE queries listed in the assessment; email Cole &
-  Fumagalli (mention the PS factor 2 and the peaks σ₀/2 normalisation in pbhstat v0.0.6,
-  and ask about NG plans); write and date your prediction before opening the scan results.
+  2503.05434, 2603.23025, 2501.00295 and 2512.13648 to the reading list.
+* INSPIRE scan done (23 Oct 2026, 193 citing records): nothing closes the gap; re-run it before
+  submission.
+* **You still need to:** email Cole & Fumagalli (mention the PS factor 2 and the peaks σ₀/2
+  normalisation in pbhstat v0.0.6, and ask about NG plans); write and date your prediction
+  before opening the scan results.
 
 ## Phase 1: Gaussian baselines — done
 
