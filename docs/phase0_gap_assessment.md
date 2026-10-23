@@ -13,11 +13,17 @@ local-NG fields appeared in 2025 (Germani et al.). The paper must cite these and
 
 Sharpened claim (suggested wording):
 
-> We construct peaks theory on the compaction function with local NG (quadratic and
-> logarithmic/USR templates) for broad spectra, as the exact counterpart of threshold statistics:
-> same threshold, windows, transfer function and cut. We quantify the amplitude ratio R(Δ, NG)
-> between the two, test the peak-correspondence assumption on 3D realisations, and propagate
-> R to the significance of the PBH-overproduction tension for the NANOGrav 15-year signal.
+> We construct peaks theory on the compaction function with local NG (quadratic, logarithmic/USR
+> and curvaton templates) for broad spectra, as the exact counterpart of threshold statistics:
+> same threshold, windows, transfer function and cut. Unlike previous work, which imposes the
+> peak condition on a Gaussian field, we count maxima of the non-Gaussian compaction itself, a
+> local function of two correlated Gaussian fields, and validate the result with an independent
+> Monte Carlo and with 3D realisations. We quantify the amplitude ratio R(Δ, NG) between the two
+> statistics and propagate it to the significance of the PBH-overproduction tension for the
+> NANOGrav 15-year signal.
+
+(Added 23 Oct 2026, after Phase 3b: the derivation is in `docs/phase3b_derivation.tex`; the
+Gaussian-peak approximation miscounts peaks by up to 18% but shifts A_* by ≤ 1.7%.)
 
 ## How this was checked, and its limits
 

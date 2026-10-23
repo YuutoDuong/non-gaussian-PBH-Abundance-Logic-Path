@@ -47,54 +47,73 @@ conventions to < 0.01, while the Gaussian R itself moves by 0.07 between them
 * Optional, before the note: the q-marginalised prescription of 2402.11033 (q as a random
   variable, threshold → 2/5 for broad spectra), as a third threshold systematic.
 
-## Phase 3: peaks with NG for broad spectra — started
+## Phase 3: peaks with NG for broad spectra — done (robustness items left)
 
-Fix the definition first: peaks = maxima of the compaction field at the formation scale
-(prescription (i) in the assessment), so that peaks and threshold statistics differ only by the
-peak constraint. Then:
+Definition: peaks = maxima of the compaction field at the formation scale (prescription (i) in
+the assessment), so that peaks and threshold statistics differ only by the peak constraint.
 
-1. **3a, Gaussian-peak approximation — implemented.** Count BBKS maxima of the Gaussian field
-   C_g(x; r) with ζ_r as a correlated extra scalar (exact BBKS f(x), no high-peak limit), map
-   through F′. Exact for F′ = const; it is Young's approach generalised to broad spectra.
-   First R map: `results/fig_phase3a_ratio_preview.png` (preliminary).
-2. **3b, true NG peaks — the new physics.** Count maxima of C_l = F′(ζ_r) C_g, a product of two
-   correlated Gaussian fields. ∇C_l = F′∇C_g + F″C_g∇ζ_r, so the stationary points move; the
-   joint vector is (C_g, ζ_r, ∇C_g, ∇ζ_r, ∇∇C_g, ∇∇ζ_r), 20 Gaussian variables with known
-   covariances (all follow from the same spectral integrals). Start from the local-NG peak
-   statistics of Germani et al. 2503.05434 (§3) and Young 2201.13345 App. B. Write the LaTeX
-   derivation before coding, as planned. Expected structure: integrate δ³(∇C_l) analytically
-   (Gaussian in ∇ζ_r after eliminating ∇C_g), keep |det ∇∇C_l| with a high-peak expansion
-   around the 3a result, and quantify the correction.
-3. Monte Carlo check, part 1: sample the 20-variable Gaussian vector with importance sampling
-   near threshold; must reproduce 3a when F″ = 0 and give the 3b result otherwise.
-4. Monte Carlo check, part 2: 3D Gaussian random fields at large σ, apply F, smooth, find maxima
-   of C_l, compare counts with 3a and 3b for Δ ≤ 1 (box ≥ 512³ for Δ = 1).
-5. Robustness: the Germani–Sheth / Fumagalli non-linear statistics (pbhstat `NonLinearModel`)
-   in the Gaussian limit; profile dispersion (Escrivà 2607.08738) for f_NL < 0.
+1. **3a, Gaussian-peak approximation — done.** BBKS maxima of the Gaussian field C_g(x; r) with
+   ζ_r as a correlated extra scalar (exact BBKS f(x)), mapped through F′. Exact for F′ = const;
+   Young's approach generalised to broad spectra.
+2. **3b, true NG peaks — done** (`docs/phase3b_derivation.tex`, `PeaksConfig(constraint="C_l")`).
+   Maxima of C_l = F′(ζ_r) C_g, a local function of two correlated Gaussian fields. Germani et
+   al. 2503.05434 cover a function of one Gaussian field, where peak positions do not move; no
+   paper imposes the peak condition on the non-Gaussian compaction. Result: ∇C_l = F′∇Y with
+   Y = C_g + λζ_r, λ = C_l F″/F′², so the maxima are BBKS maxima of Y, times a rank-one Hessian
+   factor 1 − τR₂ that is exact to first order. That factor is identically 1 for the logarithmic
+   template, because 1/F′ is linear.
+3. **Monte Carlo check, part 1 — done.** Independent sampling of the 20 Gaussian variables with
+   the exact Hessian (`ngpbh.validation`) reproduces the semi-analytic density to 3×10⁻⁴ at 15 of
+   16 test nodes. The exception is the most extreme node (f_NL = −2, Δ = 1, density already
+   suppressed twentyfold), off by 0.85%, the O(τ²) remainder.
+4. **Monte Carlo check, part 2 — done** (`scripts/lattice_peaks.py`,
+   `results/phase3b_lattice.csv`, `results/fig_phase3b_lattice.png`). Maxima of C_l counted on
+   256³ Gaussian random fields (Δ = 1, r = 8 cells, 24 realisations, ν = 1.5–3), with predictions
+   from the lattice's own mode sums:
+   * Gaussian calibration: lattice/BBKS = 1.010 → 0.976, a mild grid trend.
+   * f_NL = −2: lattice/3b = 1.006 → 0.949 (±0.3–2.7%), against lattice/3a = 1.18 → 1.14.
+   * f_NL = +2: lattice/3b = 1.011 → 0.997, against lattice/3a = 0.91 → 0.98.
+   * μ_* = 5/6: lattice/3b = 1.007 → 0.998, against lattice/3a = 0.93 → 0.98.
 
-Fallback as before (week 6): restrict to Δ ≤ 0.5 where 3a and 3b can be checked on lattices.
+   3b agrees to about 1% beyond the grid trend; 3a miscounts peaks by up to 18%. A 512³ box was
+   not needed for Δ = 1 with r = 8 cells (L/r = 32).
+5. **Still open — robustness:**
+   * the Germani–Sheth / Fumagalli non-linear statistics (pbhstat `NonLinearModel`) in the
+     Gaussian limit;
+   * profile dispersion (Escrivà 2607.08738) for f_NL < 0;
+   * a lattice run at Δ = 2 (needs L/r ≥ 60, i.e. 512³ at r = 8).
 
-## Phase 4: discrepancy map R — machinery ready
+## Phase 4: discrepancy map R — done with Phase 3b peaks
 
-* Grid: Δ ∈ {0.1, 0.3, 0.5, 1, 2}, f_NL ∈ {−2, −1, −0.5, 0, 0.5, 1, 2}, μ_* ∈ {5/6, 5/2, 10, −5/2}
-  (`scripts/scan_amplitudes.py`, 4 cores, ~5 min). Same threshold, window, transfer function,
-  k < 4.49/r cut, K, γ for both statistics.
-* Exit: R unchanged when every grid is doubled — built into the tests at 2×10⁻⁴ in A_*.
-* Sanity check updated: Gaussian R is **0.77–0.79** in ngpbh's BBKS normalisation, not "a little
-  below 1"; the "slightly smaller amplitude" of 2402.11033 refers to other conventions. R spans
-  0.75–0.89 across the normalisation conventions in use (`results/phase1_convention_spread.csv`),
-  so report the conventions with every number, and lead with the double ratio.
-* Preliminary (3a) trend: positive NG pushes R towards 1 (R = 0.92 for μ_* = 5/6 at Δ = 2);
-  negative f_NL pulls it below the Gaussian value for narrow spectra.
-* Preliminary (3a) sizes, which set the framing of the note: NG moves the threshold-statistics
-  A_* by factors 0.2–2 across the grid, the choice of statistics moves it by ~20% (R ≈ 0.78),
-  but the interaction is small: the double ratio R/R_Gauss stays within 0.96–1.04 for
-  |f_NL| ≤ 2. The exception is μ_* = 5/6 (same f_NL = 1 at second order, but the full USR tail):
-  1.05–1.17, largest at Δ = 2, against 1.02–1.03 for quadratic f_NL = 1, so the
-  non-perturbative tail, not f_NL, drives it. That smallness is expected, because in 3a the
-  peak constraint acts on the Gaussian field C_g. So whether NG changes the threshold–peaks gap
-  materially is decided by 3b; if 3b also gives a few percent, the result is still publishable
-  ("the statistics systematic is NG-independent to x%"), but the PTA headline changes.
+* Grid: Δ ∈ {0.1, 0.3, 0.5, 1, 2}; f_NL ∈ {−2, −1, −0.5, 0, 0.5, 1, 2}; μ_* ∈ {5/6, 5/2, 10, −5/2}.
+  Statistics: threshold, peaks 3a, peaks 3b, all with the same threshold, window, transfer
+  function, k < 4.49/r cut, K and γ (`scripts/scan_amplitudes.py`, ~20 min on 3–4 cores).
+  Tables: `python scripts/summarise_scan.py`; figure: `results/fig_phase3_ratio.png`.
+* Exit: R unchanged when every grid is doubled. This is built into the tests at 2×10⁻⁴ in A_*
+  (3a) and 10⁻⁴ in log β (3b).
+* Gaussian R is **0.77–0.79** in ngpbh's BBKS normalisation. It spans 0.75–0.89 across the
+  normalisation conventions in use, and ~0.6–0.67 with the 2406.20089 high-peak formula
+  (2602.12252). So report the conventions with every number, and lead with the double ratio,
+  which cancels them to < 0.01.
+* **Result 1 — true NG peaks vs the Gaussian-peak approximation:**
+  * A_3b/A_3a = 0.983–1.000 over the grid. The largest shift is −1.7% (f_NL = −2, Δ = 0.5);
+    most entries are under 0.5%.
+  * 3a miscounts peaks by up to 18% (lattice), but β depends exponentially on A, so the
+    required amplitude moves only by δln A ≈ δln n/|ln β|.
+  * The approximation used implicitly in the literature is therefore good to ≲ 2% in A_* for
+    |f_NL| ≤ 2. That is a new, quantified statement.
+* **Result 2 — the R map (3b):**
+  * R = 0.738–0.817 for |f_NL| ≤ 2.
+  * The double ratio R/R_Gauss stays within 0.958–1.036 for |f_NL| ≤ 2: positive NG pushes R
+    up, and negative f_NL pulls it down for narrow spectra and up for broad ones.
+  * The non-perturbative USR tail (μ_* = 5/6, f_NL = 1 at second order) gives 1.05–1.16, largest
+    at Δ = 2, against 1.02–1.03 for quadratic f_NL = 1.
+* **Framing for the note:** across the grid, NG moves the threshold-statistics A_* by factors of
+  0.2–2. The choice of statistics moves it by 18–26% (1 − R for |f_NL| ≤ 2). The interaction
+  between the two is ±4% for |f_NL| ≤ 2 and up to 16% for strongly non-perturbative NG. For the PTA question this
+  means the statistics systematic is close to an NG-independent ~20% rescaling of the
+  overproduction line in A, except for strong USR-type tails. Phase 5 decides whether that
+  rescaling moves the significance appreciably.
 
 ## Phase 5: PTA tension — not started
 
@@ -107,13 +126,13 @@ Fallback as before (week 6): restrict to Δ ≤ 0.5 where 3a and 3b can be check
    2303.07980 tables) or quote the size of the omission.
 3. Then PTArcade / ceffyl, the posterior mass in the allowed region per prescription and NG case,
    and the question: does the choice of statistics move the significance more than the NG does?
-4. Network: arXiv/INSPIRE are blocked from the cloud environment used so far; the NANOGrav data
-   and PTArcade need a machine with access.
+4. Inputs (reachable since network access was opened, 23 Oct 2026): PTArcade 1.1.5 on PyPI and
+   the NG15 free-spectrum data and KDE representations on Zenodo.
 
 ## Phase 6: package and write up — scaffold in place
 
 Repo layout follows the plan (`nongaussian.py`, threshold and peaks on a shared integrator in
-`stats.py`, `tests/`). 47 tests run in ~35 s. Remaining: CI, a Zenodo DOI or a pbhstat PR, the
+`stats.py`, `tests/`). 60 tests run in ~50 s. Remaining: CI, a Zenodo DOI or a pbhstat PR, the
 10–15 page note, and an arXiv endorser.
 
 ## Pitfalls, confirmed or added
@@ -125,3 +144,5 @@ Repo layout follows the plan (`nongaussian.py`, threshold and peaks on a shared 
   moves C_th by 0.11 at Δ = 2 — larger than any statistics effect.
 * **New:** normalisation conventions (PS factor, peak volume, Jacobian) move R by ~0.14.
 * **New:** pbhstat's code and paper differ; compare codes in one convention at a time.
+* **New:** the rank-one Hessian term of Phase 3b is formally O(σ) but grows like λ², so it
+  reaches tens of percent in the peak density for f_NL = −2 at Δ = 1; it cannot be dropped.

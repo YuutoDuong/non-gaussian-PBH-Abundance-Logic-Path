@@ -67,8 +67,26 @@ C_l are minima of C_g and G(−m, s) is used. With Gaussian ζ this is the full 
 density (no high-peak approximation); `PeaksConfig(density="high_peak")` replaces G by (γν)³.
 
 What the approximation leaves out: with F″ ≠ 0, ∇C_l = F′∇C_g + F″C_g∇ζ_r, so maxima of C_l are
-displaced from maxima of C_g. Counting the true maxima needs the joint statistics of
-(C_g, ζ_r) and their gradients and Hessians; that is the Phase 3 derivation.
+displaced from maxima of C_g. `PeaksConfig(constraint="C_l")` counts the true maxima of C_l
+(Phase 3b, `docs/phase3b_derivation.tex`): at each (C_l, ζ_r) node they are BBKS maxima of the
+Gaussian field Y = C_g + λζ_r, λ = C_l F″/F′², so the same w with R_*, m and s of Y, built from
+the moments of C_g and ζ_r up to fourth order (the three extra ones are in the moments table
+below), times the rank-one factor Q = 1 − τR₂:
+
+    τ = sign(F′) κ v / σ₂(Y),  κ = −c F′ (1/F′)″,  v = (s₁² s₁r² − s_cr1⁴) / (3 s₁(Y)²) / r²,
+    R₂ = 27 ∫f₂ N / ∫f N,       f₂(x) = E[e₂(−ζ) Θ | x]   (→ x²/3 − 1/3; 9/m for high peaks)
+
+κ = 0 for the logarithmic template; κ = −2λ²/c for the quadratic one. Q is exact to first order
+in τ (checked against an independent Monte Carlo of the 20 Gaussian variables with the exact
+Hessian, `ngpbh.validation`, to 3×10⁻⁴; 0.85% at the most extreme node). Maxima of C_l counted
+on 256³ Gaussian random fields follow the 3b density to ~1% (beyond the Gaussian grid trend),
+while 3a misses them by up to 18% (`scripts/lattice_peaks.py`, `results/phase3b_lattice.csv`).
+
+| extra moment (Phase 3b) | definition | meaning |
+|---|---|---|
+| s1r² | ∫dln k x² W_s² P^T | r²⟨\|∇ζ_r\|²⟩ |
+| s2cr² | (2Φ/3) ∫dln k x⁶ W W_s P^T | r⁴⟨∇²C_g ∇²ζ_r⟩ |
+| s2r² | ∫dln k x⁴ W_s² P^T | r⁴⟨(∇²ζ_r)²⟩ |
 
 Numerics: C_l on Gauss–Legendre nodes with C_l − C_l,th ∝ t³ (absorbs the (C − C_th)^γ cusp);
 ζ_r on a trapezoid grid with step ≤ √(1−γ_cr²)/12 inside a window found by a coarse pass;

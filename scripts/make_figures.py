@@ -109,10 +109,17 @@ def series(rows, template, statistic, cut="4.49"):
     return [p[0] for p in pts], [p[1] for p in pts]
 
 
-def ratio(rows, template):
-    w, a_pk = series(rows, template, "peaks")
+def ratio(rows, template, peaks="peaks"):
+    w, a_pk = series(rows, template, peaks)
     _, a_th = series(rows, template, "threshold")
     return w, [p / t for p, t in zip(a_pk, a_th)]
+
+
+def correction(rows, template):
+    """A_* of Phase 3b peaks over Phase 3a peaks."""
+    w, a_b = series(rows, template, "peaks_3b")
+    _, a_a = series(rows, template, "peaks")
+    return w, [b / a for b, a in zip(a_b, a_a)]
 
 
 def fig_amplitudes(rows, out):
@@ -153,33 +160,88 @@ def fig_amplitudes(rows, out):
     plt.close(fig)
 
 
-def fig_ratio(rows, conv_rows, out):
+def fig_ratio(rows, out):
+    """R for Phase 3b peaks (solid) with Phase 3a (dashed, same colour), and the 3b/3a shift."""
     fig, axes = plt.subplots(1, 3, figsize=(12.5, 4.3))
-    ax = axes[0]
-    for t, c in DIVERGING.items():
-        w, r = ratio(rows, t)
-        ax.plot(w, r, "-o", color=c, label=LABELS[t], markeredgecolor=SURFACE, markeredgewidth=0.8)
-    quad_labels = [(ratio(rows, t)[0][-1], ratio(rows, t)[1][-1], LABELS[t]) for t in ("fNL=-2", "gaussian", "fNL=+2")]
-    ax.set_title("Quadratic template", loc="left")
-    ax.set_ylabel(r"$R=A_*^{\rm peaks}/A_*^{\rm threshold}$")
-    ax.legend(loc="upper left", ncol=2)
-    ax = axes[1]
-    w, r = ratio(rows, "gaussian")
-    ax.plot(w, r, "-o", color=GAUSS, label="Gaussian", markeredgecolor=SURFACE, markeredgewidth=0.8)
-    log_labels = [(ratio(rows, "gaussian")[0][-1], ratio(rows, "gaussian")[1][-1], "Gaussian")]
-    for t, c in zip(LOG_FAMILY, CATEGORICAL):
-        w, r = ratio(rows, t)
-        ax.plot(w, r, "-o", color=c, label=LABELS[t], markeredgecolor=SURFACE, markeredgewidth=0.8)
-        log_labels.append((w[-1], r[-1], LABELS[t]))
-    ax.set_title("Logarithmic (USR) template", loc="left")
-    ax.legend(loc="upper left")
-    for a_ in axes[:2]:
-        style(a_)
-        a_.set_ylim(0.72, 0.94)
-        a_.set_xlim(0.085, 3.4)
-    end_labels(axes[0], quad_labels)
-    end_labels(axes[1], log_labels)
+    families = [
+        (axes[0], list(DIVERGING.items()), "Quadratic template", ("fNL=-2", "gaussian", "fNL=+2")),
+        (axes[1], [("gaussian", GAUSS)] + list(zip(LOG_FAMILY, CATEGORICAL)), "Logarithmic (USR) template",
+         ("gaussian", "USR mu=5/6")),
+    ]
+    for ax, members, title, labelled in families:
+        for t, c in members:
+            w, r3a = ratio(rows, t, "peaks")
+            ax.plot(w, r3a, "--", color=c, linewidth=1.0, alpha=0.7)
+            w, r3b = ratio(rows, t, "peaks_3b")
+            ax.plot(w, r3b, "-o", color=c, label=LABELS[t], markeredgecolor=SURFACE, markeredgewidth=0.8)
+        ax.set_title(title, loc="left")
+        style(ax)
+        ax.set_ylim(0.72, 0.94)
+        ax.set_xlim(0.085, 3.4)
+        ax.legend(loc="upper left", ncol=2 if len(members) > 5 else 1)
+        end_labels(ax, [(ratio(rows, t, "peaks_3b")[0][-1], ratio(rows, t, "peaks_3b")[1][-1], LABELS[t])
+                        for t in labelled])
+    axes[0].set_ylabel(r"$R=A_*^{\rm peaks}/A_*^{\rm threshold}$")
+    axes[0].text(0.98, 0.03, "solid: maxima of $C_\\ell$ (3b)   dashed: maxima of $C_g$ (3a)",
+                 transform=axes[0].transAxes, fontsize=7, color=MUTED, ha="right")
     ax = axes[2]
+    # the two families reuse blue, so the logarithmic one is dashed with square markers here
+    for t, c in DIVERGING.items():
+        if t != "gaussian":
+            w, q = correction(rows, t)
+            ax.plot(w, q, "-o", color=c, label=LABELS[t], markeredgecolor=SURFACE, markeredgewidth=0.8)
+    for t, c in zip(LOG_FAMILY, CATEGORICAL):
+        w, q = correction(rows, t)
+        ax.plot(w, q, "--s", color=c, label=LABELS[t], markeredgecolor=SURFACE, markeredgewidth=0.8)
+    ax.axhline(1.0, color=GAUSS, linewidth=1.0)
+    style(ax)
+    ax.set_xlim(0.085, 3.4)
+    ax.set_title(r"True NG peaks vs Gaussian-peak approximation", loc="left")
+    ax.set_ylabel(r"$A_*^{\rm 3b}/A_*^{\rm 3a}$")
+    ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.17), ncol=4, fontsize=7)
+    fig.suptitle(
+        "Phase 3: peaks vs threshold statistics, same threshold, window, transfer function and cut",
+        fontsize=9, color=INK2, x=0.01, ha="left",
+    )
+    fig.tight_layout()
+    fig.savefig(out, dpi=200)
+    plt.close(fig)
+
+
+def fig_lattice(rows, out):
+    """Maxima of C_l counted on 256^3 Gaussian random fields over the Kac-Rice predictions."""
+    cases = [("gaussian", GAUSS, "Gaussian (grid calibration)"), ("fNL=-2", DIVERGING["fNL=-2"], LABELS["fNL=-2"]),
+             ("fNL=+2", DIVERGING["fNL=+2"], LABELS["fNL=+2"]), ("mu=5/6", CATEGORICAL[2], r"$\mu_*=5/6$")]
+    fig, axes = plt.subplots(1, 2, figsize=(8.6, 3.7), sharey=True)
+    for ax, key, title in ((axes[0], "3b", "Phase 3b: maxima of $C_\\ell$"),
+                           (axes[1], "3a", "Phase 3a: maxima of $C_g$ (Gaussian-peak approx.)")):
+        for i, (case, c, label) in enumerate(cases):
+            sel = [r for r in rows if r["case"] == case]
+            nu = [float(r["nu"]) + 0.03 * (i - 1.5) for r in sel]
+            val = [float(r[f"lattice_over_{key}"]) for r in sel]
+            err = [float(r["err_rel"]) * v for r, v in zip(sel, val)]
+            ax.errorbar(nu, val, yerr=err, fmt="-o", color=c, label=label, capsize=2,
+                        markeredgecolor=SURFACE, markeredgewidth=0.8)
+        ax.axhline(1.0, color=AXIS, linewidth=1.0)
+        ax.grid(True, color=GRID, linewidth=0.6)
+        ax.set_axisbelow(True)
+        for side in ("top", "right"):
+            ax.spines[side].set_visible(False)
+        ax.set_xticks([1.5, 2.0, 2.5, 3.0])
+        ax.set_xlabel(r"threshold $C_\ell > \nu\,\sigma_c$")
+        ax.set_title(title, loc="left")
+    axes[0].set_ylabel("lattice count / prediction")
+    axes[0].set_ylim(0.88, 1.22)
+    axes[0].legend(loc="upper right", fontsize=7)
+    fig.suptitle(r"256$^3$ Gaussian random fields, 24 realisations, lognormal $\Delta=1$, $r=8$ cells, "
+                 r"$\sigma_c=0.15$, $k<4.49/r$", fontsize=9, color=INK2, x=0.01, ha="left")
+    fig.tight_layout()
+    fig.savefig(out, dpi=200)
+    plt.close(fig)
+
+
+def fig_conventions(conv_rows, out):
+    fig, ax = plt.subplots(figsize=(4.6, 4.1))
     conv = [
         ("R_pbhstat", "pbhstat v0.0.6 code"),
         ("R_ps2", r"PS $\times 2$, BBKS, $V=4\pi r^3/3$"),
@@ -195,15 +257,7 @@ def fig_ratio(rows, conv_rows, out):
     ax.set_title("Gaussian R: normalisation conventions only", loc="left")
     ax.text(0.02, 0.02, "pbhstat physics setup (linear estimator, no transfer)", transform=ax.transAxes,
             fontsize=7, color=MUTED)
-    ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.17), ncol=2, fontsize=7)
-    fig.suptitle(
-        "Phase 3a preview: peaks in the Gaussian-peak approximation (not the final Phase 3 result); "
-        "left two panels share every ingredient except the peak constraint",
-        fontsize=9,
-        color=INK2,
-        x=0.01,
-        ha="left",
-    )
+    ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.17), ncol=1, fontsize=7)
     fig.tight_layout()
     fig.savefig(out, dpi=200)
     plt.close(fig)
@@ -214,7 +268,10 @@ def main():
     conv = read("results/phase1_convention_spread.csv")
     Path("results").mkdir(exist_ok=True)
     fig_amplitudes(rows, "results/fig_phase2_threshold_amplitudes.png")
-    fig_ratio(rows, conv, "results/fig_phase3a_ratio_preview.png")
+    fig_ratio(rows, "results/fig_phase3_ratio.png")
+    fig_conventions(conv, "results/fig_phase1_conventions.png")
+    if Path("results/phase3b_lattice.csv").exists():
+        fig_lattice(read("results/phase3b_lattice.csv"), "results/fig_phase3b_lattice.png")
 
 
 if __name__ == "__main__":

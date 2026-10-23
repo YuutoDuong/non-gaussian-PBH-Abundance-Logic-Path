@@ -295,10 +295,40 @@ Hessian components from their joint Gaussian conditional on $(c,z)$, built direc
 \eqref{eq:corr}; evaluate the exact $\nabla\nabla\Cl$, its determinant and definiteness. Without
 the rank-one term it reproduces \eqref{eq:n3b} within its statistical errors ($2\times10^{-4}$
 typically, $2\times10^{-3}$ at the most suppressed node); with it, the table of Sec.~7.
-\item Lattice: Gaussian random fields in a periodic box, $\Cg$ and $\zr$ by FFT filtering,
-$\Cl=F'(\zr)\Cg$, local maxima counted on the grid above several thresholds, compared with
-\eqref{eq:final} and with Phase~3a (\url{scripts/lattice_peaks.py}).
+\item Lattice (\url{scripts/lattice_peaks.py}): Gaussian random fields on a periodic $256^3$
+grid, lognormal $\Delta=1$, $r=8$ cells, $\sigma_{0,c}=0.15$, 24 realisations; $\Cg$ and $\zr$ by
+FFT filtering with the same kernels and cut; local maxima of $\Cl=F'(\zr)\Cg$ (26 neighbours)
+counted above $\Cl=\nu\sigma_{0,c}$. The predictions use the lattice's own mode sums for the
+moments, so only grid effects separate them from the counts. Lattice/prediction for
+$\nu=1.5,\,2,\,2.5,\,3$:
+
+\begin{center}
+\begin{tabular}{lcc}
+template & Phase 3b, eq.~\eqref{eq:final} & Phase 3a (maxima of $\Cg$)\\\hline
+Gaussian (grid calibration) & $1.010,\ 0.995,\ 0.988,\ 0.976$ & same\\
+$f_{\rm NL}=-2$ & $1.006,\ 1.003,\ 0.976,\ 0.949$ & $1.183,\ 1.182,\ 1.159,\ 1.139$\\
+$f_{\rm NL}=+2$ & $1.011,\ 1.008,\ 1.004,\ 0.997$ & $0.911,\ 0.936,\ 0.960,\ 0.977$\\
+$\mu_*=5/6$ & $1.007,\ 1.003,\ 0.997,\ 0.998$ & $0.929,\ 0.942,\ 0.956,\ 0.976$\\
+\end{tabular}
+\end{center}
+Statistical errors are $0.2$--$0.6\%$, and $1$--$2.7\%$ at $\nu\ge2.5$ for $f_{\rm NL}=-2$. Phase~3b
+follows the counts to the level of the Gaussian grid trend; the Gaussian-peak approximation
+misses them by up to 18\%. In the required amplitude this is a shift of at most 1.7\%
+(Sec.~\ref{sec:consequence}), because $\delta\ln A_*\simeq\delta\ln n/|\ln\beta|$.
 \end{enumerate}
+
+\section{Consequence for the abundance}\label{sec:consequence}
+
+Same threshold (Musco et al.\ with the transfer function), window, transfer function, cut,
+$\mathcal K=3.3$, $\gamma=0.36$ and $k_*=10^7\,{\rm Mpc}^{-1}$ for all statistics
+(\url{results/phase2_amplitudes.csv}):
+\begin{itemize}
+\item $A^{\rm 3b}_*/A^{\rm 3a}_*=0.983$--$1.000$ for $\Delta=0.1$--$2$, $|f_{\rm NL}|\le2$,
+$\mu_*\in\{5/6,5/2,10,-5/2\}$: largest for $f_{\rm NL}=-2$ at $\Delta=0.5$.
+\item $R=A^{\rm peaks}_*/A^{\rm threshold}_*=0.770$--$0.789$ for Gaussian $\zeta$ and $0.738$--$0.817$
+for $|f_{\rm NL}|\le2$; the double ratio $R/R_{\rm Gauss}$ lies in $0.958$--$1.036$, and reaches
+$1.16$ for $\mu_*=5/6$ at $\Delta=2$.
+\end{itemize}
 
 \section{Not included (common to both statistics)}
 
