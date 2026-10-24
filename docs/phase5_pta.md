@@ -164,6 +164,32 @@ Gaussian ζ, threshold → peaks 3b, A_* at k* = 10⁸ Mpc⁻¹:
 The threshold prescription matters most for broad spectra. For the lognormal at Δ = 1, the
 transfer function moves δ_th from 0.458 to 0.537, and A_* by 62%.
 
+### 4. Robustness (Phase 6 audit, `results/phase6_robustness.md`)
+
+Each row changes one choice; the statistics shift Δσ_P (threshold → peaks 3b) is taken over the
+cases with σ_P ≤ 4:
+
+| change | statistics shift Δσ_P | largest change of any σ_P |
+|---|---|---|
+| none (reference) | +0.31 to +0.68 | — |
+| prior log10 k* ∈ [6, 9], or log10 A down to −4 | unchanged | 0.00 |
+| posterior grid twice as fine | unchanged | 0.00 |
+| KDE tail smoothing 0 / 0.03 / 0.10 dex | +0.30 to +0.72 | 0.14 |
+| 5 frequency bins (2–10 nHz) | +0.27 to +0.72 | 1.45 |
+| 30 frequency bins (2–59 nHz) | +0.23 to +0.55 | 1.06 |
+| peak volume (2π)^{3/2} r³ (Young) | +0.40 to +0.81 | 0.14 |
+| Press–Schechter factor 2 | +0.27 to +0.59 | 0.09 |
+| pbhstat v0.0.6 normalisation | +0.16 to +0.39 | 0.33 |
+| high-peak formula of 2406.20089 (indicative) | +0.82 to +1.29 | 0.65 |
+
+* **Statistics shift.** It survives every change: +0.2 to +0.8σ across the peak-normalisation
+  conventions in use. Only the high-peak formula of 2406.20089 doubles it, to about +1σ.
+* **Absolute significance.** It is set mostly by the frequency range. For the Gaussian
+  BPL(4,3,1) case, threshold statistics give 1.9σ_P with 5 bins, 3.0σ_P with the conventional
+  14, and 3.8σ_P with 30. The reason is that the posterior's tail nearest the allowed region
+  (k* ≈ 10^7) puts the SIGW peak at 10–20 nHz, and the bins above it bound it.
+* **Not sensitive:** the prior box and the grid resolution.
+
 ## Answer to the research question
 
 The gap between threshold statistics and peaks theory changes how strongly PBH overproduction
@@ -180,6 +206,8 @@ disfavours a SIGW explanation of NANOGrav 15, but modestly and uniformly:
   templates push it beyond 4σ. Peaks theory erodes the relief from negative NG by 0.3–0.5σ. In
   2306.17149's setup, f_NL = −2 stays below 2σ_P with either statistic; the curvaton moves from
   1.7 to 2.0σ_P.
+* **Absolute significance.** The largest analysis choice is the frequency range: 5, 14 or 30
+  bins move every σ by −1.5 to +1σ. The statistics shift does not depend on it.
 * **Against the conventions.** Three convention choices are rarely stated. Two of them shift
   the significance about as much as the choice of statistics does:
   * the transfer function in the threshold: −0.2 to −1.0σ;

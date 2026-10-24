@@ -1,0 +1,10 @@
+{
+  "title": "ngpbh: threshold statistics and peaks theory for the PBH abundance with local non-Gaussianity",
+  "upload_type": "software",
+  "description": "Threshold statistics and peaks theory (including maxima of the non-Gaussian compaction function) for the primordial black hole abundance with local non-Gaussianity and broad spectra; scalar-induced gravitational waves and the NANOGrav 15-year free-spectrum likelihood; scripts reproducing the R map and the PTA tension per statistic.",
+  "license": "MIT",
+  "keywords": ["primordial black holes", "non-Gaussianity", "peaks theory", "pulsar timing arrays", "scalar-induced gravitational waves"],
+  "creators": [
+    {"name": "YuutoDuong", "affiliation": "", "orcid": ""}
+  ]
+}

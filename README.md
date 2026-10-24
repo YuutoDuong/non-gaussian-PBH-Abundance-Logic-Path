@@ -9,6 +9,7 @@ PBH overproduction disfavours a scalar-induced GW explanation of the PTA signal?
 * `docs/revised_plan.md` — the plan with those corrections folded in, and the status per phase.
 * `docs/phase3b_derivation.tex` (and `.pdf`) — peaks of the non-Gaussian compaction function.
 * `docs/phase5_pta.md` — Phase 5: the NANOGrav 15 tension per statistic and NG template.
+* `docs/note/ngpbh_note.tex` (and `.pdf`) — the write-up (Phase 6).
 * `docs/conventions.md` — every formula the code implements, with sources.
 
 ## Package `ngpbh`
@@ -44,6 +45,7 @@ python -m venv .venv && .venv/bin/pip install -e ".[dev]"
 | `digitize_2306_17149.py` | `digitized_2306.17149_fig3.csv`: their f_PBH bands and NG15 contours, read from the vector figure (needs PyMuPDF) |
 | `pta_tension.py` | `phase5_lines.csv`, `phase5_tension.csv`, `phase5_summary.md`, `phase5_compare.md`: overproduction lines per statistic, NG template and shape, and the NG15 exclusion significance (~1 h on 4 cores) |
 | `pta_bpl_marginal.py` | `phase5_posterior_bpl_marginal.npz`: the NG15 posterior with the BPL shape marginalised (as 2306.17149 Fig. 3) |
+| `phase6_robustness.py` | `phase6_robustness.md`: the Phase 5 significances under changes of prior, frequency bins, KDE smoothing, grid and peak normalisation |
 | `make_figures.py`, `make_phase5_figures.py` | the figures in `results/` from the CSVs |
 
 ```python
@@ -60,3 +62,24 @@ A_peaks = peaks.solve_amplitude(f_target=1.0)
 
 Peaks need the k < 4.49/r cut (`MomentsConfig(x_cut=4.49)`) for broad spectra; use it for both
 statistics when comparing them.
+
+## Reproducing the results
+
+```bash
+.venv/bin/python scripts/compare_pbhstat.py          # Phase 1 exit check (needs pbhstat)
+.venv/bin/python scripts/scan_amplitudes.py          # R map, ~20 min on 4 cores
+.venv/bin/python scripts/lattice_peaks.py            # 3b vs 256^3 lattices (tens of minutes)
+.venv/bin/python scripts/fetch_ng15.py               # NANOGrav 15-yr free spectrum
+.venv/bin/python scripts/pta_validate.py             # likelihood checks, ~3 min
+.venv/bin/python scripts/pta_tension.py lines        # 312 overproduction lines, ~40 min on 4 cores
+.venv/bin/python scripts/pta_bpl_marginal.py         # shape-marginalised posterior, ~7 min
+.venv/bin/python scripts/pta_tension.py tension      # significances
+.venv/bin/python scripts/pta_tension.py compare      # against 2306.17149
+.venv/bin/python scripts/phase6_robustness.py        # robustness audit, ~12 min
+.venv/bin/python scripts/make_figures.py && .venv/bin/python scripts/make_phase5_figures.py
+```
+
+## Citing
+
+See `CITATION.cff`. The author fields are placeholders until the first tagged release (which
+also mints the Zenodo DOI through `.zenodo.json`). MIT licence (`LICENSE`).

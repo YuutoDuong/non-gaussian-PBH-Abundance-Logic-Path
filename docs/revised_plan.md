@@ -144,7 +144,12 @@ the assessment), so that peaks and threshold statistics differ only by the peak 
    NG moves it by −1.2σ to beyond +3σ. The transfer-function threshold choice moves it by −0.2 to
    −1.0σ, f_PBH = 1 vs 10⁻³ by +0.4 to +0.8σ, and the f_PBH normalisation by −0.15 to −0.4σ.
    Peaks 3a and 3b agree to 0.04σ.
-5. **Still open:**
+5. **Phase 6 audit** (`results/phase6_robustness.md`):
+   * The statistics shift is +0.2 to +0.8σ across the peak-normalisation conventions (+0.8 to
+     +1.3σ with the 2406.20089 high-peak formula). It is insensitive to the prior box, the grid
+     and the KDE smoothing.
+   * The absolute significance moves by −1.5 to +1σ with the frequency range (5/14/30 bins).
+6. **Still open:**
    * the SMBHB foreground;
    * the full PTA likelihood instead of the refit;
    * QCD sound-speed effects on the SIGW tail;

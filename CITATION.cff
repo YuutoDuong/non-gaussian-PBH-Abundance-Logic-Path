@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+message: "If you use ngpbh, please cite the software and the accompanying note."
+title: "ngpbh: threshold statistics and peaks theory for the PBH abundance with local non-Gaussianity"
+version: 0.4.0
+date-released: 2026-10-24
+license: MIT
+repository-code: "https://github.com/YuutoDuong/non-gaussian-PBH-Abundance-Logic-Path"
+keywords:
+  - primordial black holes
+  - non-Gaussianity
+  - peaks theory
+  - pulsar timing arrays
+  - scalar-induced gravitational waves
+authors:
+  # Fill in given-names, family-names, affiliation and orcid before the Zenodo release.
+  - alias: "YuutoDuong"

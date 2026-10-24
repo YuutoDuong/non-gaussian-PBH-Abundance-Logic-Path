@@ -1,0 +1,29 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install
+        run: python -m pip install -e ".[dev]"
+      - name: Cache the NANOGrav 15-yr free spectrum
+        uses: actions/cache@v4
+        with:
+          path: data/ng15
+          key: ng15-ceffyl-hd-4e67348394468caa4ac21207df33ccba
+      - name: Fetch the NANOGrav 15-yr free spectrum (MD5-checked)
+        run: python scripts/fetch_ng15.py
+      - name: Test
+        run: python -m pytest -q

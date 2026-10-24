@@ -4,12 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ngpbh"
-version = "0.3.0"
+version = "0.4.0"
 description = "Threshold statistics and peaks theory for the PBH abundance with local non-Gaussianity"
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 license = { text = "MIT" }
-dependencies = ["numpy>=1.22", "scipy>=1.8"]
+authors = [{ name = "YuutoDuong" }]
+dependencies = ["numpy>=2.0", "scipy>=1.11"]  # np.trapezoid needs NumPy 2
 
 [project.optional-dependencies]
 dev = ["pytest>=7", "matplotlib>=3.5"]
