@@ -25,7 +25,7 @@ from concurrent.futures import ProcessPoolExecutor
 from pathlib import Path
 
 import numpy as np
-from scipy.interpolate import CubicSpline
+from scipy.interpolate import CubicSpline, RegularGridInterpolator
 
 from ngpbh.abundance import AbundanceModel
 from ngpbh.cosmology import HorizonMass
@@ -226,6 +226,28 @@ def stage_compare(out="results/phase5_compare.md"):
                        (theirs, lines[("BPL(4,3,1)", t, "threshold", "base", f)],
                         lines[("BPL(4,3,1)", t, "peaks_3b", "base", f)])]
                 md.append(f"| {pname} | {t} | {f:g} | {sig[0]:.2f} | {sig[1]:.2f} | {sig[2]:.2f} |")
+    if marg.exists():
+        md += ["", "## Their NG15 contours inside our BPL-marginalised posterior", "",
+               "HPD level of our posterior along their digitised contours (median, 10-90%), excluding the "
+               "parts on the A = 1 prior edge and the plot edge at log10 k* = 9:", "",
+               "| their contour | our HPD level | 1D convention | 2D convention |", "|---|---|---|---|"]
+        lp = cases["BPL marginalised (their Fig. 1/3)"]
+        p = np.exp(lp - lp.max())
+        p /= p.sum()
+        order = np.argsort(p.ravel())[::-1]
+        lev = np.empty(p.size)
+        lev[order] = np.cumsum(p.ravel()[order])
+        interp = RegularGridInterpolator((LOG10_KSTAR, LOG10_A), lev.reshape(p.shape))
+        for edge, c1, c2 in (("1sigma", 0.683, 0.393), ("2sigma", 0.954, 0.865), ("3sigma", 0.997, 0.989)):
+            pts = np.array(dig[("NG15", edge)])
+            pts = pts[(pts[:, 1] < -0.05) & (pts[:, 0] < 8.95)]
+            v = interp(pts)
+            md.append(f"| {edge} | {np.median(v):.3f} ({np.percentile(v, 10):.3f}-{np.percentile(v, 90):.3f}) | {c1} | {c2} |")
+        q = lambda w, x: np.interp([0.0228, 0.5, 0.9772], np.cumsum(w) / w.sum(), x)
+        k2, a2 = q(p.sum(1), LOG10_KSTAR), q(p.sum(0), LOG10_A)
+        md += ["", f"1D marginals (median, 2-sigma): log10 k* = {k2[1]:.2f} (+{k2[2] - k2[1]:.2f}/-{k2[1] - k2[0]:.2f}), "
+               f"log10 A = {a2[1]:.2f} (+{a2[2] - a2[1]:.2f}/-{a2[1] - a2[0]:.2f}); 2306.17149 Fig. 1: "
+               "7.92 (+0.89/-0.62) and -0.86 (+0.79/-0.65)."]
     Path(out).write_text("\n".join(md) + "\n")
     print("\n".join(md))
 
