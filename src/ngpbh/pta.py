@@ -120,6 +120,28 @@ def log_posterior_sigw(template, freespec, log10_kstar, log10_A):
     return out
 
 
+def log_posterior_sigw_ng(template, freespec, log10_kstar, log10_A, F=0.0, G=0.0, order=4):
+    """As log_posterior_sigw for a `sigw_ng.NGSIGWTemplate`: Omega is a polynomial in A, not A^2.
+
+    Omega~ = A^2 T2 + A^3 (F^2 T3 + 12 G sbar T2) + F^4 A^4 T4 (truncated at A^order). A spectrum
+    that is not positive at a bin (possible only from MC noise where T2 vanishes) is treated as
+    lying below the KDE grid.
+    """
+    from . import thermal
+
+    f = freespec.freqs
+    k = f / thermal.HZ_PER_INV_MPC
+    base = thermal.H2_OMEGA_R * thermal.gw_dilution(f)
+    amp = 10.0 ** np.asarray(log10_A, dtype=float)[:, None]
+    out = np.empty((len(log10_kstar), len(log10_A)))
+    for a, lk in enumerate(log10_kstar):
+        om = base * template.omega(k[None, :] / 10.0**lk, amp, F=F, G=G, order=order)
+        with np.errstate(divide="ignore", invalid="ignore"):
+            r = freespec.log10_rho(np.where(om > 0.0, om, 0.0))
+        out[a] = freespec.loglike_rho(np.where(np.isfinite(r), r, -np.inf))
+    return out
+
+
 def credible_level(log_post, mask):
     """Smallest highest-posterior-density credible mass whose region reaches the masked cells.
 

@@ -6,8 +6,7 @@
 
 The same kernel as Kohri & Terada (1804.08577) in t = u + v, s = |u - v|. Checks in the tests:
 the Dirac-delta closed form, Omega_GW,RD = 0.8222 A^2 for a flat spectrum, and the k^3 infrared
-tail. Primordial NG corrections to the SIGW (relative size ~ A (3 f_NL/5)^2) are not included,
-as in 2306.17149.
+tail. This is the Gaussian part; the primordial-NG corrections are in sigw_ng.py.
 
 Quadrature: t is split at the resonance t = sqrt(3), where the kernel has a log singularity and
 a step, and mapped to w = ln|t - sqrt(3)| on each side; Gauss-Legendre panels in w and in s.

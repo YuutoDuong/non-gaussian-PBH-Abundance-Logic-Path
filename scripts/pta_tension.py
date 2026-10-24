@@ -12,8 +12,14 @@ Stage "tension": the NG15 posterior in (log10 k*, log10 A) for each shape (unifo
 the allowed region A < A_*(k*) is first reached (2306.17149's "excluded at n sigma"), the
 posterior mass in it, and the profile-likelihood Delta chi^2.
 
-Usage: python scripts/pta_tension.py [lines|tension|all] [--workers 4]
-Writes results/phase5_lines.csv, results/phase5_tension.csv, results/phase5_summary.md.
+Stage "ngsigw": the same with the primordial-NG corrections to the SIGW spectrum (Adshead et al.
+2105.01659; ngpbh.sigw_ng, terms from scripts/sigw_ng_terms.py): every NG template gets its own
+posterior, exact to A^4 for the quadratic template and to A^3 (F and G) for the curvaton and USR
+templates. The Gaussian-SIGW posterior of stage "tension" is what 2306.17149 used.
+
+Usage: python scripts/pta_tension.py [lines|tension|compare|ngsigw|all] [--workers 4]
+Writes results/phase5_lines.csv, results/phase5_tension.csv, results/phase5_summary.md and, for
+stage ngsigw, results/phase5_ngsigw_tension.csv and results/phase5_ngsigw_summary.md.
 """
 
 import argparse
@@ -31,9 +37,10 @@ from ngpbh.abundance import AbundanceModel
 from ngpbh.cosmology import HorizonMass
 from ngpbh.moments import MomentsConfig
 from ngpbh.nongaussian import Curvaton, Logarithmic, Quadratic
-from ngpbh.pta import (FreeSpectrum, credible_level, log_posterior_sigw, posterior_mass, sigma_1d,
-                       sigma_one_sided)
+from ngpbh.pta import (FreeSpectrum, credible_level, log_posterior_sigw, log_posterior_sigw_ng, posterior_mass,
+                       sigma_1d, sigma_one_sided)
 from ngpbh.sigw import SIGWTemplate
+from ngpbh.sigw_ng import NGSIGWTemplate, load_terms, local_coefficients
 from ngpbh.spectra import BrokenPowerLaw, LogNormal
 from ngpbh.stats import CollapseModel, PeaksConfig
 from ngpbh.threshold import MuscoThreshold
@@ -75,6 +82,8 @@ LOG10_KSTAR = np.linspace(5.0, 10.0, 501)
 LOG10_A = np.linspace(-3.0, 0.0, 601)
 SMOOTH = 0.05  # dex; regularises the KDE tails (ngpbh.pta.FreeSpectrum), bulk unchanged
 SIGMA_RELIABLE = 4.0  # beyond this the free-spectrum KDEs carry no information (see docs/phase5_pta.md)
+NG_TERMS = "results/sigw_ng_terms.csv"
+NG_FIGURE_CASES = [("BPL(4,3,1)", "fNL=-2"), ("BPL(4,3,1)", "fNL=+2"), ("LN D=0.5", "fNL=-2"), ("LN D=0.5", "fNL=+2")]
 
 
 def line_job(job):
@@ -276,9 +285,124 @@ def stage_compare(out="results/phase5_compare.md"):
     print("\n".join(md))
 
 
+def ng_templates(path=NG_TERMS):
+    terms = load_terms(path)
+    return {name: NGSIGWTemplate.from_terms(SIGWTemplate(sp.with_amplitude(1.0)), terms[name])
+            for name, sp in SHAPES.items()}
+
+
+def ng_settings(template):
+    """(F, G, order, alternative order) of the NG-SIGW series for a Phase 5 template.
+
+    The quadratic template is exact at A^4; its O(A^3) truncation is the alternative. The
+    curvaton and USR maps are truncated at A^3 (F, G); adding the F^4 A^4 terms, without the
+    G^2, F^2 G and F H ones, is the alternative.
+    """
+    ng = TEMPLATES[template]
+    F, G = local_coefficients(ng)
+    return (F, G, 4, 3) if isinstance(ng, Quadratic) else (F, G, 3, 4)
+
+
+def stage_ngsigw(out="results/phase5_ngsigw_tension.csv"):
+    lines = load_lines()
+    with open("results/phase5_tension.csv") as fh:
+        gauss = {(r["shape"], r["template"], r["statistic"], r["variant"], float(r["f_pbh"])): r for r in csv.DictReader(fh)}
+    tmpl = ng_templates()
+    fs = FreeSpectrum(n_bins=14, smooth=SMOOTH)
+    fsx = FreeSpectrum(n_bins=14, smooth=None)
+    rows, figs, med = [], {}, {}
+    for shape in SHAPES:
+        lp_g = log_posterior_sigw(tmpl[shape].t2, fs, LOG10_KSTAR, LOG10_A)
+        med[(shape, "gaussian")] = posterior_medians(lp_g)
+        for template in TEMPLATES:
+            if template == "gaussian":
+                continue
+            F, G, order, alt = ng_settings(template)
+            t0 = time.time()
+            lp = log_posterior_sigw_ng(tmpl[shape], fs, LOG10_KSTAR, LOG10_A, F, G, order)
+            lpx = log_posterior_sigw_ng(tmpl[shape], fsx, LOG10_KSTAR, LOG10_A, F, G, order)
+            lpa = log_posterior_sigw_ng(tmpl[shape], fs, LOG10_KSTAR, LOG10_A, F, G, alt)
+            med[(shape, template)] = posterior_medians(lp)
+            if (shape, template) in NG_FIGURE_CASES:
+                figs[f"{shape}|{template}"] = compact(lp[::2, ::2], 1e-3)
+            for key, line in sorted(lines.items()):
+                if key[:2] != (shape, template):
+                    continue
+                level, mass, dchi2 = tension_metrics(lp, line)
+                _, mass_x, _ = tension_metrics(lpx, line)
+                _, mass_a, _ = tension_metrics(lpa, line)
+                g = gauss[key]
+                rows.append(dict(shape=shape, template=template, statistic=key[2], variant=key[3], f_pbh=key[4],
+                                 F=round(F, 6), G=round(G, 6), order=order,
+                                 sigma_p_gsigw=float(g["sigma_p"]), sigma_p=sigma_one_sided(mass), sigma=sigma_1d(level),
+                                 p_allowed=mass, dchi2=dchi2, sigma_p_ceffyl=sigma_one_sided(mass_x),
+                                 sigma_p_alt=sigma_one_sided(mass_a), alt_order=alt))
+            print(f"{shape:10s} {template:15s} F={F:+.3f} G={G:.3f} A^{order} ({time.time() - t0:.0f}s)", flush=True)
+    np.savez_compressed("results/phase5_ngsigw_posteriors.npz", log10_kstar=LOG10_KSTAR[::2], log10_A=LOG10_A[::2], **figs)
+    with open(out, "w", newline="") as fh:
+        w = csv.DictWriter(fh, fieldnames=list(rows[0]))
+        w.writeheader()
+        w.writerows(rows)
+    write_ngsigw_summary(rows, med)
+
+
+def posterior_medians(logpost):
+    """1D posterior medians of log10 k* and log10 A."""
+    p = np.exp(logpost - logpost.max())
+
+    def median(w, x):
+        return float(np.interp(0.5, np.cumsum(w) / w.sum(), x))
+
+    return median(p.sum(1), LOG10_KSTAR), median(p.sum(0), LOG10_A)
+
+
+def write_ngsigw_summary(rows, med, out="results/phase5_ngsigw_summary.md"):
+    idx = {(r["shape"], r["template"], r["statistic"], r["variant"], r["f_pbh"]): r for r in rows}
+    md = ["# Phase 5 with the primordial-NG corrections to the SIGW spectrum", "",
+          "Each NG template gets its own NG15 posterior: Omega_GW = A^2 T2 + A^3 [F^2 T3 + 12 G sbar T2] + F^4 A^4 T4 "
+          "(exact for the quadratic template; truncated at A^3 for the curvaton and USR maps). Cells: sigma_P with the "
+          "Gaussian SIGW (as in phase5_summary.md) -> with the NG SIGW. 'alt': the A^3 truncation for the quadratic "
+          "template, the A^3 series plus the F^4 A^4 terms for the others. Values above "
+          f"{SIGMA_RELIABLE:.0f} sigma lie beyond the free-spectrum KDE samples.", "",
+          "## Posterior medians (1D marginals)", "",
+          "| shape | template | F | G | log10 k*: Gaussian SIGW -> NG SIGW | log10 A |", "|---|---|---|---|---|---|"]
+    for shape in SHAPES:
+        k0, a0 = med[(shape, "gaussian")]
+        for t in TEMPLATES:
+            if t == "gaussian":
+                continue
+            r = next(x for x in rows if x["shape"] == shape and x["template"] == t)
+            k1, a1 = med[(shape, t)]
+            md.append(f"| {shape} | {t} | {r['F']:+.3f} | {r['G']:.3f} | {k0:.3f} -> {k1:.3f} | "
+                      f"{a0:.3f} -> {a1:.3f} ({a1 - a0:+.3f}) |")
+    md.append("")
+    for variant, f in [("base", 1.0), ("base", 1e-3), ("T", 1.0), ("entropy", 1.0)]:
+        templates = [t for t in (ENTROPY_TEMPLATES if variant == "entropy" else TEMPLATES) if t != "gaussian"]
+        md += [f"## variant {variant}, f_PBH = {f:g}", "",
+               "| shape | template | threshold | peaks 3a | peaks 3b | NG-SIGW shift (thr, 3b) | "
+               "3b - threshold: G-SIGW -> NG-SIGW | alt (thr, 3b) |",
+               "|---|---|---|---|---|---|---|---|"]
+        for shape in SHAPES:
+            for t in templates:
+                s = [idx.get((shape, t, st, variant, f)) for st in STATISTICS]
+                if None in s:
+                    continue
+                cells = [f"{fmt_sigma(x['sigma_p_gsigw'])} -> {fmt_sigma(x['sigma_p'])}" for x in s]
+                d_thr = s[0]["sigma_p"] - s[0]["sigma_p_gsigw"]
+                d_3b = s[2]["sigma_p"] - s[2]["sigma_p_gsigw"]
+                stat_g = s[2]["sigma_p_gsigw"] - s[0]["sigma_p_gsigw"]
+                stat_n = s[2]["sigma_p"] - s[0]["sigma_p"]
+                alt = f"{fmt_sigma(s[0]['sigma_p_alt'])}, {fmt_sigma(s[2]['sigma_p_alt'])}"
+                md.append(f"| {shape} | {t} | {cells[0]} | {cells[1]} | {cells[2]} | {d_thr:+.2f}, {d_3b:+.2f} | "
+                          f"{stat_g:+.2f} -> {stat_n:+.2f} | {alt} |")
+        md.append("")
+    Path(out).write_text("\n".join(md))
+    print("\n".join(md))
+
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("stage", nargs="?", default="all", choices=["lines", "tension", "compare", "all"])
+    ap.add_argument("stage", nargs="?", default="all", choices=["lines", "tension", "compare", "ngsigw", "all"])
     ap.add_argument("--workers", type=int, default=4)
     args = ap.parse_args()
     if args.stage in ("lines", "all"):
@@ -287,6 +411,8 @@ def main():
         stage_tension()
     if args.stage in ("compare", "all"):
         stage_compare()
+    if args.stage in ("ngsigw", "all"):
+        stage_ngsigw()
 
 
 if __name__ == "__main__":

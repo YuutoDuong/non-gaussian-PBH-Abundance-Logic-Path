@@ -55,6 +55,20 @@ non-Gaussian compaction (Phase 3b) and the same pipeline for every statistic.
      `phase5_tension.csv`).
 
    Values above 4σ lie where the KDEs have no samples and are quoted only as ">4".
+5. **NG corrections to the SIGW** (`ngpbh.sigw_ng`, stage `ngsigw`). With
+   ζ = ζ_g + F(ζ_g² − ⟨ζ_g²⟩), F = 3f_NL/5, the spectrum is
+   Ω = A² T2 + F²A³ (hybrid + C + Z) + F⁴A⁴ (reducible + planar + nonplanar). These are the seven
+   terms of Adshead, Lozanov & Weiner (2105.01659); A is the amplitude of the Gaussian component,
+   as in the PBH lines. Stages 1–4 use the Gaussian SIGW, as 2306.17149 do. Stage `ngsigw` gives
+   every NG template its own posterior. The series is exact at A⁴ for the quadratic template.
+   For the curvaton and USR maps it is truncated at A³, where only F and the cubic coefficient G
+   enter (G through Ω += 12Gσ² A² T2). Method and conventions: `docs/conventions.md`.
+   Checks (`results/sigw_ng_validation.md`):
+   * the Monte Carlo engine reproduces the quadrature of the Gaussian, hybrid and reducible terms
+     (72 comparisons, rms pull 0.97);
+   * all six NG terms reproduce Adshead et al. Fig. 4 for lognormal peaks of width 1/5 and 1/10,
+     read from the figure's vector paths, to ≤ 3% of each curve's maximum
+     (`results/fig_sigw_ng_validation.png`).
 
 ## Exit check: 2306.17149 Fig. 3
 
@@ -95,7 +109,9 @@ tables are in `results/phase5_summary.md` (every shape, template, statistic and 
 `results/phase5_compare.md`. Figures:
 * `results/fig_phase5_tension.png`: posteriors and lines;
 * `results/fig_phase5_sigma.png`: σ_P per template and statistic;
-* `results/fig_phase5_validation.png`: bands and contours against 2306.17149.
+* `results/fig_phase5_validation.png`: bands and contours against 2306.17149;
+* `results/fig_sigw_ng_terms.png` and `results/fig_phase5_ngsigw.png`: the NG corrections to the
+  SIGW spectrum and their effect (section 5; tables in `results/phase5_ngsigw_summary.md`).
 
 ### 1. In 2306.17149's own setup
 
@@ -190,6 +206,44 @@ cases with σ_P ≤ 4:
   (k* ≈ 10^7) puts the SIGW peak at 10–20 nHz, and the bins above it bound it.
 * **Not sensitive:** the prior box and the grid resolution.
 
+### 5. NG corrections to the SIGW spectrum
+
+Relative to the Gaussian term, the corrections are large. In the NG15 band of the posterior bulk
+(k/k* ≈ 0.02–0.3), T3/T2 ≈ 2–6 and T4/T2 ≈ 0.4–5 (`results/fig_sigw_ng_terms.png`). They grow
+with the width of the peak, because the one-loop spectrum collects the whole variance σ² = A
+while the peak of a broad lognormal is low. For |f_NL| = 2, Ω_GW at fixed A is therefore 10–40%
+larger near the PBH lines (A ≈ 0.03–0.05). In the posterior bulk (A ≈ 0.1–0.3) the corrections
+exceed the Gaussian term. The posterior moves to smaller A. For |f_NL| = 2 the median of log10 A
+shifts by −0.12 (BPL), −0.14 (LN Δ = 0.5), −0.18 (LN Δ = 1) and −0.08 dex (LN Δ = 2). It shifts
+by −0.07 to −0.16 dex for USR β = 3, −0.04 to −0.11 for the curvaton and ≤ 0.02 for
+|f_NL| = 0.5.
+
+Smaller A lies closer to the PBH-allowed region, so the exclusion weakens. Over the cases with
+σ_P ≤ 4, in all variants:
+
+| template | change of σ_P (NG SIGW − Gaussian SIGW) |
+|---|---|
+| f_NL = ±2 | −0.10 to −0.26 (median −0.17) |
+| curvaton r_dec = 0.9 | −0.03 to −0.20 (median −0.14) |
+| f_NL = ±1 | 0.00 to −0.09 (median −0.05) |
+| f_NL = ±0.5, USR μ_* = 5/2 | ≤ 0.03 |
+| USR β = 3, μ_* = 5/6 | σ_P > 4 with either SIGW (shifts −0.16 to +0.06) |
+
+Base variant, f_PBH = 1, threshold → peaks 3b: f_NL = −2 for BPL(4,3,1) goes from 1.87 → 2.18 to
+1.73 → 2.05, LN Δ = 0.5 from 1.88 → 2.31 to 1.73 → 2.11, LN Δ = 1 from 3.43 → 3.84 to
+3.25 → 3.67. The curvaton for BPL(4,3,1) goes from 2.01 → 2.44 to 1.92 → 2.30.
+
+* **The statistics shift is unchanged.** Over the 66 reliable pairs, threshold → peaks 3b adds
+  +0.23 to +0.67 with the NG SIGW (median +0.39), against +0.24 to +0.68 (median +0.42) with the
+  Gaussian SIGW. The pair-by-pair change is −0.10 to +0.10 (median 0.00; 90% within ±0.06).
+* **Truncation.** For the quadratic template, dropping the A⁴ terms changes σ_P by ≤ 0.02. For
+  the curvaton and USR maps, adding the F⁴A⁴ terms changes it by ≤ 0.02 too. The neglected O(A⁴)
+  terms in G and H are of similar size, so the A³ truncation is adequate here.
+* **Against the NG effect on the PBH line.** Through the PBH abundance, NG shifts σ_P by −1.2 to
+  beyond +2σ; through the SIGW, by at most 0.26σ. The SIGW part relieves the tension for either
+  sign of f_NL, because at fixed A it raises Ω through F² (and G > 0). In the reliable cases σ_P
+  never rises by more than 0.01.
+
 ## Answer to the research question
 
 The gap between threshold statistics and peaks theory changes how strongly PBH overproduction
@@ -217,6 +271,9 @@ disfavours a SIGW explanation of NANOGrav 15, but modestly and uniformly:
   significance without these choices leaves about ±1σ unaccounted for.
 * **Peak approximation.** Using the Gaussian-peak approximation instead of the true NG peaks
   changes nothing at this level.
+* **NG in the SIGW spectrum.** It relieves the tension by up to 0.26σ for |f_NL| = 2 and the
+  curvaton, and by ≤ 0.1σ for |f_NL| ≤ 1. It leaves the statistics shift unchanged (±0.1σ). It
+  matters more than the choice of statistics only for |f_NL| ≳ 2.
 
 ## What is not included
 
@@ -226,10 +283,12 @@ disfavours a SIGW explanation of NANOGrav 15, but modestly and uniformly:
   quantifies the effect by putting their own lines on our posterior.
 * **QCD era in the SIGW.** The sound-speed change during the QCD era modifies the infrared tail of
   Ω_GW (Abe et al. 2020, Franciolini et al. 2023). It is left out, as in 2306.17149.
-* **NG corrections to Ω_GW.** These are of relative size ~A (3f_NL/5)². At the overproduction line
-  (A ≈ 0.01–0.04, |f_NL| ≤ 2) they change Ω by ≲ 6%, i.e. A by ≲ 3%: a fraction of the statistics
-  shift. They are larger in the posterior bulk (A ≳ 0.1), but the significance is set by the
-  posterior's low-A tail.
+* **NG corrections to Ω_GW beyond the quadratic template.** For the curvaton and USR maps the
+  SIGW series stops at A³ (section 5). The comparison with 2306.17149 in section 1 uses the
+  BPL-marginalised posterior, which exists only for the Gaussian SIGW, because the NG terms are
+  tabulated for fixed shapes. The fixed-shape results of section 5 show the size of the change.
+  (An earlier version of this document estimated the corrections as ~A(3f_NL/5)², i.e. ≲ 6% at
+  the line. The computed prefactor is 2–8 rather than 1, which is why the shift reaches 0.26σ.)
 * **Fixed shape per line.** Each line is compared with the posterior of the same shape. The
   posterior marginalised over the BPL shape, which is what 2306.17149 overlay on their bands, is
   used only for the comparison with their claim (`scripts/pta_bpl_marginal.py`).

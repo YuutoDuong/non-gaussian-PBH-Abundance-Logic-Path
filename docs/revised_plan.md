@@ -120,8 +120,7 @@ the assessment), so that peaks and threshold statistics differ only by the peak 
 
 1. **SIGW** (`ngpbh.sigw`) for Gaussian ζ, with Standard-Model g*(T) (`ngpbh.thermal`). Checks:
    flat spectrum 0.8222436 A², the Dirac closed form, scipy `dblquad` to 10⁻⁸–10⁻¹², and the k³
-   tail. NG corrections to Ω_GW are left out, as in 2306.17149 (≲ 3% in A at the overproduction
-   line).
+   tail. The primordial-NG corrections to Ω_GW are item 6 (2306.17149 leave them out).
 2. **NANOGrav 15 likelihood** (`ngpbh.pta`): the ceffyl free-spectrum refit, 14 bins, data from
    Zenodo with MD5 checked. It reproduces:
    * NANOGrav's power-law fits within ~0.3σ;
@@ -149,7 +148,19 @@ the assessment), so that peaks and threshold statistics differ only by the peak 
      +1.3σ with the 2406.20089 high-peak formula). It is insensitive to the prior box, the grid
      and the KDE smoothing.
    * The absolute significance moves by −1.5 to +1σ with the frequency range (5/14/30 bins).
-6. **Still open:**
+6. **NG corrections to the SIGW spectrum — done** (`ngpbh.sigw_ng`; `docs/phase5_pta.md`
+   section 5). All seven terms of Adshead, Lozanov & Weiner for ζ = ζ_g + F(ζ_g² − σ²) are
+   included: the disconnected ones by quadrature of the one-loop spectrum, the connected ones by
+   randomised QMC. The series is exact at A⁴ for the quadratic template and truncated at A³ (F, G)
+   for the curvaton and USR maps. Validation: the MC reproduces the quadrature terms (rms pull
+   0.97), and all six NG terms reproduce Adshead et al. Fig. 4 to ≤ 3% of each curve's maximum.
+   * **Result.** At fixed A, Ω_GW is larger by F²A × (2–8): the posterior moves to smaller A by up
+     to 0.18 dex, and σ_P drops by 0.10–0.26 for |f_NL| = 2 and 0.03–0.20 for the curvaton
+     (≤ 0.1 for |f_NL| ≤ 1).
+   * The statistics shift is unchanged (median +0.42 → +0.39, each pair within ±0.1).
+   * The earlier estimate "≲ 3% in A" was too small by a factor 2–8: the one-loop power collects
+     the whole variance.
+7. **Still open:**
    * the SMBHB foreground;
    * the full PTA likelihood instead of the refit;
    * QCD sound-speed effects on the SIGW tail;
@@ -166,13 +177,13 @@ the assessment), so that peaks and threshold statistics differ only by the peak 
 * **Packaging:**
   * GitHub Actions CI (pytest on 3.10/3.12/3.13, NG15 data cached);
   * MIT `LICENSE`;
-  * `CITATION.cff` and `.zenodo.json` (author fields are placeholders);
+  * `CITATION.cff` and `.zenodo.json` (author: Duong Ngoc Khoa, Phenikaa Institute for Advanced
+    Study, ORCID 0009-0009-9409-3298);
   * version 0.4.0.
 * **Note:** `docs/note/ngpbh_note.tex` / `.pdf`, 13 pages. It covers the construction, the
   checks, the R map, the PTA tension, robustness, the two pitfalls found in the literature, and
   appendices.
 * **Remaining (your decisions or actions):**
-  * your name, affiliation and ORCID in the note, `CITATION.cff` and `.zenodo.json`;
   * a tagged release, which mints the Zenodo DOI once the Zenodo–GitHub link is enabled;
   * an arXiv endorser;
   * the email to Cole & Fumagalli;
@@ -197,3 +208,7 @@ the assessment), so that peaks and threshold statistics differ only by the peak 
 * **New (Phase 5):** the f_PBH normalisation in common use (M_eq formula; 2306.17149 eq. 14) is
   3–13× larger than entropy conservation gives; state it with every A_*.
 * **New (Phase 5):** a `pgrep -f` waiter matches its own command line; use `pgrep -f "[p]attern"`.
+* **New (NG SIGW):** for broad spectra the Monte Carlo of the connected terms has heavy-tailed
+  weights. They come from pairs of vertices that are nearly independent: cos 2φ averages to
+  zero but carries the variance. Averaging each sample over rotations about k removes them, and
+  the balance heuristic over the spectral momenta keeps soft momenta under control.

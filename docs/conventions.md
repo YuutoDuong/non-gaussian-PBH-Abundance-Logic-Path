@@ -144,6 +144,44 @@ are regularised (`smooth=0.05`: max of the KDE and its 0.05-dex Gaussian blur), 
 compact kernels floor the density at ln p = −36 outside the sampled range; this leaves the bulk
 unchanged and moves significances by ≤ 0.1σ.
 
+## NG corrections to the SIGW (`sigw_ng.py`)
+
+For ζ = ζ_g + F(ζ_g² − ⟨ζ_g²⟩), F = 3f_NL/5, with Δ²_g = A s(k/k*) the spectrum of the Gaussian
+component (the A of the PBH lines), the four-point function of ζ ends at F⁴ and
+
+    Ω_GW,RD = A² T2 + F² A³ (hybrid + C + Z) + F⁴ A⁴ (reducible + planar + nonplanar)
+
+(Adshead, Lozanov & Weiner 2105.01659 eqs. 2.33–2.39; their prefactors 2⁵, 2⁷F², 2⁸F², 2⁹F⁴ are
+reproduced by our derivation). Each term is a function of x = k/k* only, so one table per spectral
+shape serves every f_NL, A and k* (`results/sigw_ng_terms.csv`, `scripts/sigw_ng_terms.py`).
+
+* **Disconnected terms** are the Gaussian functional of P_g + P_2, with the one-loop spectrum
+  Δ²_2 = F²A² s2(x), s2 = x² ∫dln p (s(p)/p) ∫_{|x−p|}^{x+p} s(r) dr/r² (exact inner integral).
+  Then hybrid = 2 Ω_bil[s, s2] and reducible = Ω_G[s2], both by the quadrature of `sigw.py`.
+* **Connected terms** need the oscillation average of the product of two transfer functions,
+  J12 = (I_A1 I_A2 + I_B1 I_B2)/2 with I = (I_A sin x + I_B cos x)/x (Kohri & Terada's late-time
+  form; J11 is the Gaussian kernel), and the polarisation factor Re[z1² z̄2²], z = (q_x + i q_y)/k.
+  They are computed by randomised quasi-Monte Carlo over the spectral momenta. L of the L + 1
+  momenta that carry a power spectrum are drawn from the spectrum, and the last one follows from
+  momentum conservation. The strategies (which momentum is fixed) are combined with the balance
+  heuristic, so the weights stay bounded when a momentum becomes soft. For C and planar, each
+  sample is averaged over 8 rotations about k of one spectral momentum (C: q2 at fixed q1 − q2;
+  planar: q1 − q3 and q2 − q3, independently). The weights are unchanged and the estimate stays
+  unbiased, but the cos 2φ oscillation of nearly independent vertex pairs cancels; this removes a
+  heavy-tailed variance for broad spectra.
+* **Templates beyond quadratic order**, ζ = ζ_g + Fζ_g² + Gζ_g³ + …: at O(A³) only F and G enter,
+  G through P → (1 + 6Gσ²)P, i.e. +12Gσ² A² T2. The g_NL-type trispectrum vanishes under the
+  azimuthal integral (Perna et al. 2403.06962 eq. 3.11). O(A⁴) would need G², F²G and FH terms,
+  so the curvaton and USR maps are truncated at O(A³). The quadratic template is exact at A⁴.
+  The coefficients are (F, G) = (−0.617, 0.322) for the curvaton r_dec = 0.9 (Sasaki, Valiviita &
+  Wands g_NL), and (1/2μ, 1/3μ²) for the USR maps: (0.75, 0.75) for β = 3, (0.6, 0.48) for
+  μ = 5/6 and (0.2, 0.053) for μ = 5/2.
+
+Validation (`results/sigw_ng_validation.md`): the MC engine reproduces the quadrature of the
+Gaussian, hybrid and reducible terms to ≲ 1%. All six NG terms reproduce Adshead et al. Fig. 4
+(lognormal σ = 1/5 and 1/10, read from the figure's vector paths) within the MC error and the
+digitisation, including the sign changes of Z and the negative nonplanar term.
+
 ## Normalisation conventions that differ between codes
 
 | choice | ngpbh default | alternatives | effect on Gaussian R |
