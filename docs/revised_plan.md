@@ -155,11 +155,31 @@ the assessment), so that peaks and threshold statistics differ only by the peak 
    * QCD sound-speed effects on the SIGW tail;
    * a joint NANOGrav + EPTA fit.
 
-## Phase 6: package and write up — scaffold in place
+## Phase 6: package and write up — draft done (24 Oct 2026)
 
-Repo layout follows the plan (`nongaussian.py`, threshold and peaks on a shared integrator in
-`stats.py`, `sigw.py`, `pta.py`, `tests/`). 74 tests run in ~40 s. Remaining: CI, a Zenodo DOI or a pbhstat PR, the
-10–15 page note, and an arXiv endorser.
+* **Audit** (`results/phase6_robustness.md`): the results hold.
+  * The statistics shift in the PTA significance is +0.2 to +0.8σ under every analysis change
+    tried.
+  * The absolute significance carries ±1–1.5σ from the frequency range, the threshold
+    prescription and the f_PBH conventions. These are now documented.
+  * One packaging bug fixed: NumPy ≥ 2 is required (`np.trapezoid`).
+* **Packaging:**
+  * GitHub Actions CI (pytest on 3.10/3.12/3.13, NG15 data cached);
+  * MIT `LICENSE`;
+  * `CITATION.cff` and `.zenodo.json` (author fields are placeholders);
+  * version 0.4.0.
+* **Note:** `docs/note/ngpbh_note.tex` / `.pdf`, 13 pages. It covers the construction, the
+  checks, the R map, the PTA tension, robustness, the two pitfalls found in the literature, and
+  appendices.
+* **Remaining (your decisions or actions):**
+  * your name, affiliation and ORCID in the note, `CITATION.cff` and `.zenodo.json`;
+  * a tagged release, which mints the Zenodo DOI once the Zenodo–GitHub link is enabled;
+  * an arXiv endorser;
+  * the email to Cole & Fumagalli;
+  * whether to contact the 2306.17149 authors about the threshold and f_PBH conventions before
+    submission;
+  * re-running the INSPIRE scan just before submission;
+  * optional: a pbhstat PR with the NG threshold statistics and peaks.
 
 ## Pitfalls, confirmed or added
 
