@@ -44,6 +44,12 @@ threshold-statistics A_* by ≤ 2% for Δ ≤ 2.
 * Checks: Dirac spectrum gives k*r_m = 2.7437, δ_c = 0.5947. Lognormal with transfer function:
   δ_c = 0.593, 0.578, 0.559, 0.537, 0.529 for Δ = 0.1, 0.3, 0.5, 1, 2; without it the broad end
   drops to 0.458 (Δ = 1) and 0.419 (Δ = 2).
+* 2306.17149 write P^T in eq. (S4), but their thresholds (Fig. S3: δ_th = 0.458 for the lognormal
+  at Δ = 1, 0.544 for BPL(4,3,1), α_s ≈ 2.7) are the values *without* the transfer function
+  (ngpbh: 0.4577; 0.5438 with q = 2.57); with it BPL(4,3,1) gives 0.5700 (q = 4.0). Phase 5 uses
+  their choice as its baseline (`MuscoThreshold(transfer=False)`) to compare with their bands, and
+  the transfer-function threshold as a variant. For BPL(4,3,1) it raises A_* by 0.071 dex (18%),
+  for every statistic: C_l,th = 2Φ[1 − √(1 − C_th/Φ)] grows faster than C_th (0.761 → 0.826).
 
 ## Collapse
 
@@ -100,6 +106,40 @@ Monte Carlo sampling, and stable to 10⁻⁵ when all grids are doubled.
 M_eq = 2.8×10¹⁷ M_⊙, Ω_DM = 0.12/0.674². Scale–mass relation (default, 2211.01728 eq. 39):
 M_H = 17 M_⊙ (g*/10.75)^{−1/6} (k_H/10⁶ Mpc⁻¹)^{−2}, k_H = 1/r, g* = 106.75 (no QCD
 corrections yet). pbhstat preset: R = (M_H/M_eq)^{1/2}/k_eq, Ω_CDM = 0.26.
+
+Two more conventions use the Standard-Model g*(T), g*s(T) (Saikawa & Shirai 2005.03544, the
+table PTArcade ships; `thermal.py`), with k_H = 1/r re-entering at temperature T:
+
+* `"fivt23"` (2306.17149 eqs. 4, 14, 15): k = 1.5×10⁷ Mpc⁻¹ (g*/106.75)^{1/2} (g*s/106.75)^{−1/3}
+  T/GeV, M_H = 4.8×10⁻² M_⊙ (g*/106.75)^{−1/2} (T/GeV)⁻², and
+  f_PBH = (1/Ω_DM) ∫ dln M_H (M_H/M_⊙)^{−1/2} (g*/106.75)^{3/4} (g*s/106.75)^{−1} β/7.9×10⁻¹⁰.
+* `"entropy"`: k = aH and M_H = 4π M_P²/H exactly, and n_PBH/s conserved after formation, so
+  ρ_PBH,0 = (3/4) β (g*/g*s) T s₀. This is the same formula with 7.9×10⁻¹⁰ replaced by 1.0×10⁻⁸;
+  it agrees with Carr et al. (0912.5297) to 2%.
+
+For the same β, the M_eq formula gives an f_PBH 3–5 times larger than `"entropy"` (it drops Ω_m
+and the g* heating of the radiation after formation) and `"fivt23"` one 12.7 times larger. Since
+β depends exponentially on 1/A, these move A_* by only ln(factor)/|ln β|: −8% and −12% at
+|ln β| ≈ 21. All conventions cancel in R and in the double ratio; they matter for the absolute
+PTA tension, so Phase 5 reports them as variants.
+
+## Scalar-induced GWs and the PTA likelihood (`sigw.py`, `pta.py`)
+
+    Ω_GW,RD(k) = (1/6) ∫₁^∞ dt ∫₀¹ ds K(t,s) P(k(t+s)/2) P(k(t−s)/2)        (2306.17149 eqs. 6–7)
+    h²Ω_GW(f) = h²Ω_r (g*/g*0)(g*s/g*s0)^{−4/3} Ω_GW,RD(k),  h²Ω_r = 4.2×10⁻⁵,  f = k/2π
+
+Gaussian ζ, radiation domination, no QCD sound-speed effects, as in 2306.17149. Numerics: t is
+split at the resonance √3 and mapped to ln|t − √3|, Gauss–Legendre panels in t and s, and the
+logarithmic bracket of the kernel rewritten as y g(e) with g(e) = −e³/12 − … so that the corner
+t, s → 1 has no cancellation. Checks: a flat spectrum gives 0.8222436 A² (Kohri & Terada), a
+narrow spectrum approaches their Dirac closed form, scipy `dblquad` agrees to 10⁻⁸–10⁻¹², and
+the k³ infrared tail matches its asymptotic form to 10⁻⁵.
+
+PTA likelihood: the NANOGrav 15-yr HD free spectrum as KDE log-densities per frequency bin (PTArcade
+data, Zenodo 10495907), the lowest 14 bins, with ρ_j² = H₁₀₀² h²Ω_GW(f_j)/(8π⁴ f_j⁵ T) and
+T = 16.03 yr (the ceffyl refit). It reproduces NANOGrav's γ = 13/3 amplitude
+(2.5 vs 2.4 × 10⁻¹⁵) and free-γ slope (3.07 vs 3.2), and 2306.17149's lognormal SIGW fit
+(`results/phase5_validation.md`).
 
 ## Normalisation conventions that differ between codes
 

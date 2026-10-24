@@ -32,8 +32,9 @@ conventions to < 0.01, while the Gaussian R itself moves by 0.07 between them
   function and Musco threshold reproduce the Ferrante et al. broad-spectrum benchmark
   (A = 9.09×10⁻³ vs 9.2×10⁻³ for β = 10⁻¹⁶ at M_H = 10⁻¹⁵ M_⊙).
 * Decision recorded: **one threshold prescription for both statistics** = Musco et al. with the
-  transfer function (as 2306.17149). The no-transfer and 2/5 variants are systematics to
-  show, not alternatives to mix.
+  transfer function. The no-transfer and 2/5 variants are systematics to show, not alternatives
+  to mix. (Phase 5 found that 2306.17149 themselves used the no-transfer threshold, see
+  `docs/phase5_pta.md`; Phase 5 therefore runs both.)
 
 ## Phase 2: threshold statistics with NG — done
 

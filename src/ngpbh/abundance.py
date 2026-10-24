@@ -10,6 +10,7 @@ from dataclasses import dataclass, field
 from typing import Optional
 
 import numpy as np
+from scipy.interpolate import CubicSpline
 from scipy.optimize import brentq
 from scipy.special import logsumexp
 
@@ -46,11 +47,20 @@ class AbundanceModel:
         self.geometries = None
         if self.statistic == "peaks":
             self.geometries = [make_peak_geometry(m, self.peaks) for m in self.unit_moments]
-        ln_mh = np.log(self.m_h)
+        self._log_w = self.log_weights()
+
+    def log_weights(self, scale=1.0):
+        """ln of the f_PBH quadrature weights on the r grid.
+
+        scale moves the spectrum to k* -> scale k*: the variances depend on k r only, so beta on
+        the grid r/scale is unchanged and only M_H(r/scale) and its weight change.
+        """
+        m_h = self.horizon.mh_of_r(self.r / scale)
+        ln_mh = np.log(m_h)
         w = np.zeros_like(ln_mh)
         w[1:] += 0.5 * np.diff(ln_mh)
         w[:-1] += 0.5 * np.diff(ln_mh)
-        self._log_w = np.log(w) + self.horizon.log_redshift_factor(self.m_h)
+        return np.log(w) + self.horizon.log_redshift_factor(m_h)
 
     def _auto_r_grid(self):
         kp = self.spectrum.k_peak
@@ -76,6 +86,39 @@ class AbundanceModel:
 
     def fpbh(self, A):
         return float(np.exp(self.log_fpbh(A)))
+
+    def amplitude_curve(self, scales, f_targets=(1.0,), bracket=(1e-4, 1.0), n_A=15, span=0.25):
+        """A_* for each target f_PBH with the spectrum moved to k* -> scale k*, for many scales.
+
+        One set of beta grids on a ln A lattice around the reference solution serves every scale;
+        ln f_PBH(ln A) is smooth and monotonic, so A_* is read off by cubic interpolation. The
+        lattice is widened until it brackets every requested (scale, f_target).
+        Returns an array of shape (len(f_targets), len(scales)).
+        """
+        scales = np.atleast_1d(np.asarray(scales, dtype=float))
+        log_ws = np.array([self.log_weights(sc) for sc in scales])
+        ln_a0 = np.log(self.solve_amplitude(float(np.exp(np.mean(np.log(f_targets)))), bracket=bracket))
+        targets = np.log(np.asarray(f_targets, dtype=float))
+        lo, hi = ln_a0 - span, ln_a0 + span
+        cache = {}
+        for _ in range(8):
+            ln_a = np.linspace(lo, hi, n_A)
+            lb = np.array([cache.setdefault(round(x, 12), self.log_beta_grid(np.exp(x))) for x in ln_a])
+            ln_f = logsumexp(lb[:, None, :] + log_ws[None, :, :], axis=2)  # (n_A, n_scales)
+            if ln_f[0].max() < targets.min() and ln_f[-1].min() > targets.max():
+                break
+            width = hi - lo
+            if ln_f[0].max() >= targets.min():
+                lo -= 0.5 * width
+            if ln_f[-1].min() <= targets.max():
+                hi += 0.5 * width
+        else:
+            raise RuntimeError("could not bracket the targets")
+        out = np.empty((targets.size, scales.size))
+        for j in range(scales.size):
+            spline = CubicSpline(ln_f[:, j], ln_a)
+            out[:, j] = np.exp(spline(targets))
+        return out
 
     def solve_amplitude(self, f_target=1.0, bracket=(1e-4, 1.0), xtol=1e-6):
         """A_* with f_PBH(A_*) = f_target, by root finding in ln A."""
