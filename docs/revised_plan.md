@@ -113,27 +113,47 @@ the assessment), so that peaks and threshold statistics differ only by the peak 
   0.2–2. The choice of statistics moves it by 18–26% (1 − R for |f_NL| ≤ 2). The interaction
   between the two is ±4% for |f_NL| ≤ 2 and up to 16% for strongly non-perturbative NG. For the PTA question this
   means the statistics systematic is close to an NG-independent ~20% rescaling of the
-  overproduction line in A, except for strong USR-type tails. Phase 5 decides whether that
-  rescaling moves the significance appreciably.
+  overproduction line in A, except for strong USR-type tails. Phase 5 found that this rescaling
+  moves the NG15 exclusion by +0.4σ (0.25–0.8σ), the same for every NG template.
 
-## Phase 5: PTA tension — not started
+## Phase 5: PTA tension — done (`docs/phase5_pta.md`)
 
-1. SIGW spectra on a grid in (A, k_*, Δ) with SIGWfast or SIGWAY, Gaussian SIGW for all NG cases
-   (justified by Atal & Domènech 2103.01056 when PBHs are not overproduced).
-2. **Exit check (revised):** reproduce the f_PBH = 1 band of 2306.17149 Fig. 3 (Gaussian, BPL
-   α = 4, β = 3, γ = 1, NANOGrav15) to a few percent in A, with their fitting method (direct fit to
-   the 14 free-spectrum bins) and their significance definition (credible-region level). Note
-   that they include QCD-dependent K, γ, C_th, Φ; either add them (Musco–Jedamzik–Young
-   2303.07980 tables) or quote the size of the omission.
-3. Then PTArcade / ceffyl, the posterior mass in the allowed region per prescription and NG case,
-   and the question: does the choice of statistics move the significance more than the NG does?
-4. Inputs (reachable since network access was opened, 23 Oct 2026): PTArcade 1.1.5 on PyPI and
-   the NG15 free-spectrum data and KDE representations on Zenodo.
+1. **SIGW** (`ngpbh.sigw`) for Gaussian ζ, with Standard-Model g*(T) (`ngpbh.thermal`). Checks:
+   flat spectrum 0.8222436 A², the Dirac closed form, scipy `dblquad` to 10⁻⁸–10⁻¹², and the k³
+   tail. NG corrections to Ω_GW are left out, as in 2306.17149 (≲ 3% in A at the overproduction
+   line).
+2. **NANOGrav 15 likelihood** (`ngpbh.pta`): the ceffyl free-spectrum refit, 14 bins, data from
+   Zenodo with MD5 checked. It reproduces:
+   * NANOGrav's power-law fits within ~0.3σ;
+   * 2306.17149's lognormal and BPL SIGW fits, with medians within 0.05;
+   * their contour levels (68.3/95.4/99.7%).
+   The KDE tails needed regularising for 3–4σ statements (compact kernels).
+3. **Exit check ✓.** Their Fig. 3 was read from the vector paths of the arXiv source. Our bands
+   for BPL(4,3,1) agree to 1–6% in A (curvaton 8–11%) for k* ≥ 10^7.5. They dip at k* ≈ 10^6.5
+   because of QCD, and their own lines give the same significances as ours on the same posterior
+   (≤ 0.07), so the QCD omission is quantified as negligible. Two unstated conventions of theirs
+   were found:
+   * the threshold is computed without the transfer function (+18% in A_* with it for
+     BPL(4,3,1), +62% for the lognormal at Δ = 1);
+   * the f_PBH normalisation is 12.7× the entropy-conservation value (−12% in A_*).
+4. **Result.** Threshold → peaks 3b strengthens the exclusion by Δσ_P = +0.24 to +0.78 (median
+   +0.42) for every template and shape:
+   * Gaussian BPL(4,3,1): 3.0 → 3.6σ_P;
+   * their shape-marginalised setup: 2.3 → 2.8σ_P.
+
+   NG moves it by −1.2σ to beyond +3σ. The transfer-function threshold choice moves it by −0.2 to
+   −1.0σ, f_PBH = 1 vs 10⁻³ by +0.4 to +0.8σ, and the f_PBH normalisation by −0.15 to −0.4σ.
+   Peaks 3a and 3b agree to 0.04σ.
+5. **Still open:**
+   * the SMBHB foreground;
+   * the full PTA likelihood instead of the refit;
+   * QCD sound-speed effects on the SIGW tail;
+   * a joint NANOGrav + EPTA fit.
 
 ## Phase 6: package and write up — scaffold in place
 
 Repo layout follows the plan (`nongaussian.py`, threshold and peaks on a shared integrator in
-`stats.py`, `tests/`). 60 tests run in ~50 s. Remaining: CI, a Zenodo DOI or a pbhstat PR, the
+`stats.py`, `sigw.py`, `pta.py`, `tests/`). 74 tests run in ~40 s. Remaining: CI, a Zenodo DOI or a pbhstat PR, the
 10–15 page note, and an arXiv endorser.
 
 ## Pitfalls, confirmed or added
@@ -147,3 +167,8 @@ Repo layout follows the plan (`nongaussian.py`, threshold and peaks on a shared 
 * **New:** pbhstat's code and paper differ; compare codes in one convention at a time.
 * **New:** the rank-one Hessian term of Phase 3b is formally O(σ) but grows like λ², so it
   reaches tens of percent in the peak density for f_NL = −2 at Δ = 1; it cannot be dropped.
+* **New (Phase 5):** free-spectrum KDEs with compact kernels are floored outside the sampled
+  range; regularise their tails before quoting 3–4σ, and do not quote beyond ~4σ.
+* **New (Phase 5):** the f_PBH normalisation in common use (M_eq formula; 2306.17149 eq. 14) is
+  3–13× larger than entropy conservation gives; state it with every A_*.
+* **New (Phase 5):** a `pgrep -f` waiter matches its own command line; use `pgrep -f "[p]attern"`.

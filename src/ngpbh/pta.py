@@ -13,6 +13,13 @@ and 2306.17149). As in ceffyl, rho below the KDE grid takes the density at its l
 data only bound rho from above there) and rho above it has zero likelihood. ceffyl takes the
 nearest grid point; here the log density is interpolated linearly, which removes the 0.0014-dex
 staircase and otherwise agrees.
+
+The KDEs use a compact (Epanechnikov) kernel with bandwidths down to 0.004 dex, so outside the
+sampled range the density is floored at ln p = -36 and in the sparse tails it is a comb of
+single-sample spikes between floors (bins 1 and 2, the most constraining ones, have almost no
+low-rho tail). That is harmless in the bulk but makes tail probabilities (beyond ~2.5 sigma)
+lumpy and cliff-like. `smooth` (in dex) replaces each density by max(KDE, KDE * Gaussian): the
+bulk is unchanged, holes are filled and the tails decay smoothly beyond the last samples.
 """
 
 import hashlib
@@ -41,7 +48,7 @@ def md5sum(path):
 class FreeSpectrum:
     """KDE representation of a PTA free spectrum and the likelihood of a model h^2 Omega_GW(f)."""
 
-    def __init__(self, directory=None, n_bins=14):
+    def __init__(self, directory=None, n_bins=14, smooth=None):
         d = Path(directory) if directory is not None else DEFAULT_DIR / DATA_SUBDIR
         if not d.is_dir():
             raise FileNotFoundError(f"{d} not found; run scripts/fetch_ng15.py first")
@@ -54,6 +61,14 @@ class FreeSpectrum:
         self.n_bins = n_bins
         self._dx = self.grid[1] - self.grid[0]
         self._log_dx = np.log(self._dx)
+        self.smooth = smooth
+        if smooth:
+            half = int(np.ceil(5 * smooth / self._dx))
+            kern = np.exp(-0.5 * (np.arange(-half, half + 1) * self._dx / smooth) ** 2)
+            kern /= kern.sum()
+            blurred = np.array([np.convolve(np.exp(d), kern, mode="same") for d in self.log_density])
+            with np.errstate(divide="ignore"):
+                self.log_density = np.maximum(self.log_density, np.log(blurred))
 
     def log10_rho(self, h2omega):
         """log10 rho_j [s] for h^2 Omega_GW given at the bin frequencies (last axis)."""
@@ -125,6 +140,13 @@ def posterior_mass(log_post, mask):
     lp = np.asarray(log_post, dtype=float)
     p = np.exp(lp - lp.max())
     return float(p[np.asarray(mask, dtype=bool)].sum() / p.sum())
+
+
+def sigma_one_sided(p):
+    """Gaussian-equivalent significance of a tail probability p (one-sided): 0.0228 -> 2."""
+    from scipy.special import ndtri
+
+    return float(-ndtri(np.clip(p, 1e-300, 1.0)))
 
 
 def sigma_1d(level):

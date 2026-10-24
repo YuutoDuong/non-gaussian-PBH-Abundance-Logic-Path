@@ -138,8 +138,11 @@ the k³ infrared tail matches its asymptotic form to 10⁻⁵.
 PTA likelihood: the NANOGrav 15-yr HD free spectrum as KDE log-densities per frequency bin (PTArcade
 data, Zenodo 10495907), the lowest 14 bins, with ρ_j² = H₁₀₀² h²Ω_GW(f_j)/(8π⁴ f_j⁵ T) and
 T = 16.03 yr (the ceffyl refit). It reproduces NANOGrav's γ = 13/3 amplitude
-(2.5 vs 2.4 × 10⁻¹⁵) and free-γ slope (3.07 vs 3.2), and 2306.17149's lognormal SIGW fit
-(`results/phase5_validation.md`).
+(2.5 vs 2.4 × 10⁻¹⁵) and free-γ slope (3.07 vs 3.2), and 2306.17149's lognormal and BPL SIGW
+fits (`results/phase5_validation.md`, `results/phase5_compare.md`). For tail probabilities the KDEs
+are regularised (`smooth=0.05`: max of the KDE and its 0.05-dex Gaussian blur), because their
+compact kernels floor the density at ln p = −36 outside the sampled range; this leaves the bulk
+unchanged and moves significances by ≤ 0.1σ.
 
 ## Normalisation conventions that differ between codes
 

@@ -29,7 +29,7 @@ PBH overproduction disfavours a scalar-induced GW explanation of the PTA signal?
 ```bash
 python -m venv .venv && .venv/bin/pip install -e ".[dev]"
 .venv/bin/python scripts/fetch_ng15.py # NANOGrav 15-yr free spectrum (Zenodo, MD5-checked) into data/
-.venv/bin/python -m pytest            # 73 tests, ~40 s
+.venv/bin/python -m pytest            # 74 tests, ~40 s
 .venv/bin/pip install pbhstat && .venv/bin/python scripts/compare_pbhstat.py   # Phase 1 exit check
 ```
 

@@ -23,17 +23,38 @@ non-Gaussian compaction (Phase 3b) and the same pipeline for every statistic.
    * **γ = 13/3 amplitude:** 2.52 (+0.59/−0.61) × 10⁻¹⁵, against 2.4 (+0.7/−0.6) × 10⁻¹⁵
      published by NANOGrav.
    * **Free γ:** 3.07 (+0.63/−0.56), against 3.2 ± 0.6.
-   * **Lognormal SIGW fit, Δ marginalised:** log10 A = −0.57 (+0.55/−0.83), against
-     −0.56 (+0.53/−0.74) in 2306.17149 Fig. 2, and log10 k* = 8.16 against 8.14.
+   * **Lognormal SIGW fit, Δ marginalised:** log10 A = −0.57 (+0.54/−0.84), against
+     −0.56 (+0.53/−0.74) in 2306.17149 Fig. 2; log10 k* = 8.16 against 8.14; Δ = 0.90 against
+     0.98. Our upper tails in k* and Δ are longer, consistent with a k* prior that ends at 10⁹ in
+     their fit.
+   * **BPL fit, shape marginalised:** log10 A = −0.84 (+0.79/−0.74) against −0.86 (+0.79/−0.65)
+     (their Fig. 1), and log10 k* = 7.95 against 7.92. Their digitised 1σ/2σ/3σ contours lie at
+     our 69/94/99% HPD levels (`results/phase5_compare.md`).
 3. **Overproduction lines** (`AbundanceModel.amplitude_curve`). The variances depend only on k r,
    so moving the spectrum to another k* only re-weights the f_PBH integral over M_H. One set of
    β grids then gives A_*(k*) at all k*. It agrees with a direct solve at each k* to 10⁻⁷.
 4. **Tension.** The NG15 posterior in (log10 k*, log10 A) uses uniform priors on [5, 10] × [−3, 0]
    (A ≤ 1, as in 2306.17149) and the same spectral shape as the line. For each line we compute:
-   * the highest-posterior-density level at which the allowed region A < A_*(k*) is first
-     reached, quoted as a two-sided 1D Gaussian equivalent ("excluded at n σ");
-   * the posterior mass in that region;
-   * the profile Δχ².
+   * **σ_HPD:** the highest-posterior-density level at which the allowed region A < A_*(k*) is
+     first reached, quoted as a two-sided 1D Gaussian equivalent. This is 2306.17149's "excluded
+     at n σ": their 1σ/2σ/3σ contours lie at our 69/94/99% HPD levels, i.e. they use 68.3/95.4/99.7%.
+   * **σ_P:** the posterior mass P in that region, as a one-sided Gaussian equivalent. This is the
+     posterior probability that PBHs are not overproduced.
+   * the profile Δχ², which does not depend on the prior.
+
+   σ_P is the primary measure. σ_HPD saturates where the posterior ridge is lumpy: for f_NL < 0,
+   several lines first touch the same local bump at k* ≈ 10^7.05.
+
+   **The KDE tails need regularising.** The free-spectrum KDEs use a compact kernel with
+   bandwidths down to 0.004 dex. Outside the sampled range the density is floored at ln p = −36,
+   and the sparse tails are combs of single-sample spikes. The two most constraining bins (3.9 and
+   5.9 nHz) have almost no low-ρ tail. `FreeSpectrum(smooth=0.05)` replaces each density by
+   max(KDE, KDE ⊗ 0.05-dex Gaussian):
+   * the bulk is unchanged (the γ = 13/3 fit moves by 0.004 dex);
+   * σ changes by ≤ 0.1 relative to the KDEs as distributed (`sigma_ceffyl` in
+     `phase5_tension.csv`).
+
+   Values above 4σ lie where the KDEs have no samples and are quoted only as ">4".
 
 ## Exit check: 2306.17149 Fig. 3
 
@@ -69,8 +90,105 @@ against their claims. Variants `T` (transfer-function threshold, the Phase 1–4
 
 ## Results
 
-Pending: `scripts/pta_tension.py` (overproduction lines and significances) is running; this
-section is filled in from `results/phase5_summary.md` when it finishes.
+All tables: σ_HPD / σ_P, or σ_P alone, for the region where PBHs are not overproduced. Full
+tables are in `results/phase5_summary.md` (every shape, template, statistic and variant) and
+`results/phase5_compare.md`. Figures:
+* `results/fig_phase5_tension.png`: posteriors and lines;
+* `results/fig_phase5_sigma.png`: σ_P per template and statistic;
+* `results/fig_phase5_validation.png`: bands and contours against 2306.17149.
+
+### 1. In 2306.17149's own setup
+
+This uses the BPL-marginalised posterior with the BPL(4,3,1) lines, as overlaid in their Fig. 3.
+
+| template | f_PBH | their line (digitised) | ngpbh, threshold | ngpbh, peaks 3b |
+|---|---|---|---|---|
+| Gaussian (NL only) | 1 | 1.47 / 2.35 | 1.43 / 2.32 | 1.93 / 2.77 |
+| Gaussian (NL only) | 10⁻³ | 2.08 / 2.92 | 2.05 / 2.88 | 2.63 / 3.24 |
+| f_NL = −2 | 1 | 0.88 / 1.57 | 0.88 / 1.57 | 1.18 / 1.86 |
+| curvaton r_dec = 0.9 | 1 | 1.01 / 1.66 | 1.07 / 1.72 | 1.28 / 2.03 |
+| USR β = 3 | 1 | 3.52 / 3.97 | 3.45 / 3.92 | 3.78 / >4 |
+
+* **QCD omission:** their lines (with QCD) and ours (without) give the same significance to
+  ≤ 0.07 on this posterior and to ≤ 0.2 on the fixed-shape one (`phase5_compare.md`). Leaving out
+  QCD does not change the conclusions, as they say.
+* **Their claims:** "USR at 3σ" is confirmed. "Gaussian at over 2σ" holds for f_PBH ≤ 10⁻³ (2.1σ_HPD)
+  and by posterior mass (2.3σ_P). At the f_PBH = 1 edge our marginalised posterior gives
+  1.5σ_HPD, because its lower-left tip at k* ≈ 10^7 reaches 0.1 dex lower than theirs: their 2σ
+  contour sits at our 94% level, and their priors on α, β, γ are not stated.
+* **Peaks theory:** it raises every entry by 0.2–0.6σ. Their footnote is right that threshold
+  statistics are conservative, and the size of the effect is now known.
+
+### 2. Consistent analysis: each shape against its own posterior
+
+Base variant, f_PBH = 1, σ_P from threshold statistics → peaks 3b:
+
+| template | BPL(4,3,1) | LN Δ=0.5 | LN Δ=1 | LN Δ=2 |
+|---|---|---|---|---|
+| Gaussian | 2.98 → 3.62 | 3.02 → 3.52 | 3.54 → >4 | 3.84 → >4 |
+| f_NL = −2 | 1.87 → 2.18 | 1.88 → 2.31 | 3.43 → 3.84 | >4 → >4 |
+| f_NL = −1 | 1.98 → 2.40 | 1.90 → 2.36 | 3.05 → 3.46 | 3.89 → >4 |
+| f_NL = −0.5 | 2.25 → 2.93 | 2.22 → 2.89 | 3.09 → 3.51 | 3.60 → >4 |
+| f_NL = +0.5 | 3.67 → >4 | 3.60 → >4 | >4 | >4 |
+| f_NL = +1, +2 | >4 | >4 | >4 | >4 |
+| curvaton r_dec = 0.9 | 2.01 → 2.44 | 2.00 → 2.43 | 3.09 → 3.49 | 3.91 → >4 |
+| USR μ_* = 5/2 | 3.53 → >4 | 3.49 → 3.91 | >4 | >4 |
+| USR μ_* = 5/6, β = 3 | >4 | >4 | >4 | >4 |
+
+* **Statistics shift:** over the 81 cases with σ_P ≤ 4, threshold → peaks 3b adds
+  Δσ_P = +0.24 to +0.78 (median +0.42). With σ_HPD the shift is +0.0 to +1.1 (median +0.40).
+  The shift has the same sign and nearly the same size for every NG template, spectral shape and
+  convention. This is Phase 4's double ratio R(NG)/R(Gaussian) ≈ 1 carried over to the PTA.
+* **3a vs 3b:** the Gaussian-peak approximation (3a) and the true NG peaks (3b) differ by
+  |Δσ_P| ≤ 0.04. Phase 3b's correction to the peak count is real (up to 18%) but irrelevant for
+  this question.
+* **NG shift:** relative to the Gaussian case, threshold statistics, Δσ_P runs from −1.15
+  (f_NL = −2, narrow spectra) to more than +2 (positive f_NL and USR templates). For broad
+  spectra the sign of the f_NL < 0 shift flips: at Δ = 2, f_NL = −2 raises the tension by
+  about +1σ, because large negative ζ_g also produce large compaction.
+* **Shape-marginalised vs fixed posterior:** fixing the shape gives higher significance. For
+  BPL(4,3,1), the steep causality tail disfavours the low-k* corner, where the allowed region is
+  closest.
+
+### 3. The statistics shift against the other choices
+
+Gaussian ζ, threshold → peaks 3b, A_* at k* = 10⁸ Mpc⁻¹:
+
+| choice | Δ log10 A_*, BPL(4,3,1) | Δ log10 A_*, LN Δ=1 | σ_P, BPL(4,3,1) | σ_P, LN Δ=1 |
+|---|---|---|---|---|
+| base (2306.17149 conventions) | −0.099 (threshold → 3b) | −0.096 | 2.98 → 3.62 | 3.54 → >4 |
+| transfer function in the threshold | +0.071 | +0.208 | 2.50 → 3.22 | 2.69 → 3.12 |
+| entropy f_PBH normalisation | +0.056 | +0.054 | 2.56 → 3.34 | 3.30 → 3.76 |
+| f_PBH = 10⁻³ instead of 1 | −0.119 | −0.115 | 3.74 → >4 | >4 |
+
+The threshold prescription matters most for broad spectra. For the lognormal at Δ = 1, the
+transfer function moves δ_th from 0.458 to 0.537, and A_* by 62%.
+
+## Answer to the research question
+
+The gap between threshold statistics and peaks theory changes how strongly PBH overproduction
+disfavours a SIGW explanation of NANOGrav 15, but modestly and uniformly:
+
+* **Size and sign.** Peaks theory strengthens the exclusion by about 0.4σ (0.25–0.8σ) for every
+  NG template and spectral shape tested.
+* **No interaction with NG.** The shift is nearly independent of NG, so the two effects add.
+  Choosing peaks theory never turns an allowed scenario into an excluded one or the reverse,
+  except near a chosen significance threshold.
+* **Against NG.** For |f_NL| ≥ 1 and the USR and curvaton templates, the NG effect is 2–5 times
+  larger; for |f_NL| ≈ 0.5 the two are comparable. Negative f_NL and the curvaton relieve the
+  tension by up to 1.2σ for narrow and moderately broad spectra; positive f_NL and the USR
+  templates push it beyond 4σ. Peaks theory erodes the relief from negative NG by 0.3–0.5σ. In
+  2306.17149's setup, f_NL = −2 stays below 2σ_P with either statistic; the curvaton moves from
+  1.7 to 2.0σ_P.
+* **Against the conventions.** Three convention choices are rarely stated. Two of them shift
+  the significance about as much as the choice of statistics does:
+  * the transfer function in the threshold: −0.2 to −1.0σ;
+  * f_PBH = 1 versus 10⁻³: +0.4 to +0.8σ.
+
+  The third, the corrected f_PBH normalisation, shifts it less: −0.15 to −0.4σ. Quoting a
+  significance without these choices leaves about ±1σ unaccounted for.
+* **Peak approximation.** Using the Gaussian-peak approximation instead of the true NG peaks
+  changes nothing at this level.
 
 ## What is not included
 

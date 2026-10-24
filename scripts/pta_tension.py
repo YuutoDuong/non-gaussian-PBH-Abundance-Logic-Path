@@ -31,7 +31,8 @@ from ngpbh.abundance import AbundanceModel
 from ngpbh.cosmology import HorizonMass
 from ngpbh.moments import MomentsConfig
 from ngpbh.nongaussian import Curvaton, Logarithmic, Quadratic
-from ngpbh.pta import FreeSpectrum, credible_level, log_posterior_sigw, posterior_mass, sigma_1d
+from ngpbh.pta import (FreeSpectrum, credible_level, log_posterior_sigw, posterior_mass, sigma_1d,
+                       sigma_one_sided)
 from ngpbh.sigw import SIGWTemplate
 from ngpbh.spectra import BrokenPowerLaw, LogNormal
 from ngpbh.stats import CollapseModel, PeaksConfig
@@ -72,6 +73,8 @@ LOG10_KSTAR_LINE = np.arange(5.0, 10.001, 0.25)
 F_TARGETS = (1.0, 1e-3)
 LOG10_KSTAR = np.linspace(5.0, 10.0, 501)
 LOG10_A = np.linspace(-3.0, 0.0, 601)
+SMOOTH = 0.05  # dex; regularises the KDE tails (ngpbh.pta.FreeSpectrum), bulk unchanged
+SIGMA_RELIABLE = 4.0  # beyond this the free-spectrum KDEs carry no information (see docs/phase5_pta.md)
 
 
 def line_job(job):
@@ -131,10 +134,15 @@ def load_lines(path="results/phase5_lines.csv"):
     return {k: np.array(sorted(v)) for k, v in lines.items()}
 
 
-def shape_posteriors():
-    fs = FreeSpectrum(n_bins=14)
+def shape_posteriors(smooth=SMOOTH):
+    fs = FreeSpectrum(n_bins=14, smooth=smooth)
     return {name: log_posterior_sigw(SIGWTemplate(sp.with_amplitude(1.0)), fs, LOG10_KSTAR, LOG10_A)
             for name, sp in SHAPES.items()}
+
+
+def compact(logpost, decimals):
+    """ln L relative to its maximum, clipped at -200 (beyond any quoted level), as float32."""
+    return np.round(np.maximum(logpost - logpost.max(), -200.0), int(-np.log10(decimals))).astype(np.float32)
 
 
 def tension_metrics(logl, line):
@@ -151,14 +159,19 @@ def tension_metrics(logl, line):
 def stage_tension(out="results/phase5_tension.csv"):
     lines = load_lines()
     posts = shape_posteriors()
-    np.savez_compressed("results/phase5_posteriors.npz", log10_kstar=LOG10_KSTAR, log10_A=LOG10_A,
-                        **{name: lp for name, lp in posts.items()})
+    exact = shape_posteriors(smooth=None)  # ceffyl's KDEs as distributed
+    # for figures only: every second grid point, ln L relative to its maximum, float32
+    np.savez_compressed("results/phase5_posteriors.npz", log10_kstar=LOG10_KSTAR[::2], log10_A=LOG10_A[::2],
+                        **{name: compact(lp[::2, ::2], 1e-3) for name, lp in posts.items()})
     rows = []
     for (shape, template, statistic, variant, f), line in sorted(lines.items()):
         level, mass, dchi2 = tension_metrics(posts[shape], line)
+        level_x, mass_x, _ = tension_metrics(exact[shape], line)
         rows.append(dict(shape=shape, template=template, statistic=statistic, variant=variant, f_pbh=f,
                          log10_A_star_k8=float(np.interp(8.0, line[:, 0], line[:, 1])),
-                         credible_level=level, sigma=sigma_1d(level), p_allowed=mass, dchi2=dchi2))
+                         credible_level=level, sigma=sigma_1d(level), p_allowed=mass,
+                         sigma_p=sigma_one_sided(mass), dchi2=dchi2,
+                         sigma_ceffyl=sigma_1d(level_x), sigma_p_ceffyl=sigma_one_sided(mass_x)))
     with open(out, "w", newline="") as fh:
         w = csv.DictWriter(fh, fieldnames=list(rows[0]))
         w.writeheader()
@@ -166,28 +179,36 @@ def stage_tension(out="results/phase5_tension.csv"):
     write_summary(rows)
 
 
+def fmt_sigma(x):
+    return f">{SIGMA_RELIABLE:.0f}" if x > SIGMA_RELIABLE else f"{x:.2f}"
+
+
 def write_summary(rows, out="results/phase5_summary.md"):
     idx = {(r["shape"], r["template"], r["statistic"], r["variant"], r["f_pbh"]): r for r in rows}
     md = ["# Phase 5: NG15 tension per statistic", "",
-          "sigma = Gaussian-equivalent (two-sided 1D) of the HPD credible level at which the region "
-          "A < A_*(k*) is first reached; 2306.17149 quote 'excluded at over 2 sigma' for their Gaussian band.",
-          "Posterior: NG15 HD free spectrum (14 bins), uniform in log10 k* in [5,10] and log10 A in [-3,0], same shape "
-          "as the line.", ""]
+          "Each cell: sigma_HPD / sigma_P. sigma_HPD is the two-sided 1D Gaussian equivalent of the HPD credible "
+          "level at which the region A < A_*(k*) is first reached (2306.17149's 'excluded at n sigma'); sigma_P is "
+          "the one-sided Gaussian equivalent of the posterior mass in that region. Posterior: NG15 HD free spectrum "
+          f"(14 bins, KDE tails smoothed by {SMOOTH} dex), uniform in log10 k* in [5,10] and log10 A in [-3,0], same "
+          f"shape as the line. Values above {SIGMA_RELIABLE:.0f} sigma lie where the free-spectrum KDEs have no samples.",
+          ""]
     for variant, f in [("base", 1.0), ("base", 1e-3), ("T", 1.0), ("entropy", 1.0)]:
         templates = ENTROPY_TEMPLATES if variant == "entropy" else TEMPLATES
         md += [f"## variant {variant}, f_PBH = {f:g}", "",
-               "| shape | template | threshold | peaks 3a | peaks 3b | 3b - threshold | NG shift (3b) |",
-               "|---|---|---|---|---|---|---|"]
+               "| shape | template | log10 A* (k*=1e8): threshold, 3b | threshold | peaks 3a | peaks 3b | "
+               "3b - threshold (P) | NG shift, 3b (P) |",
+               "|---|---|---|---|---|---|---|---|"]
         for shape in SHAPES:
             g = idx.get((shape, "gaussian", "peaks_3b", variant, f))
             for t in templates:
                 s = [idx.get((shape, t, st, variant, f)) for st in STATISTICS]
                 if None in s:
                     continue
-                sig = [x["sigma"] for x in s]
-                ng_shift = sig[2] - g["sigma"] if g else np.nan
-                md.append(f"| {shape} | {t} | {sig[0]:.2f} | {sig[1]:.2f} | {sig[2]:.2f} | {sig[2] - sig[0]:+.2f} | "
-                          f"{ng_shift:+.2f} |")
+                cells = [f"{fmt_sigma(x['sigma'])} / {fmt_sigma(x['sigma_p'])}" for x in s]
+                d_stat = s[2]["sigma_p"] - s[0]["sigma_p"]
+                d_ng = s[2]["sigma_p"] - g["sigma_p"] if g else np.nan
+                md.append(f"| {shape} | {t} | {s[0]['log10_A_star_k8']:.3f}, {s[2]['log10_A_star_k8']:.3f} | "
+                          f"{cells[0]} | {cells[1]} | {cells[2]} | {d_stat:+.2f} | {d_ng:+.2f} |")
         md.append("")
     Path(out).write_text("\n".join(md))
     print("\n".join(md))
@@ -204,15 +225,16 @@ def stage_compare(out="results/phase5_compare.md"):
         for r in csv.DictReader(fh):
             dig[(r["curve"], r["edge"])].append((float(r["log10_kstar"]), float(r["log10_A"])))
     lines = load_lines()
-    posts = dict(np.load("results/phase5_posteriors.npz"))
-    cases = {"BPL(4,3,1), fixed shape": posts["BPL(4,3,1)"]}
+    fs = FreeSpectrum(n_bins=14, smooth=SMOOTH)
+    bpl = log_posterior_sigw(SIGWTemplate(SHAPES["BPL(4,3,1)"]), fs, LOG10_KSTAR, LOG10_A)
+    cases = {"BPL(4,3,1), fixed shape": bpl}
     marg = Path("results/phase5_posterior_bpl_marginal.npz")
     if marg.exists():
         cases["BPL marginalised (their Fig. 1/3)"] = np.load(marg)["logpost"]
     md = ["# Phase 5: 2306.17149's lines vs ours", "",
-          "sigma of the region below each line (HPD level, 1D-equivalent). Their lines include QCD effects "
-          "on the formation parameters; ours do not. Their lines extend over 6 < log10 k* < 9 only; beyond, "
-          "they are continued flat.", "",
+          "sigma_HPD / sigma_P of the region below each line (as in phase5_summary.md). Their lines include QCD "
+          "effects on the formation parameters; ours do not. Their lines extend over 6 < log10 k* < 9 only; "
+          "beyond, they are continued flat.", "",
           "| posterior | template | f_PBH | their line | ngpbh threshold (base) | ngpbh peaks 3b (base) |",
           "|---|---|---|---|---|---|"]
     for pname, lp in cases.items():
@@ -222,10 +244,12 @@ def stage_compare(out="results/phase5_compare.md"):
                 _, keep = np.unique(d[:, 0], return_index=True)
                 d = d[keep]
                 theirs = np.column_stack([LOG10_KSTAR, np.interp(LOG10_KSTAR, d[:, 0], d[:, 1])])
-                sig = [sigma_1d(tension_metrics(lp, ln)[0]) for ln in
-                       (theirs, lines[("BPL(4,3,1)", t, "threshold", "base", f)],
-                        lines[("BPL(4,3,1)", t, "peaks_3b", "base", f)])]
-                md.append(f"| {pname} | {t} | {f:g} | {sig[0]:.2f} | {sig[1]:.2f} | {sig[2]:.2f} |")
+                cells = []
+                for ln in (theirs, lines[("BPL(4,3,1)", t, "threshold", "base", f)],
+                           lines[("BPL(4,3,1)", t, "peaks_3b", "base", f)]):
+                    level, mass, _ = tension_metrics(lp, ln)
+                    cells.append(f"{fmt_sigma(sigma_1d(level))} / {fmt_sigma(sigma_one_sided(mass))}")
+                md.append(f"| {pname} | {t} | {f:g} | {cells[0]} | {cells[1]} | {cells[2]} |")
     if marg.exists():
         md += ["", "## Their NG15 contours inside our BPL-marginalised posterior", "",
                "HPD level of our posterior along their digitised contours (median, 10-90%), excluding the "

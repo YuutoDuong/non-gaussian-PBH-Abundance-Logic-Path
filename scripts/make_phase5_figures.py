@@ -78,23 +78,23 @@ def fig_tension(lines, tension, post, out):
             for st in ["threshold", "peaks_3b"]:
                 ls, _, slab = STAT_STYLE[st]
                 line = lines[(shape, t, st, "base", 1.0)]
-                sig = float(tension[(shape, t, st, "base", 1.0)]["sigma"])
+                sig = float(tension[(shape, t, st, "base", 1.0)]["sigma_p"])
+                sig_txt = ">4" if sig > 4 else f"{sig:.1f}"
                 ax.plot(line[:, 0], line[:, 1], ls, color=NG_COLOURS[t], linewidth=1.5,
-                        label=f"{NG_LABELS[t]}, {slab}: {sig:.1f}$\\sigma$")
+                        label=f"{NG_LABELS[t]}, {slab}: {sig_txt}$\\sigma$")
         axes_style(ax)
         ax.set_xlim(6.0, 9.5)
         ax.set_ylim(-2.6, 0.0)
         ax.set_title(f"{shape.replace('D=', 'Δ=')}: NG15 posterior and $f_{{PBH}}=1$ lines", loc="left")
-        ax.legend(loc="lower right", fontsize=6.3, handlelength=2.6)
-    if axes[0].get_legend() is not None:
-        axes[0].text(0.02, 0.97, "fill: 68.3 / 95.4 / 99.7% HPD", transform=axes[0].transAxes, fontsize=7,
-                     color=MUTED, va="top")
+        ax.legend(loc="upper left", bbox_to_anchor=(0.0, 0.93), fontsize=6.3, handlelength=2.6)
+        ax.text(0.02, 0.98, "NG15 posterior: 68.3 / 95.4 / 99.7% HPD;  $\\sigma=\\sigma_P$", transform=ax.transAxes,
+                fontsize=6.8, color=MUTED, va="top")
     fig.tight_layout()
     fig.savefig(out, dpi=200)
     plt.close(fig)
 
 
-def fig_sigma(tension, out, variant="base", f=1.0):
+def fig_sigma(tension, out, variant="base", f=1.0, cap=4.0):
     shapes = ["BPL(4,3,1)", "LN D=0.5", "LN D=1", "LN D=2"]
     templates = ["fNL=-2", "fNL=-1", "fNL=-0.5", "gaussian", "fNL=+0.5", "fNL=+1", "fNL=+2",
                  "curvaton r=0.9", "USR mu=5/2", "USR mu=5/6", "USR beta=3"]
@@ -102,7 +102,7 @@ def fig_sigma(tension, out, variant="base", f=1.0):
     y = np.arange(len(templates))[::-1]
     for ax, shape in zip(axes, shapes):
         for yy, t in zip(y, templates):
-            vals = [float(tension[(shape, t, st, variant, f)]["sigma"]) for st in STAT_STYLE]
+            vals = [min(float(tension[(shape, t, st, variant, f)]["sigma_p"]), cap + 0.15) for st in STAT_STYLE]
             ax.plot([min(vals), max(vals)], [yy, yy], color=AXIS, linewidth=1.0, zorder=1)
             for (st, (_, mk, slab)), v in zip(STAT_STYLE.items(), vals):
                 ax.plot(v, yy, mk, color=NG_COLOURS[t], markeredgecolor=SURFACE if st != "peaks_3a" else INK2,
@@ -110,19 +110,22 @@ def fig_sigma(tension, out, variant="base", f=1.0):
                         markerfacecolor=NG_COLOURS[t] if st != "peaks_3a" else SURFACE)
         for s in (2.0, 3.0):
             ax.axvline(s, color=MUTED, linewidth=0.8, linestyle=(0, (3, 3)), zorder=0)
+        ax.axvspan(cap, cap + 0.4, color=GRID, zorder=0)
+        ax.set_xlim(0.8, cap + 0.4)
+        ax.text(cap + 0.2, y[-1] - 0.9, f">{cap:.0f}", fontsize=7, color=MUTED, ha="center")
         ax.grid(True, axis="x", color=GRID, linewidth=0.6)
         for side in ("top", "right"):
             ax.spines[side].set_visible(False)
         ax.set_title(shape.replace("D=", "Δ="), loc="left")
-        ax.set_xlabel(r"exclusion of $f_{PBH}<1$ [$\sigma$]")
+        ax.set_xlabel(r"exclusion of $f_{PBH}<1$, $\sigma_P$")
     axes[0].set_yticks(y)
     axes[0].set_yticklabels([NG_LABELS[t] for t in templates], fontsize=7.5)
     handles = [plt.Line2D([], [], marker=mk, linestyle="", color=INK2, markerfacecolor=INK2 if st != "peaks_3a" else SURFACE,
                           label=slab) for st, (_, mk, slab) in STAT_STYLE.items()]
     fig.legend(handles=handles, loc="upper right", ncol=3, fontsize=7.5)
-    fig.suptitle("NG15 exclusion of the PBH-allowed region, per statistic (2306.17149 setup)", x=0.01, ha="left",
-                 fontsize=9.5, color=INK2)
-    fig.tight_layout(rect=(0, 0, 1, 0.93))
+    fig.suptitle("NG15 exclusion of the PBH-allowed region per statistic (posterior mass; 2306.17149 conventions)",
+                 x=0.01, ha="left", fontsize=9.5, color=INK2)
+    fig.tight_layout(rect=(0, 0, 1, 0.95))
     fig.savefig(out, dpi=200)
     plt.close(fig)
 
@@ -144,14 +147,13 @@ def fig_validation(lines, post, marg, digitized, out):
     ax.set_title("BPL(4,3,1), threshold statistics: $f_{PBH}=1$ and $10^{-3}$", loc="left")
     ax.text(0.02, 0.03, "wide: 2306.17149 Fig. 3 (with QCD)   dashed: ngpbh (no QCD)", transform=ax.transAxes,
             fontsize=6.8, color=MUTED)
-    ax.legend(loc="upper right", fontsize=7)
+    ax.legend(loc="center right", bbox_to_anchor=(1.0, 0.36), fontsize=7)
     ax = axes[1]
-    lk, la = post["log10_kstar"], post["log10_A"]
     if marg is not None:
-        posterior_panel(ax, lk, la, marg)
+        posterior_panel(ax, marg["log10_kstar"], marg["log10_A"], marg["logpost"])
         title = "NG15 posterior, BPL shape marginalised"
     else:
-        posterior_panel(ax, lk, la, post["BPL(4,3,1)"])
+        posterior_panel(ax, post["log10_kstar"], post["log10_A"], post["BPL(4,3,1)"])
         title = "NG15 posterior, BPL(4,3,1)"
     for edge, lw in [("1sigma", 1.0), ("2sigma", 1.0), ("3sigma", 1.0)]:
         d = digitized[("NG15", edge)]
@@ -179,7 +181,7 @@ def main():
     tension = read_tension()
     post = dict(np.load("results/phase5_posteriors.npz"))
     marg_path = Path("results/phase5_posterior_bpl_marginal.npz")
-    marg = np.load(marg_path)["logpost"] if marg_path.exists() else None
+    marg = dict(np.load(marg_path)) if marg_path.exists() else None
     fig_tension(lines, tension, post, "results/fig_phase5_tension.png")
     fig_sigma(tension, "results/fig_phase5_sigma.png")
     fig_validation(lines, post, marg, read_digitized(), "results/fig_phase5_validation.png")
