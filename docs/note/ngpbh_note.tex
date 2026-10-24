@@ -22,8 +22,8 @@
 \Large Non-Gaussian primordial black hole abundances for broad spectra\\
 and the pulsar-timing-array tension}
 \author{Duong Ngoc Khoa\thanks{Phenikaa Institute for Advanced Study. ORCID 0009-0009-9409-3298.
-Draft of 24 October 2026; the code \texttt{ngpbh} and every number below are in the accompanying
-repository.}}
+Draft of 24 October 2026. The code \texttt{ngpbh} and every number below are archived at Zenodo,
+\href{https://doi.org/10.5281/zenodo.23624507}{doi:10.5281/zenodo.23624507}.}}
 \date{}
 
 \begin{document}
@@ -51,7 +51,7 @@ include all seven terms for local NG, validated against Adshead et al. They lowe
 by up to $0.26\sigma$ for $|\fnl|\le2$ and leave the gap between the statistics unchanged. The
 gap is comparable to three analysis choices that are rarely stated:
 \begin{itemize}
-\item the transfer function in the collapse threshold;
+\item when the transfer function acts in the collapse threshold;
 \item the normalisation of $\fpbh$ (the expression in common use overestimates $\fpbh$ by a
 factor of 3--13);
 \item the frequency range of the PTA fit.
@@ -100,8 +100,9 @@ of the PBH-overproduction tension for NANOGrav 15, with every analysis choice st
 the GW spectrum, which 2306.17149 neglect.
 \item \textbf{Two pitfalls.} The second appears widely in the literature.
   \begin{itemize}
-  \item 2306.17149 compute the collapse threshold without the radiation transfer function,
-  although their formula includes it.
+  \item The collapse threshold of 2306.17149 follows Musco et al.'s superhorizon smoothing, in
+  effect without a transfer function. Their formula is written with the horizon-crossing transfer
+  function, and read that way it changes the amplitude by 18--62\%.
   \item The $\fpbh$ normalisation in common use is too large by a factor of 3--13.
   \end{itemize}
 \end{itemize}
@@ -246,15 +247,23 @@ $\ln(\text{factor})/|\ln\beta|\simeq8\%$ and 12\%. These factors cancel in $R$ b
 tension.
 
 The threshold prescription is a second, larger choice. The Musco et al.\ shape parameter $q$
-\cite{Musco21} depends on whether the transfer function enters its determination:
+\cite{Musco21} is computed from the spectrum smoothed with the transfer function $T(k,\eta)$, and
+it matters when $T$ acts:
 \begin{itemize}
-\item for a lognormal of width $\Delta=1$, $\delta_c=0.537$ with it and $0.458$ without;
-\item for the broken power law of 2306.17149 ($\alpha,\beta,\gamma=4,3,1$), $\delta_c=0.570$ and
-$0.544$.
+\item \textbf{Superhorizon.} Musco et al.\ apply it on superhorizon scales,
+$\hat r_m\simeq10\,r_H$, where $T\simeq1$ except for modes with $k\hat r_m\gtrsim20$. For every
+spectrum used here this agrees with no transfer function to $\le0.0005$ in $\delta_c$.
+\item \textbf{Horizon crossing.} Applied at horizon crossing, as in the variances, it smooths much
+more. For a lognormal of width $\Delta=1$ it gives $\delta_c=0.537$ instead of $0.458$. For the
+broken power law of 2306.17149 ($\alpha,\beta,\gamma=4,3,1$) it gives $0.570$ instead of $0.544$.
 \end{itemize}
-The thresholds in Fig.~S3 of 2306.17149 are the values without the transfer function. The
-difference moves $A_*$ by 18\% (BPL) and 62\% (lognormal, $\Delta=1$), for every statistic,
-because the linear threshold $C_{\ell,\rm th}$ grows faster than $C_{\rm th}$.
+2306.17149 write the horizon-crossing $T(k,r_m)$ in their eqs.~(S4)--(S5). Their Fig.~S3,
+however, follows the superhorizon prescription over its whole range (Appendix~\ref{app:th}). The
+two readings move $A_*$ by 18\% (BPL) and 62\% (lognormal, $\Delta=1$) for every statistic,
+because the linear threshold $C_{\ell,\rm th}$ grows faster than $C_{\rm th}$. They hardly affect
+the ratio between the statistics: $R$ changes by $\le0.5\%$ for quadratic NG and by $\le6\%$ for
+the curvaton and strong USR tails. Secs.~\ref{sec:stats}--\ref{sec:R} use the horizon-crossing
+threshold; Sec.~\ref{sec:pta} uses both.
 
 Our implementation \texttt{ngpbh} was validated as follows:
 \begin{itemize}
@@ -392,8 +401,9 @@ moments depend on $kr$ only.
 
 Figure~\ref{fig:valid} compares our threshold-statistics bands with Fig.~3 of 2306.17149, read
 exactly from the vector paths of the arXiv source. Their setup reproduces their bands only with
-two of their unstated conventions: the threshold without the transfer function and their $\fpbh$
-normalisation. With both, the agreement for $k_*\ge10^{7.5}\,{\rm Mpc}^{-1}$ is:
+two of their conventions. The first is Musco et al.'s superhorizon threshold, which their Fig.~S3
+confirms (Appendix~\ref{app:th}). The second is their $\fpbh$ normalisation. With both, the
+agreement for $k_*\ge10^{7.5}\,{\rm Mpc}^{-1}$ is:
 \begin{itemize}
 \item Gaussian (non-linearities only): 1--6\% in $A$;
 \item $\fnl=-2$: within 6\%;
@@ -618,7 +628,7 @@ bins move it by $-1.5$ to $+1\sigma$. The part of the posterior nearest the allo
 $k_*\simeq10^7\,{\rm Mpc}^{-1}$, places the GW peak at 10--20 nHz, and the bins above it bound it.
 \item \textbf{The other conventions:}
   \begin{itemize}
-  \item the transfer function in the threshold moves it by $-0.2$ to $-1.0\sigma$;
+  \item the horizon-crossing transfer function in the threshold moves it by $-0.2$ to $-1.0\sigma$;
   \item the entropy-conserving $\fpbh$ normalisation by $-0.15$ to $-0.4\sigma$;
   \item $\fpbh=10^{-3}$ instead of 1 by $+0.4$ to $+0.8\sigma$.
   \end{itemize}
@@ -753,6 +763,35 @@ drops the factor $\Omega_m$ and the heating of the radiation by $g_{*s}$ changes
 and is 3--5 times larger. Both lower the amplitude for $\fpbh=1$ by
 $\ln(\text{factor})/|\ln\beta|$, i.e.\ 8--12\% at $|\ln\beta|\simeq21$.
 
+\section{The collapse threshold of 2306.17149}\label{app:th}
+
+Figure~S3 of 2306.17149 plots $\delta_{\rm th}$ from the Musco et al.\ prescription against the
+lognormal width and against the UV slope $\beta$ of BPL(4,$\beta$,1). The figure is vector
+graphics in the arXiv source, so we read the curves exactly. We compare them with three readings
+of the prescription (Fig.~\ref{fig:th}):
+\begin{itemize}
+\item \textbf{No transfer function.} This reproduces their curves to $\le0.0002$ for
+$0.1\le\Delta\le1$ and to $\le0.0016$ for $1.9\le\beta\le3$.
+\item \textbf{$T$ at $\eta=\hat r_m/10$.} This is Musco et al.'s superhorizon smoothing. It
+reproduces the curves to $\le0.0005$ and $\le0.0012$.
+\item \textbf{$T$ at horizon crossing.} This is what the notation $T(k,r_m)$ of their
+eqs.~(S4)--(S5) suggests. It is off by up to 0.08.
+\end{itemize}
+For $\beta<2$ the integrals without $T$ converge only conditionally, because the UV tail falls
+like $k^{-\beta}$. Their curve has a kink at $\beta\simeq1.8$ and lies up to 0.007 below ours
+there. Their plotted $\alpha_s$ for the BPL is not the one behind their plotted $\delta_{\rm th}$
+through eq.~(S6). For the lognormal both curves agree with ours. Their thresholds are therefore
+Musco et al.'s, and the conclusions of 2306.17149 do not depend on the notation.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{fig_threshold_check.png}
+\caption{$\delta_{\rm th}$ of Fig.~S3 of 2306.17149 (wide gray), read from its vector paths,
+against \texttt{ngpbh} without the transfer function, with Musco et al.'s superhorizon smoothing
+($\eta=\hat r_m/10$) and with the horizon-crossing transfer function.}
+\label{fig:th}
+\end{figure}
+
 \section{Free-spectrum density estimates}\label{app:kde}
 
 The per-bin densities distributed with PTArcade \cite{PTArcade,Lamb} are Epanechnikov KDEs on a
@@ -765,11 +804,16 @@ lumpy and cliff-like. We replace each density by the maximum of itself and its c
 that the result changes by at most $0.14\sigma$ between no blur and 0.10 dex.
 
 \section*{Code and data}
-\texttt{ngpbh} (MIT licence) is in the accompanying repository, with:
+\texttt{ngpbh} (MIT licence) is archived at Zenodo:
+\begin{itemize}
+\item this release: \href{https://doi.org/10.5281/zenodo.23624507}{doi:10.5281/zenodo.23624507};
+\item all versions: \href{https://doi.org/10.5281/zenodo.23624506}{doi:10.5281/zenodo.23624506}.
+\end{itemize}
+It contains:
 \begin{itemize}
 \item the scripts that produce every table and figure here (\texttt{README.md});
-\item 91 unit tests;
-\item the digitised Fig.~3 of 2306.17149 and Fig.~4 of Adshead et al.;
+\item 96 unit tests;
+\item the digitised Figs.~3 and S3 of 2306.17149 and Fig.~4 of Adshead et al.;
 \item the tables of the NG terms of the induced GW spectrum per spectral shape.
 \end{itemize}
 The NANOGrav 15 free-spectrum densities are those of PTArcade (Zenodo record 10495907) and are

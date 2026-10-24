@@ -3,6 +3,14 @@ message: "If you use ngpbh, please cite the software and the accompanying note."
 title: "ngpbh: threshold statistics and peaks theory for the PBH abundance with local non-Gaussianity"
 version: 0.5.0
 date-released: 2026-10-24
+doi: 10.5281/zenodo.23624507
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.23624507
+    description: "The archived release (tag astro)"
+  - type: doi
+    value: 10.5281/zenodo.23624506
+    description: "All versions (concept DOI)"
 license: MIT
 repository-code: "https://github.com/YuutoDuong/non-gaussian-PBH-Abundance-Logic-Path"
 keywords:

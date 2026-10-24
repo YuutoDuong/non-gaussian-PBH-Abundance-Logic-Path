@@ -3,7 +3,7 @@ import pytest
 from scipy.optimize import brentq
 
 from ngpbh.nongaussian import Gaussian, Logarithmic, Quadratic
-from ngpbh.spectra import DiracDelta
+from ngpbh.spectra import BrokenPowerLaw, DiracDelta, LogNormal
 from ngpbh.threshold import MuscoThreshold, cl_threshold, delta_c_of_q
 
 
@@ -27,6 +27,30 @@ def test_musco_dirac(transfer):
     x_m = brentq(lambda x: (x**2 - 1) * np.sin(x) + x * np.cos(x), 2.0, 3.5)
     assert res.rm_kpeak == pytest.approx(x_m, rel=1e-9)
     assert res.C_th == pytest.approx(0.5947, abs=5e-4)  # ~0.59 quoted in 2011.03014
+
+
+# delta_th of 2306.17149 Fig. S3, read from its vector paths (scripts/check_threshold_2306_17149.py)
+FIG_S3 = [(LogNormal(1.0, 1.0, 0.5), 0.5301), (LogNormal(1.0, 1.0, 1.0), 0.4579),
+          (BrokenPowerLaw(1.0, 1.0, 4.0, 2.0, 1.0), 0.5220), (BrokenPowerLaw(1.0, 1.0, 4.0, 3.0, 1.0), 0.5438)]
+
+
+@pytest.mark.filterwarnings("ignore::scipy.integrate.IntegrationWarning")
+@pytest.mark.parametrize("spec,theirs", FIG_S3)
+def test_threshold_of_2306_17149(spec, theirs):
+    """Their thresholds are Musco et al.'s: superhorizon smoothing (eta = r_m/10) or, equivalently here,
+    no transfer function; the horizon-crossing transfer function would give a much higher value."""
+    assert MuscoThreshold(transfer=False).evaluate(spec).C_th == pytest.approx(theirs, abs=1e-3)
+    assert MuscoThreshold(transfer=True, eta_over_rm=0.1).evaluate(spec).C_th == pytest.approx(theirs, abs=1e-3)
+    assert MuscoThreshold(transfer=True).evaluate(spec).C_th > theirs + 0.02
+
+
+@pytest.mark.filterwarnings("ignore::scipy.integrate.IntegrationWarning")
+def test_threshold_shallow_uv_tail_is_smooth():
+    """For beta < 2 the integrals without the transfer function converge only conditionally."""
+    vals = [MuscoThreshold(transfer=False).evaluate(BrokenPowerLaw(1.0, 1.0, 4.0, b, 1.0)).C_th
+            for b in (1.5, 1.6, 1.7, 1.8, 1.9, 2.0)]
+    steps = np.diff(vals)
+    assert np.all(steps > 0) and np.all(steps < 0.005)
 
 
 @pytest.mark.parametrize("ng", [Quadratic(1.3), Quadratic(-0.7), Logarithmic(2.5), Logarithmic(-1.5)])

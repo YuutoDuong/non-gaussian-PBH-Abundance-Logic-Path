@@ -44,12 +44,28 @@ threshold-statistics A_* by ≤ 2% for Δ ≤ 2.
 * Checks: Dirac spectrum gives k*r_m = 2.7437, δ_c = 0.5947. Lognormal with transfer function:
   δ_c = 0.593, 0.578, 0.559, 0.537, 0.529 for Δ = 0.1, 0.3, 0.5, 1, 2; without it the broad end
   drops to 0.458 (Δ = 1) and 0.419 (Δ = 2).
-* 2306.17149 write P^T in eq. (S4), but their thresholds (Fig. S3: δ_th = 0.458 for the lognormal
-  at Δ = 1, 0.544 for BPL(4,3,1), α_s ≈ 2.7) are the values *without* the transfer function
-  (ngpbh: 0.4577; 0.5438 with q = 2.57); with it BPL(4,3,1) gives 0.5700 (q = 4.0). Phase 5 uses
-  their choice as its baseline (`MuscoThreshold(transfer=False)`) to compare with their bands, and
-  the transfer-function threshold as a variant. For BPL(4,3,1) it raises A_* by 0.071 dex (18%),
-  for every statistic: C_l,th = 2Φ[1 − √(1 − C_th/Φ)] grows faster than C_th (0.761 → 0.826).
+* **When the transfer function acts.** Musco et al. smooth the spectrum with T(k, η) on
+  superhorizon scales, "when r̂_m ≃ 10 r_H or larger" (2011.03014 Sec. IV), i.e. η ≈ r̂_m/10, where
+  T ≈ 1 except for modes with k r̂_m ≳ 20. `MuscoThreshold(transfer=True, eta_over_rm=0.1)` does
+  this. For every Phase 5 spectrum it agrees with no transfer function (`transfer=False`) to
+  ≤ 0.0005 in δ_th: BPL(4,3,1) 0.5438 vs 0.5441; lognormal 0.5301/0.5304 (Δ = 0.5), 0.4577/0.4581
+  (Δ = 1) and 0.4187/0.4192 (Δ = 2). `transfer=True` with the default `eta_over_rm=1` evaluates T
+  at horizon crossing, as for the variances. This strong smoothing gives 0.5700, 0.5593, 0.5371
+  and 0.5288 for the same spectra.
+* **2306.17149 Fig. S3** (δ_th against the lognormal width and the BPL slope β) is reproduced over
+  its whole range by Musco et al.'s smoothing or by no transfer function: to ≤ 0.0005 for
+  0.1 ≤ Δ ≤ 1, and to ≤ 0.0016 for BPL(4, β, 1) with 1.9 ≤ β ≤ 3. The horizon-crossing version is
+  off by up to 0.08 (`scripts/check_threshold_2306_17149.py`, `results/threshold_2306.17149_check.md`).
+  Their eqs. (S4)–(S5) write T(k, r_m), the notation of their horizon-crossing variances, but the
+  computation follows Musco et al. For β < 2 the integrals without T converge only conditionally;
+  `threshold.py` handles the tail with QUADPACK's QAWF, and their curve lies up to 0.007 below ours
+  there.
+* Phase 5 uses Musco et al.'s threshold as its baseline (variant `base`, `transfer=False`) and the
+  horizon-crossing threshold as a variant (`T`). Phases 1–4 used the horizon-crossing threshold.
+  For BPL(4,3,1) it raises A_* by 0.071 dex (18%), for every statistic:
+  C_l,th = 2Φ[1 − √(1 − C_th/Φ)] grows faster than C_th (0.761 → 0.826). The ratio R between the
+  statistics hardly depends on the choice: it changes by −0.1% to +0.5% for the quadratic templates,
+  and up to +6% for the curvaton and strong USR tails (44 cases, Phase 5 lines at k* = 10⁸ Mpc⁻¹).
 
 ## Collapse
 

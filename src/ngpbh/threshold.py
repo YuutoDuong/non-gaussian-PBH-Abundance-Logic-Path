@@ -10,6 +10,15 @@ with delta_c -> 2/5 for q -> 0 (broadest profiles) and 2/3 for q -> infinity.
 
 MuscoThreshold evaluates q on the mean profile of the spectrum, following the summary
 of 2011.03014 given in the supplement of 2306.17149 (eqs. S4-S6).
+
+The transfer function in the profile. Musco et al. smooth the primordial spectrum with
+T(k, eta) on superhorizon scales, "when r_m ~ 10 r_H or larger" (2011.03014 Sec. IV), i.e.
+eta ~ r_m/10, where T ~ 1 except for modes with k r_m >~ 20: MuscoThreshold(transfer=True,
+eta_over_rm=0.1). For every spectrum used in Phase 5 this differs from no transfer function
+(transfer=False) by <= 0.0005 in the threshold, and both reproduce the thresholds of
+2306.17149 Fig. S3 (scripts/check_threshold_2306_17149.py). The supplement of 2306.17149 writes
+T(k, r_m), the transfer function at horizon crossing that enters their variances; taken
+literally (transfer=True, eta_over_rm=1) it raises the threshold by 0.03-0.11 for broad spectra.
 """
 
 from dataclasses import dataclass
@@ -52,18 +61,22 @@ class ConstantThreshold:
         return ThresholdResult(self.C_th)
 
 
-def _osc_integral(spectrum, r, transfer, a_sin, a_cos, x_split=2.0, x_max=2.0e3):
+def _osc_integral(spectrum, r, transfer, a_sin, a_cos, x_split=2.0, x_max=2.0e3, eta=1.0, x_tail=1.0e3):
     """int dlnk P^T(k) [a_sin(k) sin(kr) + a_cos(k) cos(kr)] for smooth a_sin, a_cos.
 
-    The mean profile carries no window, so without the transfer function the integrand only
-    decays with the spectrum; the kr > x_split part then uses QUADPACK's Fourier quadrature.
-    With the transfer function the integrand falls like (kr)^-3 and is truncated at x_max."""
+    P^T = T^2(k, eta r) P: the transfer function at conformal time eta r (eta = 1: horizon
+    crossing of r). The mean profile carries no window, so without the transfer function the
+    integrand only decays with the spectrum; the kr > x_split part then uses QUADPACK's Fourier
+    quadrature, on a finite interval up to kr = x_tail (QAWO, which resolves the spectral peak)
+    and beyond it on [x_tail/r, inf) (QAWF), which handles tails that converge only
+    conditionally (a broken power law with UV slope beta < 2). With the transfer function the
+    integrand falls like (eta kr)^-4 and is truncated at x_max."""
 
     def integrand(k):
         x = k * r
         val = a_sin(k) * np.sin(x) + a_cos(k) * np.cos(x)
         if transfer:
-            val = val * windows.transfer_rd(x) ** 2
+            val = val * windows.transfer_rd(eta * x) ** 2
         return val
 
     if spectrum.is_delta:
@@ -89,15 +102,17 @@ def _osc_integral(spectrum, r, transfer, a_sin, a_cos, x_split=2.0, x_max=2.0e3)
         k = np.exp(lnk)
         total += 0.5 * (b - a) * np.sum(weights * integrand(k) * spectrum(k))
     if k_hi > k_split:
-        opts = dict(weight=None, limit=500, epsabs=0.0, epsrel=1e-10)
+        k_mid = min(k_hi, max(k_split, x_tail / r))
+        scale = abs(float(spectrum(np.array([spectrum.k_peak]))[0]))
         for amp, w in ((a_sin, "sin"), (a_cos, "cos")):
             fn = lambda k, amp=amp: float(amp(np.array([k]))[0] * spectrum(np.array([k]))[0] / k)
-            opts["weight"] = w
-            total += quad(fn, k_split, k_hi, wvar=r, **opts)[0]
+            total += quad(fn, k_split, k_mid, weight=w, wvar=r, limit=500, epsabs=0.0, epsrel=1e-10)[0]
+            if k_hi > k_mid and fn(k_mid) != 0.0:  # smooth far tail: QAWF
+                total += quad(fn, k_mid, np.inf, weight=w, wvar=r, limit=500, limlst=200, epsabs=1e-8 * scale)[0]
     return total
 
 
-def rm_equation(spectrum, r, transfer=False):
+def rm_equation(spectrum, r, transfer=False, eta=1.0):
     """Eq. S4: int dlnk [(k^2 r^2 - 1) sin(kr)/(kr) + cos(kr)] P^T = 0 at r = r_m.
 
     Equals -r d(r psi')/dr for the mean profile psi, so it changes sign from + to - at r_m."""
@@ -107,27 +122,28 @@ def rm_equation(spectrum, r, transfer=False):
         transfer,
         a_sin=lambda k: ((k * r) ** 2 - 1.0) / (k * r),
         a_cos=lambda k: np.ones_like(k),
+        eta=eta,
     )
 
 
-def musco_rm(spectrum, transfer=False, x_range=(0.5, 60.0), n_scan=80):
+def musco_rm(spectrum, transfer=False, x_range=(0.5, 60.0), n_scan=80, eta=1.0):
     """Innermost maximum r_m of the mean compaction profile."""
     kp = spectrum.k_peak
     xs = np.geomspace(*x_range, n_scan)
-    vals = np.array([rm_equation(spectrum, x / kp, transfer) for x in xs])
+    vals = np.array([rm_equation(spectrum, x / kp, transfer, eta) for x in xs])
     idx = np.where((vals[:-1] > 0) & (vals[1:] <= 0))[0]
     if len(idx) == 0:
         raise RuntimeError("no maximum of the mean compaction profile found in x_range")
     i = idx[0]
-    return brentq(lambda x: rm_equation(spectrum, x / kp, transfer), xs[i], xs[i + 1], xtol=1e-12) / kp
+    return brentq(lambda x: rm_equation(spectrum, x / kp, transfer, eta), xs[i], xs[i + 1], xtol=1e-12) / kp
 
 
-def musco_q(spectrum, r_m, transfer=False):
+def musco_q(spectrum, r_m, transfer=False, eta=1.0):
     """Eq. S5: F(q)[1 + F(q)] q = -(1/2)[1 + r_m int dk k cos(k r_m) P^T / int dk sin(k r_m) P^T],
     with F(q) = sqrt(1 - (3/2) delta_c(q))."""
     zero = lambda k: np.zeros_like(k)
-    num = _osc_integral(spectrum, r_m, transfer, a_sin=zero, a_cos=lambda k: k**2)
-    den = _osc_integral(spectrum, r_m, transfer, a_sin=lambda k: k, a_cos=zero)
+    num = _osc_integral(spectrum, r_m, transfer, a_sin=zero, a_cos=lambda k: k**2, eta=eta)
+    den = _osc_integral(spectrum, r_m, transfer, a_sin=lambda k: k, a_cos=zero, eta=eta)
     rhs = -0.5 * (1.0 + r_m * num / den)
 
     def lhs(q):
@@ -139,11 +155,18 @@ def musco_q(spectrum, r_m, transfer=False):
 
 @dataclass(frozen=True)
 class MuscoThreshold:
-    """Shape-dependent threshold delta_c(q) with q from the mean profile (2011.03014)."""
+    """Shape-dependent threshold delta_c(q) with q from the mean profile (2011.03014).
+
+    transfer=True smooths the spectrum with T(k, eta_over_rm * r_m): eta_over_rm = 0.1 is Musco
+    et al.'s superhorizon smoothing (r_m = 10 r_H), eta_over_rm = 1 the horizon-crossing transfer
+    function (see the module docstring).
+    """
 
     transfer: bool = False
+    eta_over_rm: float = 1.0
 
     def evaluate(self, spectrum):
-        r_m = musco_rm(spectrum, self.transfer)
-        q = musco_q(spectrum, r_m, self.transfer)
+        eta = self.eta_over_rm
+        r_m = musco_rm(spectrum, self.transfer, eta=eta)
+        q = musco_q(spectrum, r_m, self.transfer, eta=eta)
         return ThresholdResult(float(delta_c_of_q(q)), q, r_m * spectrum.k_peak)

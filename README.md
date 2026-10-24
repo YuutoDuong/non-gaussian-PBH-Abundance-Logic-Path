@@ -1,5 +1,7 @@
 # Non-Gaussian PBH abundance: threshold statistics vs peaks theory
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23624507.svg)](https://doi.org/10.5281/zenodo.23624507)
+
 Code for Option A of the project plan: does the gap between threshold statistics and peaks
 theory, once local non-Gaussianity (NG) is included for broad spectra, change how strongly
 PBH overproduction disfavours a scalar-induced GW explanation of the PTA signal?
@@ -32,7 +34,7 @@ PBH overproduction disfavours a scalar-induced GW explanation of the PTA signal?
 ```bash
 python -m venv .venv && .venv/bin/pip install -e ".[dev]"
 .venv/bin/python scripts/fetch_ng15.py # NANOGrav 15-yr free spectrum (Zenodo, MD5-checked) into data/
-.venv/bin/python -m pytest            # 91 tests, ~45 s
+.venv/bin/python -m pytest            # 96 tests, ~1 min
 .venv/bin/pip install pbhstat && .venv/bin/python scripts/compare_pbhstat.py   # Phase 1 exit check
 ```
 
@@ -47,6 +49,7 @@ python -m venv .venv && .venv/bin/pip install -e ".[dev]"
 | `digitize_2306_17149.py` | `digitized_2306.17149_fig3.csv`: their f_PBH bands and NG15 contours, read from the vector figure (needs PyMuPDF) |
 | `pta_tension.py` | `phase5_lines.csv`, `phase5_tension.csv`, `phase5_summary.md`, `phase5_compare.md`: overproduction lines per statistic, NG template and shape, and the NG15 exclusion significance (~1 h on 4 cores); stage `ngsigw`: `phase5_ngsigw_tension.csv`, `phase5_ngsigw_summary.md`, the same with the NG-corrected SIGW (~1 min) |
 | `sigw_ng_terms.py` | `sigw_ng_terms.csv`: the NG terms of the SIGW spectrum per spectral shape on a grid in k/k* (~6 min on 4 cores) |
+| `check_threshold_2306_17149.py` | `threshold_2306.17149_check.md`, `fig_threshold_check.png`, `digitized_2306.17149_figS3.csv`: the thresholds of 2306.17149 Fig. S3 against three readings of the Musco et al. prescription (needs PyMuPDF) |
 | `validate_sigw_ng.py` | `sigw_ng_validation.md`, `fig_sigw_ng_validation.png`, `digitized_2105.01659_fig4.csv`: MC against quadrature, and all six NG terms against Adshead et al. Fig. 4 read from its vector paths (needs PyMuPDF) |
 | `pta_bpl_marginal.py` | `phase5_posterior_bpl_marginal.npz`: the NG15 posterior with the BPL shape marginalised (as 2306.17149 Fig. 3) |
 | `phase6_robustness.py` | `phase6_robustness.md`: the Phase 5 significances under changes of prior, frequency bins, KDE smoothing, grid and peak normalisation |
@@ -79,6 +82,7 @@ statistics when comparing them.
 .venv/bin/python scripts/pta_bpl_marginal.py         # shape-marginalised posterior, ~7 min
 .venv/bin/python scripts/pta_tension.py tension      # significances
 .venv/bin/python scripts/pta_tension.py compare      # against 2306.17149
+.venv/bin/python scripts/check_threshold_2306_17149.py  # their threshold convention, ~1 min
 .venv/bin/python scripts/sigw_ng_terms.py            # NG terms of the SIGW spectrum, ~6 min on 4 cores
 .venv/bin/python scripts/validate_sigw_ng.py         # their validation, ~4 min
 .venv/bin/python scripts/pta_tension.py ngsigw       # significances with the NG-corrected SIGW
@@ -88,6 +92,8 @@ statistics when comparing them.
 
 ## Citing
 
-See `CITATION.cff` (Duong Ngoc Khoa, Phenikaa Institute for Advanced Study,
-ORCID 0009-0009-9409-3298). The first tagged release mints the Zenodo DOI through
-`.zenodo.json`. MIT licence (`LICENSE`).
+Duong Ngoc Khoa (Phenikaa Institute for Advanced Study, ORCID 0009-0009-9409-3298). The code is
+archived at Zenodo: doi:[10.5281/zenodo.23624507](https://doi.org/10.5281/zenodo.23624507) for
+the release used in the note (tag `astro`), and
+doi:[10.5281/zenodo.23624506](https://doi.org/10.5281/zenodo.23624506) for all versions. See
+`CITATION.cff`. MIT licence (`LICENSE`).

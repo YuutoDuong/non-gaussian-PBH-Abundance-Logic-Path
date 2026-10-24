@@ -87,11 +87,20 @@ This is 1–6% in A, or 8–11% for the curvaton. Near k* ≈ 10^6.5 their bands
 that is the QCD softening of the formation parameters, which we do not model. Reaching this
 agreement required two conventions that 2306.17149 use but do not state where one would look:
 
-* **Threshold without the transfer function.** Their eq. (S4) writes P^T, but their Fig. S3
-  thresholds (δ_th = 0.458 for the lognormal at Δ = 1, 0.544 for BPL(4,3,1)) are the Musco values
-  computed without it (ngpbh: 0.4577 and 0.5438). With the transfer function, BPL(4,3,1) has
-  δ_th = 0.570 and A_* is 18% higher (0.071 dex), for every statistic, because the linear threshold
-  C_l,th = 2Φ[1 − √(1 − C_th/Φ)] moves from 0.761 to 0.826.
+* **The threshold: Musco et al.'s superhorizon smoothing.** Their eqs. (S4)–(S5) write
+  P^T = T²(k, r_m)P, the notation of their horizon-crossing variances. Their thresholds, however,
+  follow Musco et al. (2011.03014), who apply T on superhorizon scales (r̂_m ≃ 10 r_H), where
+  T ≈ 1. We read their Fig. S3 (δ_th against the lognormal width and the BPL slope) from the
+  vector paths (`scripts/check_threshold_2306_17149.py`, `results/threshold_2306.17149_check.md`,
+  `results/fig_threshold_check.png`):
+  * T at r̂_m/10, or no T at all, reproduces it to ≤ 0.0005 for 0.1 ≤ Δ ≤ 1 and ≤ 0.0016 for
+    1.9 ≤ β ≤ 3;
+  * T at horizon crossing is off by up to 0.08.
+
+  The horizon-crossing reading would give BPL(4,3,1) δ_th = 0.570 instead of 0.544 and an A_* 18%
+  higher (0.071 dex), for every statistic, because the linear threshold
+  C_l,th = 2Φ[1 − √(1 − C_th/Φ)] moves from 0.761 to 0.826. Contacting the authors is therefore
+  not needed to settle what they computed.
 * **f_PBH normalisation.** Their eq. (14) with 7.9×10⁻¹⁰ gives 12.7 times the f_PBH that entropy
   conservation gives for the same β. The first-principles version, which agrees with Carr et al.
   2010 to 2%, has 1.0×10⁻⁸ in place of 7.9×10⁻¹⁰. Correcting it raises A_* by about 12%. The

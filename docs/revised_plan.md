@@ -33,8 +33,10 @@ conventions to < 0.01, while the Gaussian R itself moves by 0.07 between them
   (A = 9.09×10⁻³ vs 9.2×10⁻³ for β = 10⁻¹⁶ at M_H = 10⁻¹⁵ M_⊙).
 * Decision recorded: **one threshold prescription for both statistics** = Musco et al. with the
   transfer function. The no-transfer and 2/5 variants are systematics to show, not alternatives
-  to mix. (Phase 5 found that 2306.17149 themselves used the no-transfer threshold, see
-  `docs/phase5_pta.md`; Phase 5 therefore runs both.)
+  to mix. (Phase 5 found that 2306.17149's thresholds follow Musco et al.'s superhorizon smoothing,
+  which here equals no transfer function to ≤ 0.0005 in δ_th, and that "with the transfer function"
+  above means T at horizon crossing, a stronger smoothing than Musco et al.'s. Phase 5 runs both;
+  R changes by ≤ 0.5% for quadratic NG, ≤ 6% for strong USR tails.)
 
 ## Phase 2: threshold statistics with NG — done
 
@@ -132,8 +134,10 @@ the assessment), so that peaks and threshold statistics differ only by the peak 
    because of QCD, and their own lines give the same significances as ours on the same posterior
    (≤ 0.07), so the QCD omission is quantified as negligible. Two unstated conventions of theirs
    were found:
-   * the threshold is computed without the transfer function (+18% in A_* with it for
-     BPL(4,3,1), +62% for the lognormal at Δ = 1);
+   * their threshold follows Musco et al.'s superhorizon smoothing (≈ no transfer function),
+     although their eqs. (S4)–(S5) write the horizon-crossing T(k, r_m). Read literally, the
+     formula gives +18% in A_* for BPL(4,3,1) and +62% for the lognormal at Δ = 1. Confirmed
+     from their Fig. S3 over its whole range (`scripts/check_threshold_2306_17149.py`);
    * the f_PBH normalisation is 12.7× the entropy-conservation value (−12% in A_*).
 4. **Result.** Threshold → peaks 3b strengthens the exclusion by Δσ_P = +0.24 to +0.78 (median
    +0.42) for every template and shape:
@@ -184,11 +188,14 @@ the assessment), so that peaks and threshold statistics differ only by the peak 
   checks, the R map, the PTA tension, robustness, the two pitfalls found in the literature, and
   appendices.
 * **Remaining (your decisions or actions):**
-  * a tagged release, which mints the Zenodo DOI once the Zenodo–GitHub link is enabled;
+  * ~~a tagged release and the Zenodo DOI~~: done, tag `astro` (commit 692dc2c),
+    DOI 10.5281/zenodo.23624507 (all versions: 10.5281/zenodo.23624506);
   * an arXiv endorser;
   * the email to Cole & Fumagalli;
-  * whether to contact the 2306.17149 authors about the threshold and f_PBH conventions before
-    submission;
+  * whether to send the 2306.17149 authors a courtesy note before submission. It is not needed
+    for the facts. Their threshold is settled by their own Fig. S3: it follows Musco et al. and
+    only the notation of eq. (S4) is ambiguous. The f_PBH constant follows from their eq. (14)
+    and entropy conservation;
   * re-running the INSPIRE scan just before submission;
   * optional: a pbhstat PR with the NG threshold statistics and peaks.
 
@@ -197,6 +204,9 @@ the assessment), so that peaks and threshold statistics differ only by the peak 
 * Exponential sensitivity: log β throughout ✓ (a 1% shift in A moves β by ~50% at ν ≈ 7).
 * USR template singularity at ζ_g = μ_*: integration domain cut there ✓.
 * Peaks need the cut; apply it to both ✓.
+* **New:** in the Musco et al. threshold it matters *when* the transfer function acts. At
+  r̂_m/10, as Musco et al. prescribe, it is ≈ 1 (≈ no transfer function); at horizon crossing,
+  the notation of the variances, it raises δ_th by up to 0.11 for broad spectra.
 * Hidden threshold differences: the transfer-function choice inside the threshold prescription
   moves C_th by 0.11 at Δ = 2 — larger than any statistics effect.
 * **New:** normalisation conventions (PS factor, peak volume, Jacobian) move R by ~0.14.
