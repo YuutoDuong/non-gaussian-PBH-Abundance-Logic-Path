@@ -54,6 +54,10 @@ python -m venv .venv && .venv/bin/pip install -e ".[dev]"
 | `validate_sigw_ng.py` | `sigw_ng_validation.md`, `fig_sigw_ng_validation.png`, `digitized_2105.01659_fig4.csv`: MC against quadrature, and all six NG terms against Adshead et al. Fig. 4 read from its vector paths (needs PyMuPDF) |
 | `pta_bpl_marginal.py` | `phase5_posterior_bpl_marginal.npz`: the NG15 posterior with the BPL shape marginalised (as 2306.17149 Fig. 3) |
 | `phase6_robustness.py` | `phase6_robustness.md`: the Phase 5 significances under changes of prior, frequency bins, KDE smoothing, grid and peak normalisation |
+| `r_gauss_fit.py` | `r_gauss_fit.csv`, `r_gauss_fit.md`: R_Gauss on ten lognormal widths with a fit in ln Delta, for BPL(4,beta,1), and R/R_Gauss for the NG templates with BPL(4,3,1) (~5 min on 4 cores) |
+| `pta_smbhb.py` | `pta_smbhb.csv`, `pta_smbhb.md`, `pta_smbhb_posteriors.npz`: the NG15 significances with an SMBHB background marginalised over NANOGrav's astrophysical prior, and the Bayes factors (~15 min on 4 cores) |
+| `threshold_sensitivity.py` | `threshold_sensitivity_R.csv`, `threshold_sensitivity_lines.csv`, `threshold_sensitivity.md`: R and the NG15 significances for C_th x 0.95 and x 1.05 (~20 min on 4 cores) |
+| `curvaton_branches.py` | `curvaton_branches.csv`, `curvaton_branches.md`: the two branches of the curvaton map behind its threshold sensitivity (~20 min on 4 cores) |
 | `make_figures.py`, `make_phase5_figures.py` | the figures in `results/` from the CSVs |
 
 ```python
@@ -89,6 +93,10 @@ statistics when comparing them.
 .venv/bin/python scripts/validate_sigw_ng.py         # their validation, ~4 min
 .venv/bin/python scripts/pta_tension.py ngsigw       # significances with the NG-corrected SIGW
 .venv/bin/python scripts/phase6_robustness.py        # robustness audit, ~12 min
+.venv/bin/python scripts/r_gauss_fit.py              # R_Gauss fit and factorisation, ~5 min on 4 cores
+.venv/bin/python scripts/pta_smbhb.py                # with an SMBHB background, ~15 min on 4 cores
+.venv/bin/python scripts/threshold_sensitivity.py    # C_th +-5%, ~20 min on 4 cores
+.venv/bin/python scripts/curvaton_branches.py        # the two curvaton branches, ~20 min on 4 cores
 .venv/bin/python scripts/make_figures.py && .venv/bin/python scripts/make_phase5_figures.py
 ```
 
@@ -96,8 +104,9 @@ statistics when comparing them.
 
 Duong Ngoc Khoa (Phenikaa Institute for Advanced Study, Phenikaa University, Hanoi, Vietnam; ORCID 0009-0009-9409-3298). The code is
 archived at Zenodo: doi:[10.5281/zenodo.23624506](https://doi.org/10.5281/zenodo.23624506) for
-all versions (it resolves to the latest). The note was produced with version 0.6.0,
-doi:[10.5281/zenodo.23643762](https://doi.org/10.5281/zenodo.23643762). The first
+all versions (it resolves to the latest). The note is produced with version 0.7.0 (to be
+archived); version 0.6.0, doi:[10.5281/zenodo.23643762](https://doi.org/10.5281/zenodo.23643762),
+precedes the SMBHB, threshold and R_Gauss computations. The first
 archived version (tag `astro`,
 doi:[10.5281/zenodo.23624507](https://doi.org/10.5281/zenodo.23624507)) predates the threshold
 check of the note's Appendix C. See `CITATION.cff`. MIT licence (`LICENSE`).

@@ -26,8 +26,8 @@ spectra and the pulsar-timing-array tension},pdfauthor={Duong Ngoc Khoa}}
 and the pulsar-timing-array tension}
 \author{Duong Ngoc Khoa\thanks{ORCID 0009-0009-9409-3298. E-mail:
 \href{mailto:yuutoduong@gmail.com}{\texttt{yuutoduong@gmail.com}}. Version of 25 October 2026. The
-code \texttt{ngpbh} (version 0.6.0) and every number below are archived at Zenodo,
-\href{https://doi.org/10.5281/zenodo.23643762}{doi:10.5281/zenodo.23643762}.}\\[4pt]
+code \texttt{ngpbh} (version 0.7.0) and every number below are archived at Zenodo,
+\href{https://doi.org/10.5281/zenodo.23624506}{doi:10.5281/zenodo.23624506}.}\\[4pt]
 {\normalsize\itshape Phenikaa Institute for Advanced Study, Phenikaa University, Hanoi, Vietnam}}
 \date{}
 
@@ -51,7 +51,9 @@ lognormal widths $0.1\le\Delta\le2$. The NG dependence cancels almost completely
 $R/R_{\rm Gauss}$, to about 4\% (16\% for a strong ultra-slow-roll tail). Propagated to
 the NANOGrav 15-year data, peaks theory strengthens the exclusion of a scalar-induced
 gravitational-wave explanation by 0.2--0.8$\sigma$ (0.4$\sigma$ in the BBKS normalisation), for
-every NG template and spectral shape we consider. This is smaller than the effect of NG itself
+every NG template and spectral shape we consider. With an astrophysical background from
+supermassive black hole binaries, which caps the exclusion at $2.8\sigma$, the shift is
+0.04--0.39$\sigma$. Either way it is smaller than the effect of NG itself
 for $|\fnl|\gtrsim1$. We also add the primordial-NG corrections to the induced GW spectrum. We
 include all seven terms for local NG, validated against Adshead et al. They lower the significance
 by up to $0.26\sigma$ for $|\fnl|\le2$ and leave the gap between the statistics unchanged. The
@@ -96,7 +98,7 @@ curvaton templates). It is the exact counterpart of threshold statistics, so tha
 only by the peak condition.
 \item \textbf{Main technical step.} We count maxima of the non-Gaussian compaction itself, a local
 function of two correlated Gaussian fields, rather than of its Gaussian component. This differs
-from the closest existing work \cite{YGY19,Riccardi,Escriva26,Germani25}.
+from the closest existing work, discussed below.
 \item \textbf{The gap} (Sec.~\ref{sec:R}). We give the amplitude ratio $R(\Delta,{\rm NG})$ between
 the statistics.
 \item \textbf{PTA consequences} (Sec.~\ref{sec:pta}). We propagate the ratio to the significance
@@ -112,6 +114,18 @@ the GW spectrum \cite{CPS19,Unal19,ALW21}, which 2306.17149 neglect.
   \end{itemize}
 \end{itemize}
 
+\textbf{Relation to the closest work.} Yoo, Gong and Yokoyama \cite{YGY19} count peaks of $\zg$
+with typical profiles and quadratic NG, assuming that every peak of $\zg$ is a peak of $\zeta$,
+which holds for $\frac35\fnl\gtrsim-\frac14$. Riccardi et al.\ \cite{Riccardi} treat quadratic NG
+for finite-width spectra with peaks of the curvature perturbation and the linear relation between
+density and curvature, not the compaction function. Escriv\`a \cite{Escriva26} counts peaks of
+$\zg$ for the logarithmic template and adds a dispersion of the profile shape, which for negative
+NG and broad spectra raises the abundance by orders of magnitude. Germani et al.\ \cite{Germani25}
+give the statistics of peaks of general local-NG fields and apply it to their sphericity. None of
+these compares with threshold statistics in the same conventions. We count maxima of the
+non-Gaussian compaction itself, with the threshold, window, transfer function and cut of threshold
+statistics, so that $R$ isolates the peak condition.
+
 \section{Two statistics for the non-Gaussian compaction}\label{sec:stats}
 
 \subsection{Local NG and the compaction function}
@@ -123,7 +137,10 @@ three templates:
 \item ultra-slow-roll (USR), $F=-\mu_*\ln(1-\zg/\mu_*)$ \cite{AGM19}, which is
 $F=-\frac2\beta\ln(1-\frac\beta2\zg)$ of 2306.17149 with $\mu_*=2/\beta$ and has $\fnl=5/(6\mu_*)$
 at second order;
-\item the sudden-decay curvaton, $\zeta=\ln X(r_{\rm dec},\zg)$ \cite{SVW06,Ferrante}.
+\item the sudden-decay curvaton, $\zeta=\ln X(r_{\rm dec},\zg)$ \cite{SVW06,Ferrante}. $X$ depends on
+$\zg$ only through $(1+3\zg/2r_{\rm dec})^2=(\sigma/\bar\sigma)^2$, with $\sigma$ the curvaton field,
+so troughs of $\zg$ below $-2r_{\rm dec}/3$, where $\sigma$ changes sign, are also peaks of $\zeta$.
+For $r_{\rm dec}<1$ we integrate both branches.
 \end{itemize}
 We use two spectral shapes for $\Pz$, a lognormal of width $\Delta$ and the broken power law
 BPL($\alpha,\beta,\gamma$) of 2306.17149:
@@ -301,13 +318,18 @@ $\fpbh=1$, with the same threshold, window, transfer function, cut, $\mathcal K$
 both statistics.
 \begin{itemize}
 \item \textbf{Gaussian $\zeta$:} $R=0.770$--$0.789$ in the BBKS normalisation with
-$V=\frac43\pi r^3$.
+$V=\frac43\pi r^3$. For lognormal widths $0.1\le\Delta\le2$ it is fitted by
+$R_{\rm Gauss}=0.783+0.0066\ln\Delta$ to 0.002, and it is 0.775--0.778 for BPL($4,\beta,1$) with
+$\beta=2$--4.
 \item \textbf{Conventions:} $R$ spans 0.75--0.89 across the normalisation conventions in use
 (Press--Schechter factor, peak volume, Jacobian). It is about 0.6--0.67 with the high-peak
 formula of Ref.~\cite{Iovino24} as used in Ref.~\cite{Blas26}. These conventions cancel to
 better than 1\% in the double ratio $R/R_{\rm Gauss}$.
-\item \textbf{The double ratio:} it stays within 0.958--1.036 for $|\fnl|\le2$. The strongly
-non-perturbative USR tail $\mu_*=5/6$ reaches 1.05--1.16, the largest value at $\Delta=2$.
+\item \textbf{The double ratio:} it stays within 0.958--1.036 for $|\fnl|\le2$, and within
+0.971--1.033 for BPL(4,3,1) (1.03 for the curvaton). The strongly non-perturbative USR tail
+$\mu_*=5/6$ reaches 1.05--1.16, the largest value at $\Delta=2$. A threshold-statistics amplitude
+for any of these templates can therefore be converted to peaks theory as
+$A_*^{\rm peaks}\simeq R_{\rm Gauss}\,A_*^{\rm threshold}$, to about 4\%.
 \item \textbf{True NG peaks vs the Gaussian-peak approximation:} the amplitudes differ by
 $A_*^{(\Cl)}/A_*^{(\Cg)}=0.983$--1.000, where the superscript says whose maxima are counted. The
 18\% miscount of peaks moves $A_*$ by at most
@@ -315,9 +337,26 @@ $A_*^{(\Cl)}/A_*^{(\Cg)}=0.983$--1.000, where the superscript says whose maxima 
 \item \textbf{The UV cut:} removing the cut $kr<4.49$, or moving it to $kr=3.5$, 6 or 7.7 (the
 second zero of $W$), changes $R$ by at most 1.2\% and the double ratio by at most 0.8\%
 (lognormal $\Delta=0.5$--2, Gaussian and $\fnl=\pm2$).
+\item \textbf{The threshold:} NG also shifts $C_{\rm th}$, by at most a few percent for
+$\fnl\gtrsim-2$ \cite{KMR19,ETYY22,Iovino24}. Scaling $C_{\rm th}$ by 0.95 or 1.05 in both statistics,
+as in Ref.~\cite{Iovino24}, moves $A_*$ by $-19$ to $+27\%$ but $R$ and $R/R_{\rm Gauss}$ by at most
+0.3\% (Gaussian and $\fnl=-2$ to $-0.5$, lognormal $\Delta=0.1$--2). For the curvaton
+$r_{\rm dec}=0.9$, $R$ moves by up to 6\%. Its PBHs come from both branches of the map, with
+$R=0.75$--0.79 from peaks of $\zg$ and 0.81--0.84 from troughs. On each branch alone $R$ moves by
+at most 0.6\%, but the threshold shifts the balance between them: at $\Delta=0.3$ the troughs give
+3\%, 39\% and 92\% of $\fpbh$ in threshold statistics for $C_{\rm th}\times0.95$, 1 and 1.05.
 \end{itemize}
 For comparison, NG moves the threshold-statistics amplitude itself by factors of 0.2--2 over the
 same grid.
+
+\textbf{Earlier comparisons for Gaussian $\zeta$.} In their own conventions, BBKS peaks need 9--15\%
+smaller amplitudes than Press--Schechter in Ref.~\cite{Gow21} and 11--12\% in the \texttt{pbhstat}
+paper \cite{ColeFumagalli}, and the high-peak formula of Ref.~\cite{Iovino24} gives
+$R\approx0.6$--0.67. Our $R_{\rm Gauss}=0.77$--0.79 lies within the spread of the normalisation
+conventions above. The non-linear statistics of the compaction function \cite{GS20,FGGS25} go the
+other way: in \texttt{pbhstat} they need 4--12\% larger amplitudes than Press--Schechter, mostly
+because of their profile-dependent threshold \cite{ColeFumagalli}. The prescription therefore sets
+the sign of the gap, not only its size.
 
 \begin{table}[t]
 \centering\small
@@ -654,11 +693,30 @@ $k_*\simeq10^7\,{\rm Mpc}^{-1}$, places the GW peak at 10--20 nHz, and the bins 
   \begin{itemize}
   \item the horizon-crossing transfer function in the threshold moves it by $-0.2$ to $-1.0\sigma$;
   \item the entropy-conserving $\fpbh$ normalisation by $-0.15$ to $-0.4\sigma$;
-  \item $\fpbh=10^{-3}$ instead of 1 by $+0.4$ to $+0.8\sigma$.
+  \item $\fpbh=10^{-3}$ instead of 1 by $+0.4$ to $+0.8\sigma$;
+  \item a $\pm5\%$ change of $C_{\rm th}$ in both statistics by up to $\pm0.54\sigma$, for the Gaussian,
+  $\fnl<0$ and curvaton templates.
   \end{itemize}
 \item \textbf{Fixed vs marginalised shape.} Fixing the shape raises the significance relative to
 marginalising over it (Gaussian BPL: $3.0$ vs $2.3\sigma_P$). The fixed BPL(4,3,1) has a steep
 causality tail, which disfavours the low-$k_*$ corner closest to the allowed region.
+\end{itemize}
+
+\textbf{An astrophysical background.} So far the SIGW is the whole signal. We add a power law from
+supermassive black hole binaries (SMBHBs) with NANOGrav's astrophysical prior on its amplitude and
+slope \cite{NG15np} and marginalise over it. SIGW plus SMBHB is preferred over the SMBHB alone by
+Bayes factors of 94--105 for BPL(4,3,1) and the lognormals with $\Delta\le1$, and 38 for
+$\Delta=2$, of the same order as NANOGrav's 23--59 for their SIGW templates \cite{NG15np}. The
+PBH-allowed region now contains the solutions in which the SMBHB alone explains the signal:
+\begin{itemize}
+\item $\sigma_P$ is capped at 2.3--2.8$\sigma$ for every template, or 2.0--2.5$\sigma$ if the
+prior on $\log_{10}A$ extends to $-4$; the templates that relieve the tension stay at
+1.8--2.6$\sigma$;
+\item the statistics shift drops to $+0.04$ to $+0.39\sigma$ (median $+0.26$, against $+0.43$
+without the SMBHB on the same grid);
+\item the profile $\Delta\chi^2$, which does not depend on the prior range, keeps the shift where
+the PBH line cuts the SIGW posterior (7.7 to 12.5 for the Gaussian BPL) and saturates at
+$\simeq18$, the cost of explaining the signal with the SMBHB alone.
 \end{itemize}
 
 \begin{table}[t]
@@ -677,10 +735,13 @@ peak volume $(2\pi)^{3/2}r^3$ & $+0.40$ to $+0.81$ & 0.14\\
 Press--Schechter factor 2 & $+0.27$ to $+0.59$ & 0.09\\
 \texttt{pbhstat} v0.0.6 normalisation & $+0.16$ to $+0.39$ & 0.33\\
 high-peak formula \cite{Iovino24} (indicative) & $+0.82$ to $+1.29$ & 0.65\\
+$C_{\rm th}\times0.95$ (five templates) & $+0.42$ to $+0.75$ & 0.54\\
+$C_{\rm th}\times1.05$ (five templates) & $+0.23$ to $+0.72$ & 0.54\\
 \bottomrule
 \end{tabular}
 \caption{Robustness of the PTA significances for BPL(4,3,1) and lognormals with $\Delta=0.5$ and 1,
-over seven NG templates (cases with $\sigma_P\le4$). Reference prior: $\log_{10}k_*\in[5,10]$,
+over seven NG templates (cases with $\sigma_P\le4$); the $C_{\rm th}$ rows cover the Gaussian,
+$\fnl=-2,-1,-0.5$ and curvaton templates. Reference prior: $\log_{10}k_*\in[5,10]$,
 $\log_{10}A\in[-3,0]$.}
 \label{tab:robust}
 \end{table}
@@ -709,7 +770,9 @@ now quantified.
 \end{itemize}
 
 \textbf{What dominates.} For an absolute statement about the PTA tension, the larger
-uncertainties lie elsewhere. The frequency range of the fit, the treatment of the collapse
+uncertainties lie elsewhere. The largest is an astrophysical SMBHB background: with NANOGrav's
+prior it caps every exclusion at 2.3--2.8$\sigma$ and reduces the statistics shift to
+0.04--0.39$\sigma$. Among the analysis choices, the frequency range of the fit, the treatment of the collapse
 threshold and the $\fpbh$ normalisation each move the significance by about as much as the choice
 of statistics, or more. All three are rarely stated. We recommend quoting them with any PBH
 bound on the PTA signal, together with the peak normalisation when peaks theory is used. On the
@@ -722,18 +785,19 @@ question (to 0.04$\sigma$), although it miscounts peaks by up to 18\%.
 profile, as the literature we compare with does; profile dispersion can matter for negative NG
 \cite{Escriva26}. The collapse threshold follows from the power spectrum and is the same for
 every NG template, although NG also deforms the typical profile and hence the threshold
-\cite{KMR19,ETYY22}. Each scale is counted separately, without a cloud-in-cloud correction. We
+\cite{KMR19,ETYY22}; a $\pm5\%$ change moves $\sigma_P$ by up to $0.54\sigma$ and $R$ by
+$\le0.3\%$ ($\le6\%$ for the curvaton, Sec.~\ref{sec:R}). Each scale is counted separately, without a cloud-in-cloud correction. We
 neglect QCD effects on the formation parameters \cite{MJY23,FMPU22} and on the GW spectrum
 \cite{ATU21,BDF23}, truncate the NG series of
-the GW spectrum at $A^3$ for the curvaton and USR maps, use the free-spectrum refit rather than
-the full PTA likelihood, and ignore an astrophysical foreground. A
-supermassive-black-hole-binary component would relax every tension quoted here.
+the GW spectrum at $A^3$ for the curvaton and USR maps, and use the free-spectrum refit rather
+than the full PTA likelihood; the SMBHB background is a power law with NANOGrav's prior.
 \item These choices are common to both statistics, so the comparison between them is
 like-for-like.
 \item \textbf{Which peaks.} $R$ refers to BBKS maxima of the compaction at fixed scale, the
 prescription that differs from threshold statistics only by the peak condition. Peaks of $\zeta$
 with typical profiles \cite{Yoo18,Yoo20,Kitajima} and the non-linear statistics of
-Ref.~\cite{GS20} define the abundance differently; we have not computed $R$ for them.
+Ref.~\cite{GS20} define the abundance differently; we have not computed $R$ for them in our
+conventions, but Sec.~\ref{sec:R} quotes what the literature finds for Gaussian $\zeta$.
 \item The absolute numbers carry the systematics of Table~\ref{tab:robust}.
 \end{itemize}
 
@@ -745,9 +809,12 @@ the compaction function, as the exact counterpart of threshold statistics. Maxim
 non-Gaussian compaction are maxima of a shifted Gaussian field, corrected by a rank-one term
 (eq.~\ref{eq:3b}). Monte Carlo and lattice counts confirm this.
 \item \textbf{The gap.} Peaks require 18--26\% smaller amplitudes than threshold statistics. This
-ratio is almost independent of NG for $|\fnl|\le2$.
+ratio is almost independent of NG for $|\fnl|\le2$, so a threshold-statistics amplitude converts to
+peaks theory as $A_*^{\rm peaks}\simeq R_{\rm Gauss}A_*^{\rm threshold}$ with
+$R_{\rm Gauss}=0.783+0.0066\ln\Delta$ (lognormal) or 0.775--0.778 (BPL), to about 4\%.
 \item \textbf{PTA consequence.} For NANOGrav 15 this strengthens the exclusion of a
-scalar-induced explanation by 0.2--0.8$\sigma$ for every NG template. The effect is smaller than
+scalar-induced explanation by 0.2--0.8$\sigma$ for every NG template, or by 0.04--0.39$\sigma$
+with an SMBHB background, which caps the exclusion at 2.8$\sigma$. The effect is smaller than
 that of NG itself for $|\fnl|\gtrsim1$ and comparable to three analysis conventions, which we
 have quantified.
 \item \textbf{NG in the GWs.} The primordial-NG corrections to the induced GW spectrum, all seven
@@ -853,8 +920,7 @@ and test the code \texttt{ngpbh}, run the numerical checks and draft the text. T
 responsible for the content of this note.
 
 \section*{Code and data}
-\texttt{ngpbh} (MIT licence) is archived at Zenodo. This note was produced with version 0.6.0,
-\href{https://doi.org/10.5281/zenodo.23643762}{doi:10.5281/zenodo.23643762};
+\texttt{ngpbh} (MIT licence) is archived at Zenodo. This note was produced with version 0.7.0;
 \href{https://doi.org/10.5281/zenodo.23624506}{doi:10.5281/zenodo.23624506} resolves to the latest
 version. It contains:
 \begin{itemize}
@@ -906,11 +972,11 @@ downloaded with an MD5 check.
 \bibitem{Gow21} A.~D.~Gow, C.~T.~Byrnes, P.~S.~Cole, S.~Young, JCAP 02 (2021) 002, arXiv:2008.03289.
 \bibitem{IPV25} A.~J.~Iovino, G.~Perna, H.~Veerm\"ae, JCAP 05 (2026) 027, arXiv:2512.13648.
 \bibitem{GTV25} Y.~Gouttenoire, S.~Trifinopoulos, M.~Vanvlasselaer, JCAP 02 (2026) 072, arXiv:2508.19328.
-\bibitem{Escriva26} A.~Escriv\`a, arXiv:2607.08738.
-\bibitem{Germani25} C.~Germani, M.~A.~Gorji, M.~Uwabo-Niibo, M.~Yamaguchi, JCAP 09 (2025) 052, arXiv:2503.05434.
 \bibitem{CPS19} R.-G.~Cai, S.~Pi, M.~Sasaki, Phys.\ Rev.\ Lett.\ 122, 201101 (2019), arXiv:1810.11000.
 \bibitem{Unal19} C.~\"Unal, Phys.\ Rev.\ D 99, 041301 (2019), arXiv:1811.09151.
 \bibitem{ALW21} P.~Adshead, K.~D.~Lozanov, Z.~J.~Weiner, JCAP 10 (2021) 080, arXiv:2105.01659.
+\bibitem{Escriva26} A.~Escriv\`a, arXiv:2607.08738.
+\bibitem{Germani25} C.~Germani, M.~A.~Gorji, M.~Uwabo-Niibo, M.~Yamaguchi, JCAP 09 (2025) 052, arXiv:2503.05434.
 \bibitem{SVW06} M.~Sasaki, J.~V\"aliviita, D.~Wands, Phys.\ Rev.\ D 74, 103003 (2006), arXiv:astro-ph/0607627.
 \bibitem{EC94} C.~R.~Evans, J.~S.~Coleman, Phys.\ Rev.\ Lett.\ 72, 1782 (1994), arXiv:gr-qc/9402041.
 \bibitem{NJ98} J.~C.~Niemeyer, K.~Jedamzik, Phys.\ Rev.\ Lett.\ 80, 5481 (1998), arXiv:astro-ph/9709072.
@@ -919,6 +985,9 @@ downloaded with an MD5 check.
 \bibitem{EGS20} A.~Escriv\`a, C.~Germani, R.~K.~Sheth, Phys.\ Rev.\ D 101, 044022 (2020), arXiv:1907.13311.
 \bibitem{Musco21} I.~Musco, V.~De Luca, G.~Franciolini, A.~Riotto, Phys.\ Rev.\ D 103, 063538 (2021), arXiv:2011.03014.
 \bibitem{Blas26} D.~Blas, J.~W.~Foster, Y.~Gouttenoire, A.~J.~Iovino, I.~Musco, S.~Trifinopoulos, M.~Vanvlasselaer, Phys.\ Lett.\ B 879, 140635 (2026), arXiv:2602.12252.
+\bibitem{KMR19} A.~Kehagias, I.~Musco, A.~Riotto, JCAP 12 (2019) 029, arXiv:1906.07135.
+\bibitem{ETYY22} A.~Escriv\`a, Y.~Tada, S.~Yokoyama, C.-M.~Yoo, JCAP 05 (2022) 012, arXiv:2202.01028.
+\bibitem{FGGS25} J.~Fumagalli, J.~Garriga, C.~Germani, R.~K.~Sheth, Phys.\ Rev.\ D 111, 123518 (2025), arXiv:2412.07709.
 \bibitem{Espinosa} J.~R.~Espinosa, D.~Racco, A.~Riotto, JCAP 09 (2018) 012, arXiv:1804.07732.
 \bibitem{Saikawa} K.~Saikawa, S.~Shirai, JCAP 08 (2020) 011, arXiv:2005.03544.
 \bibitem{Lamb} W.~G.~Lamb, S.~R.~Taylor, R.~van Haasteren, Phys.\ Rev.\ D 108, 103019 (2023), arXiv:2303.15442.
@@ -926,8 +995,6 @@ downloaded with an MD5 check.
 \bibitem{AD21} V.~Atal, G.~Dom\`enech, JCAP 06 (2021) 001; Erratum ibid.\ 10 (2023) E01, arXiv:2103.01056.
 \bibitem{GPRW22} S.~Garcia-Saenz, L.~Pinol, S.~Renaux-Petel, D.~Werth, JCAP 03 (2023) 057, arXiv:2207.14267.
 \bibitem{Perna24} G.~Perna, C.~Testini, A.~Ricciardone, S.~Matarrese, JCAP 05 (2024) 086, arXiv:2403.06962.
-\bibitem{KMR19} A.~Kehagias, I.~Musco, A.~Riotto, JCAP 12 (2019) 029, arXiv:1906.07135.
-\bibitem{ETYY22} A.~Escriv\`a, Y.~Tada, S.~Yokoyama, C.-M.~Yoo, JCAP 05 (2022) 012, arXiv:2202.01028.
 \bibitem{MJY23} I.~Musco, K.~Jedamzik, S.~Young, Phys.\ Rev.\ D 109, 083506 (2024), arXiv:2303.07980.
 \bibitem{FMPU22} G.~Franciolini, I.~Musco, P.~Pani, A.~Urbano, Phys.\ Rev.\ D 106, 123526 (2022), arXiv:2209.05959.
 \bibitem{ATU21} K.~T.~Abe, Y.~Tada, I.~Ueda, JCAP 06 (2021) 048, arXiv:2010.06193.

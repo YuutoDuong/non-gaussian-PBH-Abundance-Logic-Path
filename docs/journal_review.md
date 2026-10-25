@@ -60,7 +60,7 @@ Results:
 
 Effort: S = hours, M = a day or so of work plus compute, L = more.
 
-### 1. The headline effect is modest: lead with the factorisation (S)
+### 1. The headline effect is modest: lead with the factorisation (S) — done
 
 * **The numbers:**
   * true NG peaks against the Gaussian-peak approximation: ≤ 1.7% in A*, ≤ 0.04σ;
@@ -71,8 +71,13 @@ Effort: S = hours, M = a day or so of work plus compute, L = more.
   peaks factorises: A*_peaks(Δ, NG) ≈ R_Gauss(Δ) × A*_threshold(Δ, NG), to about 4% for
   |f_NL| ≤ 2. Give R_Gauss(Δ), and R for the BPL, as a table or fitting formula, so readers can
   convert any threshold-statistics result. That is what people will use and cite.
+* **Done (25 Oct 2026):** `scripts/r_gauss_fit.py`.
+  * R_Gauss = 0.783 + 0.0066 ln Δ for 0.1 ≤ Δ ≤ 2, to 0.002;
+  * 0.775–0.778 for BPL(4,β,1) with β = 2–4;
+  * R/R_Gauss = 0.971–1.033 for BPL(4,3,1) over the NG templates.
+  * The conversion rule A*_peaks ≃ R_Gauss A*_threshold is in Sec. 4 and in the conclusions.
 
-### 2. Which peaks? (M)
+### 2. Which peaks? (M) — done
 
 * **The issue:** R is defined for BBKS maxima of C at a fixed scale. Two other prescriptions define
   the abundance differently:
@@ -92,8 +97,18 @@ Effort: S = hours, M = a day or so of work plus compute, L = more.
   * Germani et al. treat sphericity.
 
   The table in `docs/phase0_gap_assessment.md` already has the content.
+* **Done (25 Oct 2026):**
+  * a paragraph in Sec. 4 compares with the earlier Gaussian comparisons: BBKS peaks need 9–15%
+    smaller amplitudes than Press–Schechter in Gow et al. and 11–12% in the pbhstat paper; the
+    high-peak formula gives R ≈ 0.6–0.67; the non-linear statistics need 4–12% larger amplitudes,
+    so the prescription sets the sign of the gap, not only its size;
+  * pbhstat's `NonLinearModel` was not rerun in our conventions: it has its own threshold
+    (K̃ = 6, profile-dependent g_c), and its printed formula lacks 1/Ω_CDM, so its paper's numbers
+    are quoted instead;
+  * the introduction now has a paragraph on how the construction differs from Yoo, Gong &
+    Yokoyama, Riccardi et al., Escrivà and Germani et al.
 
-### 3. Strong negative NG: profile dispersion and the threshold (S–M)
+### 3. Strong negative NG: profile dispersion and the threshold (S–M) — threshold done
 
 * **The issue:**
   * Escrivà (2607.08738) finds that profile deformations raise the abundance by orders of
@@ -107,8 +122,19 @@ Effort: S = hours, M = a day or so of work plus compute, L = more.
   * vary C_th by ±5% for those templates, as Iovino et al. 2024 do, and report the change in R
     and σ_P;
   * add a paragraph estimating what Escrivà's result would do to the f_NL < 0 rows.
+* **Done (25 Oct 2026):** `scripts/threshold_sensitivity.py`, `scripts/curvaton_branches.py`.
+  * With C_th × 0.95 or × 1.05 in both statistics, A* moves by −19 to +27%.
+  * R and R/R_Gauss move by ≤ 0.3% for the Gaussian and quadratic templates.
+  * σ_P moves by up to ±0.54σ; the statistics shift stays at +0.23 to +0.75σ.
+  * For the curvaton, R moves by up to 6%. The map is symmetric about ζ_g = −2r/3, where the
+    curvaton field changes sign, so troughs of ζ_g are also peaks of ζ. The two branches have
+    their own R (0.75–0.79 and 0.81–0.84), each stable to ≤ 0.6%, and the threshold shifts the
+    balance between them.
+  * All of this is now in Secs. 2, 4 and 5.5 and in the limitations.
+  * Profile dispersion stays a stated limitation (Escrivà 2607.08738): estimating it would mean
+    reproducing his shape-dispersion calculation.
 
-### 4. No astrophysical foreground in the PTA fit (M)
+### 4. No astrophysical foreground in the PTA fit (M) — done
 
 * **The issue:** the fit uses the NANOGrav 15 free spectrum alone, without an SMBHB component. The
   statistics shift is the point, but even Δσ depends on the shape of the posterior near the
@@ -119,6 +145,14 @@ Effort: S = hours, M = a day or so of work plus compute, L = more.
 * **Data currency:** NANOGrav 15 is still the most constraining public free spectrum that I could
   find. IPTA DR3 is described but I found no public GWB free spectrum; the InPTA DR2 search
   (2608.02808) appeared in Aug 2026. Say so; an EPTA DR2 cross-check is optional.
+* **Done (25 Oct 2026):** `scripts/pta_smbhb.py`, with NANOGrav's astrophysical prior (2306.16219
+  eq. A1), marginalised.
+  * Bayes factors SIGW + SMBHB vs SMBHB alone: 94–105 (Δ ≤ 1 and BPL) and 38 (Δ = 2), against
+    NANOGrav's 23–59.
+  * σ_P is capped at 2.3–2.8σ, because the allowed region now contains the SMBHB-only solutions.
+  * The statistics shift drops to +0.04 to +0.39σ (median +0.26, against +0.43 without).
+  * The profile Δχ² keeps the shift and saturates at ≈ 18.
+  * In the abstract, Sec. 5.5, the discussion ("What dominates") and the conclusions.
 
 ### 5. Make contact with Iovino et al. 2024 (S) — done
 
@@ -210,6 +244,7 @@ Both journals accept papers already posted on arXiv or Zenodo.
 * [ ] INSPIRE scan re-run just before submission
 * [ ] arXiv first (endorser needed), then the journal with the arXiv number
 * [ ] a new release (v0.7.0) once the journal version adds computations, so the archive matches
+  (metadata prepared on 25 Oct 2026; the note cites the concept DOI until the version DOI exists)
 
 ## Suggested order of work
 
@@ -217,7 +252,7 @@ Both journals accept papers already posted on arXiv or Zenodo.
    * items 5 and 7;
    * the wording in the minor comments;
    * the 3a/3b jargon in the text and figure labels.
-2. **Computations (M):**
+2. **Computations (M) — done on 25 Oct 2026:**
    * item 4 (foreground);
    * item 3 (threshold ±5%);
    * item 1 (R_Gauss table or fit);

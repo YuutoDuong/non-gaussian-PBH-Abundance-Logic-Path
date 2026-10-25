@@ -165,7 +165,7 @@ the assessment), so that peaks and threshold statistics differ only by the peak 
    * The earlier estimate "≲ 3% in A" was too small by a factor 2–8: the one-loop power collects
      the whole variance.
 7. **Still open:**
-   * the SMBHB foreground;
+   * ~~the SMBHB foreground~~: done for the journal version (see "Journal computations");
    * the full PTA likelihood instead of the refit;
    * QCD sound-speed effects on the SIGW tail;
    * a joint NANOGrav + EPTA fit.
@@ -232,7 +232,50 @@ the assessment), so that peaks and threshold statistics differ only by the peak 
   * for a journal: the improvements in `docs/journal_review.md`. Its quick fixes are done (25 Oct
     2026): the Iovino et al. framing, Appendix B (origin of the 12.7, cross-checks), the spectra
     written out, σ_P in the table captions, QCD references, and descriptive labels instead of
-    "3a/3b" in the text and figures (66 references, 19 pages).
+    "3a/3b" in the text and figures (66 references, 19 pages). Its computations are done too
+    (see below);
+  * a release `v0.7.0` (GitHub release, which Zenodo archives): the note now quotes numbers that
+    v0.6.0 does not contain; send the new version DOI so the note can cite it.
+
+## Journal computations — done (25 Oct 2026)
+
+Items 1–4 of `docs/journal_review.md`, now in the note. They need code version 0.7.0 (prepared;
+the release and its DOI are still to come).
+
+* **R_Gauss and the factorisation** (`scripts/r_gauss_fit.py`):
+  * lognormal, 0.1 ≤ Δ ≤ 2: R_Gauss = 0.783 + 0.0066 ln Δ, to 0.002;
+  * BPL(4,β,1), β = 2–4: 0.775–0.778;
+  * R/R_Gauss for BPL(4,3,1) is 0.971–1.033 over the NG templates (1.03 for the curvaton), so
+    A*_peaks ≃ R_Gauss A*_threshold to about 4% (Sec. 4 and the conclusions).
+* **Other prescriptions** (literature, Gaussian ζ; Sec. 4):
+  * BBKS peaks need 9–15% smaller amplitudes than Press–Schechter in Gow et al. 2021 and 11–12%
+    in the pbhstat paper;
+  * the high-peak formula gives R ≈ 0.6–0.67;
+  * the non-linear (Germani–Sheth) statistics need 4–12% larger amplitudes in pbhstat, mostly
+    through their profile-dependent threshold, so the prescription sets the sign of the gap.
+  * pbhstat's `NonLinearModel` was not rerun in our conventions: it has its own threshold
+    (K̃ = 6, g_c(w)), and the printed formula lacks 1/Ω_CDM.
+* **Threshold ±5%** (`scripts/threshold_sensitivity.py`, `scripts/curvaton_branches.py`), as in
+  Iovino et al. 2406.20089:
+  * A* moves by −19 to +27%, R and R/R_Gauss by ≤ 0.3% (Gaussian, f_NL = −2 to −0.5);
+  * σ_P moves by up to ±0.54σ; the statistics shift stays at +0.23 to +0.75σ (reference +0.31 to
+    +0.68);
+  * for the curvaton r = 0.9, R moves by up to 6%. Its map is symmetric about ζ_g = −2r/3,
+    where the curvaton field changes sign, so troughs of ζ_g are also peaks of ζ. The two
+    branches have their own R (0.75–0.79 and 0.81–0.84), each stable to ≤ 0.6%, and the
+    threshold shifts the balance: at Δ = 0.3 the troughs give 3%, 39% and 92% of f_PBH in
+    threshold statistics for C_th × 0.95, 1 and 1.05. Checked: the branches add up to f_PBH to
+    6×10⁻⁶, and a ζ_r window of 24σ_r instead of 16 changes nothing.
+* **SMBHB background** (`scripts/pta_smbhb.py`), NANOGrav's astrophysical prior (2306.16219
+  eq. A1), marginalised:
+  * Bayes factors SIGW + SMBHB vs SMBHB alone: 94–105 (BPL, lognormal Δ ≤ 1) and 38 (Δ = 2),
+    against NANOGrav's 23–59;
+  * σ_P is capped at 2.3–2.8σ (2.0–2.5σ with log10 A ≥ −4), because the allowed region now
+    contains the SMBHB-only solutions;
+  * the statistics shift is +0.04 to +0.39σ (median +0.26, against +0.43 without);
+  * the profile Δχ² keeps the shift (7.7 → 12.5 for the Gaussian BPL) and saturates at ≈ 18.
+* **Still to do for the journal:** item 6 of the review (prose, journal class, BibTeX, vector
+  figures).
 
 ## Pitfalls, confirmed or added
 
@@ -253,6 +296,9 @@ the assessment), so that peaks and threshold statistics differ only by the peak 
 * **New (Phase 5):** the f_PBH normalisation in common use (M_eq formula; 2306.17149 eq. 14) is
   3–13× larger than entropy conservation gives; state it with every A_*.
 * **New (Phase 5):** a `pgrep -f` waiter matches its own command line; use `pgrep -f "[p]attern"`.
+* **New (journal):** the curvaton map has a second branch, ζ_g < −2r/3, where the curvaton field
+  changes sign. For f_NL < 0 it competes with the first, and quantities that differ between
+  branches (such as R) then depend on the threshold through their balance.
 * **New (NG SIGW):** for broad spectra the Monte Carlo of the connected terms has heavy-tailed
   weights. They come from pairs of vertices that are nearly independent: cos 2φ averages to
   zero but carries the variance. Averaging each sample over rotations about k removes them, and

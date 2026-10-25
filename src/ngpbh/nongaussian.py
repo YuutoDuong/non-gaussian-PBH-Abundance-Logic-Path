@@ -127,6 +127,12 @@ class Curvaton(LocalNG):
     fraction at decay (r = r_dec).  This is the quartic behind the closed form of eq. (5); for
     r = 1 it gives zeta = (2/3) ln(1 + 3 zeta_g / 2) (eq. 8), and to quadratic order
     f_NL = (5/3)(3/(4r) - 1 - r/2) (eq. 9).
+
+    g, and hence F, is symmetric about zeta_g = -2r/3, where the curvaton field changes sign
+    (rho_sigma ~ sigma^2): troughs of zeta_g below -2r/3 are peaks of zeta. For r < 1 both
+    branches are integrated; the second matters when f_NL < 0 suppresses the first (for
+    r = 0.9 see scripts/curvaton_branches.py). For r = 1, F is singular at -2/3 and bounds()
+    keeps only zeta_g > -2/3.
     """
 
     r_dec: float

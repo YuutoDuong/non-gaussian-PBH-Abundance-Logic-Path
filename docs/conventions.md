@@ -164,6 +164,12 @@ are regularised (`smooth=0.05`: max of the KDE and its 0.05-dex Gaussian blur), 
 compact kernels floor the density at ln p = −36 outside the sampled range; this leaves the bulk
 unchanged and moves significances by ≤ 0.1σ.
 
+SMBHB background (`scripts/pta_smbhb.py`): h_c = A_B (f/f_yr)^((3−γ_B)/2), so
+ρ_B² = A_B² (f/f_yr)^(3−γ_B) / (12π² f³ T), added to the SIGW power. Prior on (log10 A_B, γ_B):
+NANOGrav's astrophysical 2D Gaussian, mean (−15.6, 4.7), covariance [[0.28, −0.0026],
+[−0.0026, 0.12]] (2306.16219 eq. A1), marginalised on a grid (steps 0.025 and 0.1) inside its
+4σ ellipse.
+
 ## NG corrections to the SIGW (`sigw_ng.py`)
 
 For ζ = ζ_g + F(ζ_g² − ⟨ζ_g²⟩), F = 3f_NL/5, with Δ²_g = A s(k/k*) the spectrum of the Gaussian

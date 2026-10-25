@@ -305,5 +305,7 @@ disfavours a SIGW explanation of NANOGrav 15, but modestly and uniformly:
   fits within ~0.3σ (power law) and 2306.17149's SIGW fit (Pipeline item 2).
 * **Priors.** Credible levels depend on the prior box: uniform in log10 k* ∈ [5, 10] and
   log10 A ∈ [−3, 0]. The profile Δχ² in `phase5_tension.csv` does not.
-* **No astrophysical foreground.** As in 2306.17149, the whole signal is assumed to be SIGW. A
-  supermassive-black-hole-binary component would relax every tension quoted here.
+* **No astrophysical foreground in the tables above.** As in 2306.17149, the whole signal is
+  assumed to be SIGW. `scripts/pta_smbhb.py` adds an SMBHB power law with NANOGrav's
+  astrophysical prior (`results/pta_smbhb.md`): σ_P is then capped at 2.3–2.8σ, and the
+  statistics shift drops to +0.04 to +0.39σ (median +0.26, against +0.43 without).
