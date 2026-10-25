@@ -71,6 +71,24 @@ the scan adds:
 
 Re-run the scan just before submission.
 
+Third pass (25 Oct 2026, before the Zenodo release). The same queries, plus the citers of
+2306.17149, 2406.20089, 2501.00295, 2603.23025, 2512.13648 and 2601.06024, for records since
+16 Oct (INSPIRE had indexed up to 20 Oct): six new records, none on peaks with NG
+(backreaction, braneworld PBHs, birefringence, PBH clustering, 21 cm). The reference check for
+the note added two older papers that the first two passes missed, because they predate the
+citation trees scanned:
+
+* Yoo, Gong, Yokoyama [1906.06790](https://arxiv.org/abs/1906.06790) (JCAP 09 (2019) 033):
+  peaks of ζ_G with typical profiles and quadratic f_NL, for a monochromatic *and* an extended
+  spectrum (P ∝ k³ e^{−3k²/2k₀²}). They assume that every peak of ζ_G is a peak of ζ (valid for
+  3f_NL/5 ≳ −1/4) and do not compare with threshold statistics.
+* Atal, Garriga, Marcos-Caballero [1905.13202](https://arxiv.org/abs/1905.13202) (JCAP 09
+  (2019) 073): the origin of the USR/constant-roll log template; high-peak median profiles of
+  ζ_g, k⁴ growth cut at the peak; amplitude estimates at fixed ν, no abundance comparison.
+
+Both impose the peak condition on the Gaussian component, which the abstract of the note already
+covers ("or with the peak condition imposed on a Gaussian field"). The gap stands.
+
 ## Papers that state the gap explicitly
 
 | paper | what it says |

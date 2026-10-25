@@ -184,19 +184,33 @@ the assessment), so that peaks and threshold statistics differ only by the peak 
   * `CITATION.cff` and `.zenodo.json` (author: Duong Ngoc Khoa, Phenikaa Institute for Advanced
     Study, ORCID 0009-0009-9409-3298);
   * version 0.4.0.
-* **Note:** `docs/note/ngpbh_note.tex` / `.pdf`, 13 pages. It covers the construction, the
-  checks, the R map, the PTA tension, robustness, the two pitfalls found in the literature, and
-  appendices.
+* **Note:** `docs/note/ngpbh_note.tex` / `.pdf`, 18 pages. It covers the construction, the
+  checks, the R map, the PTA tension, the NG corrections to the induced GWs, robustness, the two
+  pitfalls found in the literature, and appendices.
+* **Pre-publication check (25 Oct 2026):**
+  * every reference checked against INSPIRE: one author list fixed (Blas et al. has seven
+    authors), ten journal references added;
+  * 27 standard references added: the other PTAs, the compaction function, peaks theory for
+    broad spectra, Yoo, Gong & Yokoyama 1906.06790 and Atal, Garriga & Marcos-Caballero
+    1905.13202 (peaks of the Gaussian component with local NG, the second for the USR log
+    template), critical collapse, the NG-SIGW literature and the trispectrum no-go theorem;
+  * "Draft" removed; the note cites the concept DOI and version 0.6.0; an acknowledgement
+    discloses the use of an AI assistant (required by arXiv and most journals);
+  * version 0.6.0 prepared (`pyproject.toml`, `CITATION.cff`, `.zenodo.json`, README).
 * **Remaining (your decisions or actions):**
   * ~~a tagged release and the Zenodo DOI~~: done, tag `astro` (commit 692dc2c),
     DOI 10.5281/zenodo.23624507 (all versions: 10.5281/zenodo.23624506);
-  * an arXiv endorser;
-  * the email to Cole & Fumagalli;
-  * whether to send the 2306.17149 authors a courtesy note before submission. It is not needed
-    for the facts. Their threshold is settled by their own Fig. S3: it follows Musco et al. and
-    only the notation of eq. (S4) is ambiguous. The f_PBH constant follows from their eq. (14)
-    and entropy conservation;
-  * re-running the INSPIRE scan just before submission;
+  * **a release `v0.6.0`** from this branch. The `astro` archive predates the threshold check
+    (Appendix C) and the `eta_over_rm` option, so it cannot reproduce the whole note;
+  * read the AI-use acknowledgement in the note and adjust the wording;
+  * the note on Zenodo as a preprint: a separate record (Publication → Preprint, CC BY 4.0),
+    related identifier "is supplemented by" 10.5281/zenodo.23624506;
+  * an arXiv endorser (astro-ph.CO); the arXiv upload needs the figures next to the `.tex`;
+  * ~~the courtesy notes to the 2306.17149 authors and to Cole & Fumagalli~~: not needed for the
+    facts (their Fig. S3, eq. 14 and the code comparison settle them); you decided against them
+    on 25 Oct 2026;
+  * ~~re-running the INSPIRE scan~~: re-run 25 Oct 2026 (records to 20 Oct), nothing closes the
+    gap; repeat just before the arXiv submission;
   * optional: a pbhstat PR with the NG threshold statistics and peaks.
 
 ## Pitfalls, confirmed or added

@@ -1,16 +1,16 @@
 cff-version: 1.2.0
 message: "If you use ngpbh, please cite the software and the accompanying note."
 title: "ngpbh: threshold statistics and peaks theory for the PBH abundance with local non-Gaussianity"
-version: 0.5.0
-date-released: 2026-10-24
-doi: 10.5281/zenodo.23624507
+version: 0.6.0
+date-released: 2026-10-25
+doi: 10.5281/zenodo.23624506
 identifiers:
   - type: doi
-    value: 10.5281/zenodo.23624507
-    description: "The archived release (tag astro)"
-  - type: doi
     value: 10.5281/zenodo.23624506
-    description: "All versions (concept DOI)"
+    description: "All versions (concept DOI); resolves to the latest version"
+  - type: doi
+    value: 10.5281/zenodo.23624507
+    description: "Version astro (24 Oct 2026), before the threshold check of the note's Appendix C"
 license: MIT
 repository-code: "https://github.com/YuutoDuong/non-gaussian-PBH-Abundance-Logic-Path"
 keywords:

@@ -1,6 +1,6 @@
 # Non-Gaussian PBH abundance: threshold statistics vs peaks theory
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23624507.svg)](https://doi.org/10.5281/zenodo.23624507)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23624506.svg)](https://doi.org/10.5281/zenodo.23624506)
 
 Code for Option A of the project plan: does the gap between threshold statistics and peaks
 theory, once local non-Gaussianity (NG) is included for broad spectra, change how strongly
@@ -93,7 +93,8 @@ statistics when comparing them.
 ## Citing
 
 Duong Ngoc Khoa (Phenikaa Institute for Advanced Study, ORCID 0009-0009-9409-3298). The code is
-archived at Zenodo: doi:[10.5281/zenodo.23624507](https://doi.org/10.5281/zenodo.23624507) for
-the release used in the note (tag `astro`), and
-doi:[10.5281/zenodo.23624506](https://doi.org/10.5281/zenodo.23624506) for all versions. See
-`CITATION.cff`. MIT licence (`LICENSE`).
+archived at Zenodo: doi:[10.5281/zenodo.23624506](https://doi.org/10.5281/zenodo.23624506) for
+all versions (it resolves to the latest). The note was produced with version 0.6.0. The first
+archived version (tag `astro`,
+doi:[10.5281/zenodo.23624507](https://doi.org/10.5281/zenodo.23624507)) predates the threshold
+check of the note's Appendix C. See `CITATION.cff`. MIT licence (`LICENSE`).

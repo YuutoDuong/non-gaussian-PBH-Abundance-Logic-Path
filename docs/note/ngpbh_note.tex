@@ -3,7 +3,10 @@
 \usepackage{amsmath,amssymb,bm}
 \usepackage{graphicx}
 \usepackage{booktabs}
+\usepackage{cite}
 \usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\hypersetup{pdftitle={Peaks or thresholds? Non-Gaussian primordial black hole abundances for broad
+spectra and the pulsar-timing-array tension},pdfauthor={Duong Ngoc Khoa}}
 \graphicspath{{../../results/}}
 \setlength{\emergencystretch}{1.5em}
 
@@ -22,8 +25,8 @@
 \Large Non-Gaussian primordial black hole abundances for broad spectra\\
 and the pulsar-timing-array tension}
 \author{Duong Ngoc Khoa\thanks{Phenikaa Institute for Advanced Study. ORCID 0009-0009-9409-3298.
-Draft of 24 October 2026. The code \texttt{ngpbh} and every number below are archived at Zenodo,
-\href{https://doi.org/10.5281/zenodo.23624507}{doi:10.5281/zenodo.23624507}.}}
+Version of 25 October 2026. The code \texttt{ngpbh} (version 0.6.0) and every number below are
+archived at Zenodo, \href{https://doi.org/10.5281/zenodo.23624506}{doi:10.5281/zenodo.23624506}.}}
 \date{}
 
 \begin{document}
@@ -62,24 +65,27 @@ We quantify all three.
 \section{Introduction}
 
 Pulsar timing arrays (PTAs) have found evidence for a nanohertz gravitational-wave background
-\cite{NG15gwb}. One cosmological interpretation is the gravitational waves induced at second
-order by a peak in the primordial curvature spectrum \cite{Ananda,Baumann,Kohri,Domenech,NG15np}.
-A peak large enough to produce the signal also forms PBHs when the perturbations re-enter the
-horizon. Requiring that PBHs are not overproduced disfavours the scenario at the 2--3$\sigma$
-level \cite{FIVT23,NG15np,Iovino24}. How strongly depends on the NG of the curvature perturbation
-and on how the PBH abundance is computed.
+\cite{NG15gwb,EPTA23,PPTA23,CPTA23}. One cosmological interpretation is the gravitational waves
+induced at second order by a peak in the primordial curvature spectrum
+\cite{Ananda,Baumann,Kohri,Domenech,NG15np,FPRS23,Ellis23}. A peak large enough to produce the
+signal also forms PBHs when the perturbations re-enter the horizon. Requiring that PBHs are not
+overproduced disfavours the scenario at the 2--3$\sigma$ level \cite{FIVT23,NG15np,Iovino24}. How
+strongly depends on the NG of the curvature perturbation \cite{FIVT23,LCH23,WZLZ23} and on how the
+PBH abundance is computed \cite{Iovino24}.
 
-Two prescriptions are in use for the abundance:
+Two prescriptions are in use for the abundance (see Ref.~\cite{CIPVV26} for a review):
 \begin{itemize}
 \item \textbf{Threshold statistics} counts the volume fraction in which the compaction function
-exceeds a threshold. It includes the non-linear relation between curvature and density and any
-local NG non-perturbatively \cite{Ferrante,Ianniccari}.
-\item \textbf{Peaks theory} counts maxima \cite{BBKS}. It has been developed for Gaussian
-curvature with finite width \cite{Pi25,Kushwaha,ColeFumagalli} and for local NG with
-monochromatic spectra \cite{Young22,Kitajima,Inui}.
+\cite{SS99,Harada15} exceeds a threshold. It includes the non-linear relation between curvature
+and density \cite{Young19,DeLuca19} and any local NG non-perturbatively \cite{Ferrante,Ianniccari}.
+\item \textbf{Peaks theory} counts maxima \cite{BBKS,Yoo18}. It has been developed for Gaussian
+curvature with finite width \cite{Yoo20,GS20,Pi25,Kushwaha,ColeFumagalli} and for local NG, either
+for monochromatic spectra \cite{Young22,Kitajima,Inui} or with the peak condition imposed on the
+Gaussian component \cite{AGM19,YGY19,Riccardi}.
 \end{itemize}
+For Gaussian curvature the two have been compared in Refs.~\cite{Gow21,Ianniccari,Kushwaha,Iovino24}.
 Several recent papers state that peaks theory with local NG for broad spectra is an open problem
-\cite{Ianniccari,Iovino24,IPV25,Pi25,ColeFumagalli}. 2306.17149 \cite{FIVT23} add, in a
+\cite{Ianniccari,Iovino24,IPV25,Pi25,ColeFumagalli,GTV25}. 2306.17149 \cite{FIVT23} add, in a
 footnote, that peaks theory ``provides slightly smaller amplitudes'', so their threshold-statistics
 bounds are conservative.
 
@@ -91,13 +97,13 @@ curvaton templates). It is the exact counterpart of threshold statistics, so tha
 only by the peak condition.
 \item \textbf{Main technical step.} We count maxima of the non-Gaussian compaction itself, a local
 function of two correlated Gaussian fields, rather than of its Gaussian component. This differs
-from the closest existing work \cite{Riccardi,Escriva26,Germani25}.
+from the closest existing work \cite{YGY19,Riccardi,Escriva26,Germani25}.
 \item \textbf{The gap} (Sec.~\ref{sec:R}). We give the amplitude ratio $R(\Delta,{\rm NG})$ between
 the statistics.
 \item \textbf{PTA consequences} (Sec.~\ref{sec:pta}). We propagate the ratio to the significance
 of the PBH-overproduction tension for NANOGrav 15, with every analysis choice stated and varied.
 \item \textbf{NG in the induced GWs} (Sec.~\ref{sec:ngsigw}). We add the primordial-NG corrections to
-the GW spectrum, which 2306.17149 neglect.
+the GW spectrum \cite{CPS19,Unal19,ALW21}, which 2306.17149 neglect.
 \item \textbf{Two pitfalls.} The second appears widely in the literature.
   \begin{itemize}
   \item The collapse threshold of 2306.17149 follows Musco et al.'s superhorizon smoothing, in
@@ -115,9 +121,10 @@ The curvature perturbation is $\zeta=F(\zg)$ with $\zg$ Gaussian and power spect
 three templates:
 \begin{itemize}
 \item quadratic, $F=\zg+\frac35\fnl\zg^2$;
-\item ultra-slow-roll (USR), $F=-\mu_*\ln(1-\zg/\mu_*)$, which is $F=-\frac2\beta\ln(1-\frac\beta2\zg)$
-of 2306.17149 with $\mu_*=2/\beta$ and has $\fnl=5/(6\mu_*)$ at second order;
-\item the sudden-decay curvaton, $\zeta=\ln X(r_{\rm dec},\zg)$ \cite{Ferrante}.
+\item ultra-slow-roll (USR), $F=-\mu_*\ln(1-\zg/\mu_*)$ \cite{AGM19}, which is
+$F=-\frac2\beta\ln(1-\frac\beta2\zg)$ of 2306.17149 with $\mu_*=2/\beta$ and has $\fnl=5/(6\mu_*)$
+at second order;
+\item the sudden-decay curvaton, $\zeta=\ln X(r_{\rm dec},\zg)$ \cite{SVW06,Ferrante}.
 \end{itemize}
 At smoothing scale $r$ (the scale that re-enters the horizon at formation, $k=1/r$), define the
 Gaussian fields
@@ -129,15 +136,16 @@ with the top-hat $W(y)=3(\sin y-y\cos y)/y^3$, the shell $W_s(y)=\sin y/y$, the 
 function $T(y)=W(y/\sqrt3)$ and $\Phi=2/3$. All moments use a hard cut $kr<4.49$, which the
 peak moments need for broad spectra; it changes threshold-statistics amplitudes by $\le2\%$. For
 a spherical configuration $\Cg=-2\Phi r\zg'$, $\zr=\zg(r)$, and the linear and full compaction of
-$\zeta=F(\zg)$ are \cite{Ferrante,Young22}
+$\zeta=F(\zg)$ are \cite{Young19,DeLuca19,Ferrante,Young22}
 \begin{equation}
 \Cl=F'(\zr)\,\Cg,\qquad C=\Cl-\frac{\Cl^2}{4\Phi}.
 \label{eq:Cl}
 \end{equation}
-A PBH of mass $M=\mathcal K(C-C_{\rm th})^\gamma M_H$ forms where $C>C_{\rm th}$ and $\Cl<2\Phi$
-(type I). We use $\mathcal K=3.3$ and $\gamma=0.36$. The threshold $C_{\rm th}=\delta_c(q)$ follows the
-shape-dependent prescription of Musco et al. \cite{Musco21,EGS20}, with the transfer function
-in the moments.
+A PBH of mass $M=\mathcal K(C-C_{\rm th})^\gamma M_H$ \cite{EC94,NJ98,MM13} forms where
+$C>C_{\rm th}$ and $\Cl<2\Phi$ (type I). We use $\mathcal K=3.3$ and $\gamma=0.36$, as in
+Refs.~\cite{Ferrante,Ianniccari}. The threshold $C_{\rm th}=\delta_c(q)$ follows the
+shape-dependent prescription of Musco et al. \cite{Musco19,EGS20,Musco21}, with the transfer
+function in the moments.
 
 \subsection{Threshold statistics}
 With $P_{\rm G}(c,z)$ the bivariate Gaussian of $(\Cg,\zr)$, the mass fraction at one scale is
@@ -490,7 +498,8 @@ Shaded: beyond $4\sigma$.}
 
 So far the GW spectrum is that of Gaussian $\zeta$, as in 2306.17149. For the quadratic template
 $\zeta=\zg+F(\zg^2-\langle\zg^2\rangle)$ with $F=3\fnl/5$, the four-point function of $\zeta$ ends at
-$F^4$. The spectrum then has seven terms \cite{ALW21}:
+$F^4$. The spectrum then has seven terms \cite{ALW21} (earlier computations include
+Refs.~\cite{CPS19,Unal19,AD21}):
 \begin{equation}
 \Omega_{\rm GW,RD}=A^2T_2+F^2A^3\,(T_{\rm hyb}+T_C+T_Z)+F^4A^4\,(T_{\rm red}+T_{\rm pl}+T_{\rm np}).
 \end{equation}
@@ -538,7 +547,7 @@ arXiv source (Fig.~\ref{fig:ngvalid}). For lognormal widths 1/5 and 1/10 the agr
 \textbf{Other templates.} For $\zeta=\zg+F\zg^2+G\zg^3+\dots$, only $F$ and $G$ enter at
 $O(A^3)$. $G$ enters through the power renormalisation $P\to(1+6G\sigma^2)P$, i.e.\
 $+12G\sigma^2A^2T_2$; the $g_{\rm NL}$-type trispectrum vanishes under the azimuthal integral
-\cite{Perna24}. $O(A^4)$ would need $G^2$, $F^2G$ and $FH$ terms, so we truncate the curvaton
+\cite{GPRW22,Perna24}. $O(A^4)$ would need $G^2$, $F^2G$ and $FH$ terms, so we truncate the curvaton
 ($F=-0.62$, $G=0.32$ \cite{SVW06}) and the USR maps ($F=1/2\mu_*$, $G=1/3\mu_*^2$) at $A^3$. The
 quadratic template is exact at $A^4$.
 
@@ -803,15 +812,18 @@ lumpy and cliff-like. We replace each density by the maximum of itself and its c
 0.05-dex Gaussian: the bulk is unchanged and the holes are filled. Table~\ref{tab:robust} shows
 that the result changes by at most $0.14\sigma$ between no blur and 0.10 dex.
 
+\section*{Acknowledgements}
+This work made extensive use of the AI assistant Claude (Anthropic), through Claude Code, to write
+and test the code \texttt{ngpbh}, run the numerical checks and draft the text. The author is
+responsible for the content of this note.
+
 \section*{Code and data}
-\texttt{ngpbh} (MIT licence) is archived at Zenodo:
+\texttt{ngpbh} (MIT licence) is archived at Zenodo,
+\href{https://doi.org/10.5281/zenodo.23624506}{doi:10.5281/zenodo.23624506}, which resolves to the
+latest version; this note was produced with version 0.6.0. It contains:
 \begin{itemize}
-\item this release: \href{https://doi.org/10.5281/zenodo.23624507}{doi:10.5281/zenodo.23624507};
-\item all versions: \href{https://doi.org/10.5281/zenodo.23624506}{doi:10.5281/zenodo.23624506}.
-\end{itemize}
-It contains:
-\begin{itemize}
-\item the scripts that produce every table and figure here (\texttt{README.md});
+\item the scripts that produce every table and figure here (\texttt{README.md}), and the source of
+this note;
 \item 96 unit tests;
 \item the digitised Figs.~3 and S3 of 2306.17149 and Fig.~4 of Adshead et al.;
 \item the tables of the NG terms of the induced GW spectrum per spectral shape.
@@ -819,38 +831,65 @@ It contains:
 The NANOGrav 15 free-spectrum densities are those of PTArcade (Zenodo record 10495907) and are
 downloaded with an MD5 check.
 
-\begin{thebibliography}{99}
+\begin{thebibliography}{99}\raggedright
 \bibitem{NG15gwb} G.~Agazie {\it et al.} (NANOGrav), Astrophys.\ J.\ Lett.\ 951, L8 (2023), arXiv:2306.16213.
-\bibitem{NG15np} A.~Afzal {\it et al.} (NANOGrav), Astrophys.\ J.\ Lett.\ 951, L11 (2023), arXiv:2306.16219.
+\bibitem{EPTA23} J.~Antoniadis {\it et al.} (EPTA and InPTA), Astron.\ Astrophys.\ 678, A50 (2023), arXiv:2306.16214.
+\bibitem{PPTA23} D.~J.~Reardon {\it et al.}, Astrophys.\ J.\ Lett.\ 951, L6 (2023), arXiv:2306.16215.
+\bibitem{CPTA23} H.~Xu {\it et al.}, Res.\ Astron.\ Astrophys.\ 23, 075024 (2023), arXiv:2306.16216.
 \bibitem{Ananda} K.~N.~Ananda, C.~Clarkson, D.~Wands, Phys.\ Rev.\ D 75, 123518 (2007), arXiv:gr-qc/0612013.
 \bibitem{Baumann} D.~Baumann, P.~J.~Steinhardt, K.~Takahashi, K.~Ichiki, Phys.\ Rev.\ D 76, 084019 (2007), arXiv:hep-th/0703290.
 \bibitem{Kohri} K.~Kohri, T.~Terada, Phys.\ Rev.\ D 97, 123532 (2018), arXiv:1804.08577.
-\bibitem{Espinosa} J.~R.~Espinosa, D.~Racco, A.~Riotto, JCAP 09 (2018) 012, arXiv:1804.07732.
 \bibitem{Domenech} G.~Dom\`enech, Universe 7, 398 (2021), arXiv:2109.01398.
+\bibitem{NG15np} A.~Afzal {\it et al.} (NANOGrav), Astrophys.\ J.\ Lett.\ 951, L11 (2023); Erratum ibid.\ 971, L27 (2024), arXiv:2306.16219.
+\bibitem{FPRS23} D.~G.~Figueroa, M.~Pieroni, A.~Ricciardone, P.~Simakachorn, Phys.\ Rev.\ Lett.\ 132, 171002 (2024), arXiv:2307.02399.
+\bibitem{Ellis23} J.~Ellis {\it et al.}, Phys.\ Rev.\ D 109, 023522 (2024), arXiv:2308.08546.
 \bibitem{FIVT23} G.~Franciolini, A.~J.~Iovino, V.~Vaskonen, H.~Veerm\"ae, Phys.\ Rev.\ Lett.\ 131, 201401 (2023), arXiv:2306.17149.
-\bibitem{Iovino24} A.~J.~Iovino, G.~Perna, A.~Riotto, H.~Veerm\"ae, arXiv:2406.20089.
-\bibitem{IPV25} A.~J.~Iovino, G.~Perna, H.~Veerm\"ae, arXiv:2512.13648.
-\bibitem{Blas26} D.~Blas, J.~W.~Foster, Y.~Gouttenoire, A.~J.~Iovino, arXiv:2602.12252.
+\bibitem{Iovino24} A.~J.~Iovino, G.~Perna, A.~Riotto, H.~Veerm\"ae, JCAP 10 (2024) 050, arXiv:2406.20089.
+\bibitem{LCH23} L.~Liu, Z.-C.~Chen, Q.-G.~Huang, Phys.\ Rev.\ D 109, L061301 (2024), arXiv:2307.01102.
+\bibitem{WZLZ23} S.~Wang, Z.-C.~Zhao, J.-P.~Li, Q.-H.~Zhu, Phys.\ Rev.\ Res.\ 6, L012060 (2024), arXiv:2307.00572.
+\bibitem{CIPVV26} B.~Carr, A.~J.~Iovino, G.~Perna, V.~Vaskonen, H.~Veerm\"ae, Riv.\ Nuovo Cim.\ 49, 225 (2026), arXiv:2601.06024.
+\bibitem{SS99} M.~Shibata, M.~Sasaki, Phys.\ Rev.\ D 60, 084002 (1999), arXiv:gr-qc/9905064.
+\bibitem{Harada15} T.~Harada, C.-M.~Yoo, T.~Nakama, Y.~Koga, Phys.\ Rev.\ D 91, 084057 (2015), arXiv:1503.03934.
+\bibitem{Young19} S.~Young, I.~Musco, C.~T.~Byrnes, JCAP 11 (2019) 012, arXiv:1904.00984.
+\bibitem{DeLuca19} V.~De Luca, G.~Franciolini, A.~Kehagias, M.~Peloso, A.~Riotto, C.~\"Unal, JCAP 07 (2019) 048, arXiv:1904.00970.
 \bibitem{Ferrante} G.~Ferrante, G.~Franciolini, A.~J.~Iovino, A.~Urbano, Phys.\ Rev.\ D 107, 043520 (2023), arXiv:2211.01728.
 \bibitem{Ianniccari} A.~Ianniccari, A.~J.~Iovino, A.~Kehagias, D.~Perrone, A.~Riotto, Phys.\ Rev.\ D 109, 123549 (2024), arXiv:2402.11033.
 \bibitem{BBKS} J.~M.~Bardeen, J.~R.~Bond, N.~Kaiser, A.~S.~Szalay, Astrophys.\ J.\ 304, 15 (1986).
+\bibitem{Yoo18} C.-M.~Yoo, T.~Harada, J.~Garriga, K.~Kohri, Prog.\ Theor.\ Exp.\ Phys.\ 2018, 123E01; Erratum: 2024, 049202, arXiv:1805.03946.
+\bibitem{Yoo20} C.-M.~Yoo, T.~Harada, S.~Hirano, K.~Kohri, Prog.\ Theor.\ Exp.\ Phys.\ 2021, 013E02; Erratum: 2024, 049203, arXiv:2008.02425.
+\bibitem{GS20} C.~Germani, R.~K.~Sheth, Phys.\ Rev.\ D 101, 063520 (2020), arXiv:1912.07072.
 \bibitem{Pi25} S.~Pi, M.~Sasaki, V.~Takhistov, J.~Wang, JCAP 09 (2025) 045, arXiv:2501.00295.
 \bibitem{Kushwaha} A.~Kushwaha, T.~Suyama, arXiv:2603.23025.
-\bibitem{ColeFumagalli} P.~S.~Cole, J.~Fumagalli, arXiv:2509.14326 (\texttt{pbhstat}).
-\bibitem{Young22} S.~Young, arXiv:2201.13345.
-\bibitem{Kitajima} N.~Kitajima, Y.~Tada, S.~Yokoyama, C.-M.~Yoo, arXiv:2109.00791.
-\bibitem{Inui} R.~Inui {\it et al.}, arXiv:2411.07647.
-\bibitem{Riccardi} F.~Riccardi, M.~Taoso, A.~Urbano, arXiv:2102.04084.
+\bibitem{ColeFumagalli} P.~S.~Cole, J.~Fumagalli, Universe 11, 322 (2025), arXiv:2509.14326 (\texttt{pbhstat}).
+\bibitem{Young22} S.~Young, JCAP 05 (2022) 037, arXiv:2201.13345.
+\bibitem{Kitajima} N.~Kitajima, Y.~Tada, S.~Yokoyama, C.-M.~Yoo, JCAP 10 (2021) 053, arXiv:2109.00791.
+\bibitem{Inui} R.~Inui, C.~Joana, H.~Motohashi, S.~Pi, Y.~Tada, S.~Yokoyama, JCAP 03 (2025) 021, arXiv:2411.07647.
+\bibitem{AGM19} V.~Atal, J.~Garriga, A.~Marcos-Caballero, JCAP 09 (2019) 073, arXiv:1905.13202.
+\bibitem{YGY19} C.-M.~Yoo, J.-O.~Gong, S.~Yokoyama, JCAP 09 (2019) 033, arXiv:1906.06790.
+\bibitem{Riccardi} F.~Riccardi, M.~Taoso, A.~Urbano, JCAP 08 (2021) 060, arXiv:2102.04084.
+\bibitem{Gow21} A.~D.~Gow, C.~T.~Byrnes, P.~S.~Cole, S.~Young, JCAP 02 (2021) 002, arXiv:2008.03289.
+\bibitem{IPV25} A.~J.~Iovino, G.~Perna, H.~Veerm\"ae, JCAP 05 (2026) 027, arXiv:2512.13648.
+\bibitem{GTV25} Y.~Gouttenoire, S.~Trifinopoulos, M.~Vanvlasselaer, JCAP 02 (2026) 072, arXiv:2508.19328.
 \bibitem{Escriva26} A.~Escriv\`a, arXiv:2607.08738.
-\bibitem{Germani25} C.~Germani, M.~A.~Gorji, M.~Uwabo-Niibo, M.~Yamaguchi, arXiv:2503.05434.
-\bibitem{Musco21} I.~Musco, V.~De Luca, G.~Franciolini, A.~Riotto, Phys.\ Rev.\ D 103, 063538 (2021), arXiv:2011.03014.
+\bibitem{Germani25} C.~Germani, M.~A.~Gorji, M.~Uwabo-Niibo, M.~Yamaguchi, JCAP 09 (2025) 052, arXiv:2503.05434.
+\bibitem{CPS19} R.-G.~Cai, S.~Pi, M.~Sasaki, Phys.\ Rev.\ Lett.\ 122, 201101 (2019), arXiv:1810.11000.
+\bibitem{Unal19} C.~\"Unal, Phys.\ Rev.\ D 99, 041301 (2019), arXiv:1811.09151.
+\bibitem{ALW21} P.~Adshead, K.~D.~Lozanov, Z.~J.~Weiner, JCAP 10 (2021) 080, arXiv:2105.01659.
+\bibitem{SVW06} M.~Sasaki, J.~V\"aliviita, D.~Wands, Phys.\ Rev.\ D 74, 103003 (2006), arXiv:astro-ph/0607627.
+\bibitem{EC94} C.~R.~Evans, J.~S.~Coleman, Phys.\ Rev.\ Lett.\ 72, 1782 (1994), arXiv:gr-qc/9402041.
+\bibitem{NJ98} J.~C.~Niemeyer, K.~Jedamzik, Phys.\ Rev.\ Lett.\ 80, 5481 (1998), arXiv:astro-ph/9709072.
+\bibitem{MM13} I.~Musco, J.~C.~Miller, Class.\ Quant.\ Grav.\ 30, 145009 (2013), arXiv:1201.2379.
+\bibitem{Musco19} I.~Musco, Phys.\ Rev.\ D 100, 123524 (2019), arXiv:1809.02127.
 \bibitem{EGS20} A.~Escriv\`a, C.~Germani, R.~K.~Sheth, Phys.\ Rev.\ D 101, 044022 (2020), arXiv:1907.13311.
+\bibitem{Musco21} I.~Musco, V.~De Luca, G.~Franciolini, A.~Riotto, Phys.\ Rev.\ D 103, 063538 (2021), arXiv:2011.03014.
+\bibitem{Blas26} D.~Blas, J.~W.~Foster, Y.~Gouttenoire, A.~J.~Iovino, I.~Musco, S.~Trifinopoulos, M.~Vanvlasselaer, Phys.\ Lett.\ B 879, 140635 (2026), arXiv:2602.12252.
+\bibitem{Espinosa} J.~R.~Espinosa, D.~Racco, A.~Riotto, JCAP 09 (2018) 012, arXiv:1804.07732.
 \bibitem{Saikawa} K.~Saikawa, S.~Shirai, JCAP 08 (2020) 011, arXiv:2005.03544.
 \bibitem{Lamb} W.~G.~Lamb, S.~R.~Taylor, R.~van Haasteren, Phys.\ Rev.\ D 108, 103019 (2023), arXiv:2303.15442.
 \bibitem{PTArcade} A.~Mitridate {\it et al.}, arXiv:2306.16377 (PTArcade).
-\bibitem{ALW21} P.~Adshead, K.~D.~Lozanov, Z.~J.~Weiner, JCAP 10 (2021) 080, arXiv:2105.01659.
-\bibitem{Perna24} G.~Perna, C.~Testini, A.~Ricciardone, S.~Matarrese, arXiv:2403.06962.
-\bibitem{SVW06} M.~Sasaki, J.~V\"aliviita, D.~Wands, Phys.\ Rev.\ D 74, 103003 (2006), arXiv:astro-ph/0607627.
+\bibitem{AD21} V.~Atal, G.~Dom\`enech, JCAP 06 (2021) 001; Erratum ibid.\ 10 (2023) E01, arXiv:2103.01056.
+\bibitem{GPRW22} S.~Garcia-Saenz, L.~Pinol, S.~Renaux-Petel, D.~Werth, JCAP 03 (2023) 057, arXiv:2207.14267.
+\bibitem{Perna24} G.~Perna, C.~Testini, A.~Ricciardone, S.~Matarrese, JCAP 05 (2024) 086, arXiv:2403.06962.
 \bibitem{Carr10} B.~J.~Carr, K.~Kohri, Y.~Sendouda, J.~Yokoyama, Phys.\ Rev.\ D 81, 104019 (2010), arXiv:0912.5297.
 \end{thebibliography}
 
