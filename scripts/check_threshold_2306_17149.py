@@ -30,7 +30,7 @@ import numpy as np
 from ngpbh.spectra import BrokenPowerLaw, LogNormal
 from ngpbh.threshold import MuscoThreshold, delta_c_of_q
 
-from make_figures import CATEGORICAL, GRID, INK2, MUTED, plt
+from make_figures import CATEGORICAL, GRID, INK2, MUTED, TEXTWIDTH, plt, save
 
 URL = "https://arxiv.org/e-print/2306.17149v3"
 # panel file -> (x label, x range on the outer ticks, delta_th range on its outer ticks, alpha_s range)
@@ -102,18 +102,20 @@ def ours(panel, xs):
 
 
 def figure(curves, grids, results, out):
-    fig, axes = plt.subplots(1, 2, figsize=(9.0, 3.7))
-    styles = {"no transfer function": dict(color=CATEGORICAL[0], ls="--", marker="o"),
-              "T at eta = r_m/10 (Musco et al.)": dict(color=CATEGORICAL[1], ls=":", marker="s"),
-              "T at horizon crossing, eta = r_m": dict(color=CATEGORICAL[2], ls="-", marker="^")}
+    fig, axes = plt.subplots(1, 2, figsize=(TEXTWIDTH, 2.6), layout="constrained")
+    styles = {"no transfer function": dict(color=CATEGORICAL[0], ls="--", marker="o", label="no transfer function"),
+              "T at eta = r_m/10 (Musco et al.)": dict(color=CATEGORICAL[1], ls=":", marker="s",
+                                                       label=r"$T$ at $\eta=\hat r_m/10$ (Musco et al.)"),
+              "T at horizon crossing, eta = r_m": dict(color=CATEGORICAL[2], ls="-", marker="^",
+                                                       label=r"$T$ at horizon crossing, $\eta=r_m$")}
     for ax, panel in zip(axes, PANELS):
         theirs = curves[(panel, "delta_th")]
-        ax.plot(theirs[:, 0], theirs[:, 1], color=INK2, linewidth=4.0, alpha=0.25, solid_capstyle="butt",
-                label="2306.17149 Fig. S3")
+        ax.plot(theirs[:, 0], theirs[:, 1], color=INK2, linewidth=3.4, alpha=0.25, solid_capstyle="butt",
+                label="Franciolini et al., fig. S3")
         for vname, st in styles.items():
-            ax.plot(grids[panel], results[panel][vname][0], linestyle=st["ls"], marker=st["marker"], markersize=3.2,
-                    color=st["color"], linewidth=1.2, label=f"ngpbh, {vname}")
-        ax.grid(True, color=GRID, linewidth=0.6)
+            ax.plot(grids[panel], results[panel][vname][0], linestyle=st["ls"], marker=st["marker"], markersize=2.8,
+                    color=st["color"], linewidth=1.0, label=f"ngpbh, {st['label']}")
+        ax.grid(True, color=GRID, linewidth=0.5)
         ax.set_axisbelow(True)
         for side in ("top", "right"):
             ax.spines[side].set_visible(False)
@@ -122,12 +124,10 @@ def figure(curves, grids, results, out):
         ax.set_ylabel(r"$\delta_{\rm th}$")
     axes[0].set_title("lognormal", loc="left")
     axes[1].set_title("broken power law", loc="left")
-    axes[0].legend(loc="lower left", fontsize=6.6)
-    axes[1].text(0.02, 0.03, r"$\beta<2$: the integrals without T converge only conditionally", transform=axes[1].transAxes,
-                 fontsize=6.6, color=MUTED)
-    fig.tight_layout()
-    fig.savefig(out, dpi=200)
-    plt.close(fig)
+    axes[0].legend(loc="lower left", fontsize=6.0)
+    axes[1].text(0.02, 0.03, r"$\beta<2$: the integrals without $T$ converge only conditionally",
+                 transform=axes[1].transAxes, fontsize=6.0, color=MUTED)
+    save(fig, out)
 
 
 def main():

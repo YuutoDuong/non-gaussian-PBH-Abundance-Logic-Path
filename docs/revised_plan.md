@@ -276,6 +276,23 @@ Items 1–4 of `docs/journal_review.md`, now in the note, with code version 0.7.
 * **Still to do for the journal:** item 6 of the review (prose, journal class, BibTeX, vector
   figures).
 
+## Journal version — drafted (25 Oct 2026)
+
+`docs/paper/ngpbh_paper.tex` (JCAP), from the note at version 0.7.0, which stays in `docs/note` as
+the archived preprint.
+* Text: prose, a conventions table, the SMBHB background as section 5.6, and "Franciolini et al."
+  instead of the arXiv number. No number changes; this was checked by script against the note.
+* Bibliography: `refs.bib`, 67 INSPIRE records with DOIs, style `JHEP.bst`.
+* Figures: vector PDFs at print size in `docs/paper/figures`, written by the figure scripts. The
+  PNGs in `results/` now use the same style.
+* Before submission:
+  * your read of the whole text;
+  * the funding acknowledgement, if any;
+  * a cover letter and suggested referees;
+  * the INSPIRE scan again;
+  * a release that contains `docs/paper` and the figure scripts, whose DOI the paper should then
+    cite.
+
 ## Pitfalls, confirmed or added
 
 * Exponential sensitivity: log β throughout ✓ (a 1% shift in A moves β by ~50% at ν ≈ 7).

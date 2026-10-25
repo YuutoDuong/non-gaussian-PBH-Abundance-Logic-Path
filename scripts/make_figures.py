@@ -1,4 +1,5 @@
-"""Figures from results/*.csv (static PNGs for the repo and the note).
+"""Figures from results/*.csv: PNGs for the repository and the note, and vector PDFs at print size
+(the JCAP text width) for the paper, in docs/paper/figures.
 
 Colour: the sign of f_NL is a polarity, so the quadratic family uses a diverging scale
 (blue arm f_NL < 0, red arm f_NL > 0, gray Gaussian midpoint; each arm validated as an ordinal
@@ -13,9 +14,12 @@ import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
+from matplotlib.ticker import FormatStrFormatter  # noqa: E402
 
 INK, INK2, MUTED, GRID, AXIS = "#0b0b0b", "#52514e", "#898781", "#e1e0d9", "#c3c2b7"
-SURFACE = "#fcfcfb"
+SURFACE = "#ffffff"
+TEXTWIDTH = 6.09  # inches: the JCAP text width, 440 pt
+PAPER_DIR = Path("docs/paper/figures")
 GAUSS = INK2
 DIVERGING = {  # f_NL -> colour
     "fNL=-2": "#184f95",
@@ -30,12 +34,12 @@ CATEGORICAL = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100"]
 LOG_FAMILY = ["USR mu=5/6", "USR mu=5/2", "USR mu=10", "log mu=-5/2"]
 LABELS = {
     "gaussian": "Gaussian",
-    "fNL=-2": r"$f_{NL}=-2$",
-    "fNL=-1": r"$f_{NL}=-1$",
-    "fNL=-0.5": r"$f_{NL}=-0.5$",
-    "fNL=+0.5": r"$f_{NL}=+0.5$",
-    "fNL=+1": r"$f_{NL}=+1$",
-    "fNL=+2": r"$f_{NL}=+2$",
+    "fNL=-2": r"$f_{\rm NL}=-2$",
+    "fNL=-1": r"$f_{\rm NL}=-1$",
+    "fNL=-0.5": r"$f_{\rm NL}=-0.5$",
+    "fNL=+0.5": r"$f_{\rm NL}=+0.5$",
+    "fNL=+1": r"$f_{\rm NL}=+1$",
+    "fNL=+2": r"$f_{\rm NL}=+2$",
     "USR mu=5/6": r"$\mu_*=5/6$",
     "USR mu=5/2": r"$\mu_*=5/2$",
     "USR mu=10": r"$\mu_*=10$",
@@ -49,17 +53,23 @@ plt.rcParams.update(
         "axes.edgecolor": AXIS,
         "axes.labelcolor": INK2,
         "axes.titlecolor": INK,
-        "axes.titlesize": 10,
-        "axes.labelsize": 9,
+        "axes.titlesize": 8.5,
+        "axes.labelsize": 8.5,
+        "axes.linewidth": 0.6,
         "xtick.color": MUTED,
         "ytick.color": MUTED,
-        "xtick.labelsize": 8,
-        "ytick.labelsize": 8,
-        "legend.fontsize": 7.5,
+        "xtick.labelsize": 7.5,
+        "ytick.labelsize": 7.5,
+        "xtick.major.width": 0.6,
+        "ytick.major.width": 0.6,
+        "xtick.minor.width": 0.4,
+        "ytick.minor.width": 0.4,
+        "legend.fontsize": 6.8,
         "legend.frameon": False,
         "font.family": "sans-serif",
-        "lines.linewidth": 1.6,
-        "lines.markersize": 4.5,
+        "lines.linewidth": 1.3,
+        "lines.markersize": 3.6,
+        "pdf.fonttype": 42,  # embed TrueType, not Type 3, in the vector figures
     }
 )
 
@@ -67,6 +77,15 @@ plt.rcParams.update(
 def read(path):
     with open(path) as fh:
         return list(csv.DictReader(fh))
+
+
+def save(fig, out, paper=True):
+    """The PNG for the repository and, for a figure of the paper, the vector PDF at print size."""
+    fig.savefig(out, dpi=200)
+    if paper:
+        PAPER_DIR.mkdir(parents=True, exist_ok=True)
+        fig.savefig(PAPER_DIR / (Path(out).stem + ".pdf"))
+    plt.close(fig)
 
 
 def style(ax):
@@ -156,74 +175,71 @@ def fig_amplitudes(rows, out):
         ha="left",
     )
     fig.tight_layout()
-    fig.savefig(out, dpi=200)
-    plt.close(fig)
+    save(fig, out, paper=False)
 
 
 def fig_ratio(rows, out):
-    """R for Phase 3b peaks (solid) with Phase 3a (dashed, same colour), and the 3b/3a shift."""
-    fig, axes = plt.subplots(1, 3, figsize=(12.5, 4.3))
+    """R for maxima of C_l (solid) and of C_g (dashed, same colour), and the ratio of the two amplitudes."""
+    fig, axes = plt.subplots(1, 3, figsize=(TEXTWIDTH, 2.6), layout="constrained")
     families = [
-        (axes[0], list(DIVERGING.items()), "Quadratic template", ("fNL=-2", "gaussian", "fNL=+2")),
-        (axes[1], [("gaussian", GAUSS)] + list(zip(LOG_FAMILY, CATEGORICAL)), "Logarithmic (USR) template",
-         ("gaussian", "USR mu=5/6")),
+        (axes[0], list(DIVERGING.items()), "quadratic"),
+        (axes[1], [("gaussian", GAUSS)] + list(zip(LOG_FAMILY, CATEGORICAL)), "logarithmic (USR)"),
     ]
-    for ax, members, title, labelled in families:
+    for ax, members, title in families:
         for t, c in members:
             w, r3a = ratio(rows, t, "peaks")
-            ax.plot(w, r3a, "--", color=c, linewidth=1.0, alpha=0.7)
+            ax.plot(w, r3a, "--", color=c, linewidth=0.8, alpha=0.7)
             w, r3b = ratio(rows, t, "peaks_3b")
-            ax.plot(w, r3b, "-o", color=c, label=LABELS[t], markeredgecolor=SURFACE, markeredgewidth=0.8)
+            ax.plot(w, r3b, "-o", color=c, label=LABELS[t], markeredgecolor=SURFACE, markeredgewidth=0.6)
         ax.set_title(title, loc="left")
         style(ax)
         ax.set_ylim(0.72, 0.94)
-        ax.set_xlim(0.085, 3.4)
-        ax.legend(loc="upper left", ncol=2 if len(members) > 5 else 1)
-        end_labels(ax, [(ratio(rows, t, "peaks_3b")[0][-1], ratio(rows, t, "peaks_3b")[1][-1], LABELS[t])
-                        for t in labelled])
+        ax.set_yticks([0.75, 0.80, 0.85, 0.90])
+        ax.yaxis.set_major_formatter(FormatStrFormatter("%.2f"))
+        ax.set_xlim(0.085, 2.4)
+        ax.legend(loc="upper left", ncol=2 if len(members) > 5 else 1, fontsize=6.2, handlelength=1.5,
+                  columnspacing=0.8, borderaxespad=0.3, labelspacing=0.3)
     axes[0].set_ylabel(r"$R=A_*^{\rm peaks}/A_*^{\rm threshold}$")
-    axes[0].text(0.98, 0.03, "solid: maxima of $C_\\ell$\ndashed: maxima of $C_g$ (Gaussian-peak approx.)",
-                 transform=axes[0].transAxes, fontsize=7, color=MUTED, ha="right")
+    # the line-style key sits apart from the colour key, in a free corner of the middle panel
+    key = [plt.Line2D([], [], color=MUTED, linewidth=1.1, label=r"maxima of $C_\ell$"),
+           plt.Line2D([], [], color=MUTED, linewidth=0.8, linestyle="--", label=r"maxima of $C_{\rm g}$")]
+    axes[1].add_artist(axes[1].get_legend())
+    axes[1].legend(handles=key, loc="lower right", fontsize=6.2, handlelength=2.0, borderaxespad=0.3)
     ax = axes[2]
-    # the two families reuse blue, so the logarithmic one is dashed with square markers here
+    # colours as in the other panels; the logarithmic family is dashed with square markers here
     for t, c in DIVERGING.items():
         if t != "gaussian":
             w, q = correction(rows, t)
-            ax.plot(w, q, "-o", color=c, label=LABELS[t], markeredgecolor=SURFACE, markeredgewidth=0.8)
+            ax.plot(w, q, "-o", color=c, markeredgecolor=SURFACE, markeredgewidth=0.6)
     for t, c in zip(LOG_FAMILY, CATEGORICAL):
         w, q = correction(rows, t)
-        ax.plot(w, q, "--s", color=c, label=LABELS[t], markeredgecolor=SURFACE, markeredgewidth=0.8)
-    ax.axhline(1.0, color=GAUSS, linewidth=1.0)
+        ax.plot(w, q, "--s", color=c, markeredgecolor=SURFACE, markeredgewidth=0.6)
+    ax.axhline(1.0, color=GAUSS, linewidth=0.8)
     style(ax)
-    ax.set_xlim(0.085, 3.4)
-    ax.set_title(r"True NG peaks vs Gaussian-peak approximation", loc="left")
-    ax.set_ylabel(r"$A_*^{(C_\ell)}/A_*^{(C_g)}$")
-    ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.17), ncol=4, fontsize=7)
-    fig.suptitle(
-        "Peaks vs threshold statistics: same threshold, window, transfer function and cut",
-        fontsize=9, color=INK2, x=0.01, ha="left",
-    )
-    fig.tight_layout()
-    fig.savefig(out, dpi=200)
-    plt.close(fig)
+    ax.set_xlim(0.085, 2.4)
+    ax.set_yticks([0.985, 0.990, 0.995, 1.000])
+    ax.yaxis.set_major_formatter(FormatStrFormatter("%.3f"))
+    ax.set_title(r"$C_\ell$ vs $C_{\rm g}$ maxima", loc="left")
+    ax.set_ylabel(r"$A_*^{(C_\ell)}/A_*^{(C_{\rm g})}$")
+    save(fig, out)
 
 
 def fig_lattice(rows, out):
     """Maxima of C_l counted on 256^3 Gaussian random fields over the Kac-Rice predictions."""
     cases = [("gaussian", GAUSS, "Gaussian (grid calibration)"), ("fNL=-2", DIVERGING["fNL=-2"], LABELS["fNL=-2"]),
-             ("fNL=+2", DIVERGING["fNL=+2"], LABELS["fNL=+2"]), ("mu=5/6", CATEGORICAL[2], r"$\mu_*=5/6$")]
-    fig, axes = plt.subplots(1, 2, figsize=(8.6, 3.7), sharey=True)
+             ("fNL=+2", DIVERGING["fNL=+2"], LABELS["fNL=+2"]), ("mu=5/6", CATEGORICAL[2], r"USR $\mu_*=5/6$")]
+    fig, axes = plt.subplots(1, 2, figsize=(TEXTWIDTH, 2.5), sharey=True, layout="constrained")
     for ax, key, title in ((axes[0], "3b", "prediction: maxima of $C_\\ell$"),
-                           (axes[1], "3a", "prediction: maxima of $C_g$ (Gaussian-peak approx.)")):
+                           (axes[1], "3a", "prediction: maxima of $C_{\\rm g}$")):
         for i, (case, c, label) in enumerate(cases):
             sel = [r for r in rows if r["case"] == case]
             nu = [float(r["nu"]) + 0.03 * (i - 1.5) for r in sel]
             val = [float(r[f"lattice_over_{key}"]) for r in sel]
             err = [float(r["err_rel"]) * v for r, v in zip(sel, val)]
-            ax.errorbar(nu, val, yerr=err, fmt="-o", color=c, label=label, capsize=2,
-                        markeredgecolor=SURFACE, markeredgewidth=0.8)
-        ax.axhline(1.0, color=AXIS, linewidth=1.0)
-        ax.grid(True, color=GRID, linewidth=0.6)
+            ax.errorbar(nu, val, yerr=err, fmt="-o", color=c, label=label, capsize=1.5, elinewidth=0.8,
+                        markeredgecolor=SURFACE, markeredgewidth=0.6)
+        ax.axhline(1.0, color=AXIS, linewidth=0.8)
+        ax.grid(True, color=GRID, linewidth=0.5)
         ax.set_axisbelow(True)
         for side in ("top", "right"):
             ax.spines[side].set_visible(False)
@@ -232,12 +248,8 @@ def fig_lattice(rows, out):
         ax.set_title(title, loc="left")
     axes[0].set_ylabel("lattice count / prediction")
     axes[0].set_ylim(0.88, 1.22)
-    axes[0].legend(loc="upper right", fontsize=7)
-    fig.suptitle(r"256$^3$ Gaussian random fields, 24 realisations, lognormal $\Delta=1$, $r=8$ cells, "
-                 r"$\sigma_c=0.15$, $k<4.49/r$", fontsize=9, color=INK2, x=0.01, ha="left")
-    fig.tight_layout()
-    fig.savefig(out, dpi=200)
-    plt.close(fig)
+    axes[0].legend(loc="upper right", fontsize=6.4)
+    save(fig, out)
 
 
 def fig_conventions(conv_rows, out):
@@ -259,8 +271,7 @@ def fig_conventions(conv_rows, out):
             fontsize=7, color=MUTED)
     ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.17), ncol=1, fontsize=7)
     fig.tight_layout()
-    fig.savefig(out, dpi=200)
-    plt.close(fig)
+    save(fig, out, paper=False)
 
 
 def main():

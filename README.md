@@ -12,7 +12,11 @@ PBH overproduction disfavours a scalar-induced GW explanation of the PTA signal?
 * `docs/phase3b_derivation.tex` (and `.pdf`) — peaks of the non-Gaussian compaction function.
 * `docs/phase5_pta.md` — Phase 5: the NANOGrav 15 tension per statistic and NG template, with and
   without the NG corrections to the SIGW spectrum.
-* `docs/note/ngpbh_note.tex` (and `.pdf`) — the write-up (Phase 6).
+* `docs/note/ngpbh_note.tex` (and `.pdf`) — the write-up (Phase 6), archived with version 0.7.0.
+* `docs/paper/ngpbh_paper.tex` (and `.pdf`) — the journal version (JCAP format, BibTeX bibliography
+  `refs.bib` from INSPIRE, vector figures in `docs/paper/figures`). Build it with
+  `pdflatex ngpbh_paper && bibtex ngpbh_paper && pdflatex ngpbh_paper && pdflatex ngpbh_paper` in
+  that directory.
 * `docs/conventions.md` — every formula the code implements, with sources.
 
 ## Package `ngpbh`
@@ -58,7 +62,7 @@ python -m venv .venv && .venv/bin/pip install -e ".[dev]"
 | `pta_smbhb.py` | `pta_smbhb.csv`, `pta_smbhb.md`, `pta_smbhb_posteriors.npz`: the NG15 significances with an SMBHB background marginalised over NANOGrav's astrophysical prior, and the Bayes factors (~15 min on 4 cores) |
 | `threshold_sensitivity.py` | `threshold_sensitivity_R.csv`, `threshold_sensitivity_lines.csv`, `threshold_sensitivity.md`: R and the NG15 significances for C_th x 0.95 and x 1.05 (~20 min on 4 cores) |
 | `curvaton_branches.py` | `curvaton_branches.csv`, `curvaton_branches.md`: the two branches of the curvaton map behind its threshold sensitivity (~20 min on 4 cores) |
-| `make_figures.py`, `make_phase5_figures.py` | the figures in `results/` from the CSVs |
+| `make_figures.py`, `make_phase5_figures.py` | the figures in `results/` from the CSVs, and their vector PDFs for the paper in `docs/paper/figures` (as do `check_threshold_2306_17149.py` and `validate_sigw_ng.py`) |
 
 ```python
 from ngpbh import AbundanceModel, CollapseModel, LogNormal, MuscoThreshold, PeaksConfig, Quadratic

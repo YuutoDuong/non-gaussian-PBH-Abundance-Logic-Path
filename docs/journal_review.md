@@ -165,7 +165,7 @@ Effort: S = hours, M = a day or so of work plus compute, L = more.
   against our normalisation.
 * **Done (25 Oct 2026):** both sentences are in the Discussion.
 
-### 6. Presentation (M)
+### 6. Presentation (M) — done
 
 * **The issue:** the paper reads like a technical report:
   * many bullet lists and terse sentences;
@@ -186,6 +186,24 @@ Effort: S = hours, M = a day or so of work plus compute, L = more.
   * shorten the abstract to about 200 words; say "paper", not "note";
   * use the journal class (revtex4-2 for PRD, jcappub for JCAP) and a BibTeX bibliography with
     DOIs, generated from INSPIRE.
+* **Done (25 Oct 2026):** the journal version is `docs/paper/ngpbh_paper.tex` (JCAP), and the
+  note in `docs/note` stays as the archived preprint.
+  * Prose throughout. Lists are gone except for the tables; the three steps of the peak density
+    read "First / Second / Third".
+  * "Franciolini et al." or "ref. [12]" instead of the arXiv number, "paper" instead of "note",
+    and JCAP's lower-case "section", "figure", "table", "eq.", "ref.".
+  * A conventions table (table 1) for the two analyses.
+  * A new subsection 5.6 for the SMBHB background, with its model and prior.
+  * Abstract 246 words, down from about 330. It keeps the 16% USR caveat and the 18% miscount.
+  * Nine vector figures at print size (6.09 in, the JCAP text width), embedded TrueType fonts,
+    7–8.5 pt text, no figure titles. Every caption states the conventions and what each line or
+    marker is. They are written to `docs/paper/figures` by the figure scripts.
+  * `refs.bib`: 67 INSPIRE records with DOIs, under the paper's citation keys. Each was checked
+    against the earlier bibliography: journal, volume, page and year all match. A duplicated
+    erratum in the INSPIRE record of 2306.16219 was fixed.
+  * `jcappub.sty` and `JHEP.bst`, LPPL, taken from the arXiv source of Iovino et al. 2406.20089.
+  * Every number in the text was compared with the note by script. The only new ones are the
+    mean of NANOGrav's SMBHB prior, (−15.6, 4.7), which describes that model.
 
 ### 7. Appendix B will be checked first (S) — done
 
@@ -234,7 +252,7 @@ Both journals accept papers already posted on arXiv or Zenodo.
 
 ## Submission checklist
 
-* [ ] journal class; BibTeX bibliography with DOIs
+* [x] journal class; BibTeX bibliography with DOIs (`docs/paper`)
 * [ ] cover letter (Claude can draft it)
 * [ ] suggested referees: experts in peaks theory with NG and in PBH thresholds who are not
   authors of 2306.17149, e.g. the authors of the works cited for peaks with NG and for the
@@ -257,4 +275,4 @@ Both journals accept papers already posted on arXiv or Zenodo.
    * item 3 (threshold ±5%);
    * item 1 (R_Gauss table or fit);
    * item 2 (an alternative prescription).
-3. **Rewrite and format (M):** item 6, the BibTeX bibliography and PDF figures.
+3. **Rewrite and format (M) — done on 25 Oct 2026:** item 6, the BibTeX bibliography and PDF figures.

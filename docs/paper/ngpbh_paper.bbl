@@ -1,0 +1,476 @@
+
+\providecommand{\href}[2]{#2}\begingroup\raggedright\begin{thebibliography}{10}
+
+\bibitem{NG15gwb}
+{\scshape NANOGrav} collaboration, \emph{{The NANOGrav 15 yr Data Set: Evidence
+  for a Gravitational-wave Background}},
+  \href{https://doi.org/10.3847/2041-8213/acdac6}{\emph{Astrophys. J. Lett.}
+  {\bfseries 951} (2023) L8}
+  [\href{https://arxiv.org/abs/2306.16213}{{\ttfamily 2306.16213}}].
+
+\bibitem{EPTA23}
+{\scshape EPTA, InPTA} collaboration, \emph{{The second data release from the
+  European Pulsar Timing Array - III. Search for gravitational wave signals}},
+  \href{https://doi.org/10.1051/0004-6361/202346844}{\emph{Astron. Astrophys.}
+  {\bfseries 678} (2023) A50}
+  [\href{https://arxiv.org/abs/2306.16214}{{\ttfamily 2306.16214}}].
+
+\bibitem{PPTA23}
+D.J.~Reardon et~al., \emph{{Search for an Isotropic Gravitational-wave
+  Background with the Parkes Pulsar Timing Array}},
+  \href{https://doi.org/10.3847/2041-8213/acdd02}{\emph{Astrophys. J. Lett.}
+  {\bfseries 951} (2023) L6}
+  [\href{https://arxiv.org/abs/2306.16215}{{\ttfamily 2306.16215}}].
+
+\bibitem{CPTA23}
+H.~Xu et~al., \emph{{Searching for the Nano-Hertz Stochastic Gravitational Wave
+  Background with the Chinese Pulsar Timing Array Data Release I}},
+  \href{https://doi.org/10.1088/1674-4527/acdfa5}{\emph{Res. Astron.
+  Astrophys.} {\bfseries 23} (2023) 075024}
+  [\href{https://arxiv.org/abs/2306.16216}{{\ttfamily 2306.16216}}].
+
+\bibitem{Ananda}
+K.N.~Ananda, C.~Clarkson and D.~Wands, \emph{{The Cosmological gravitational
+  wave background from primordial density perturbations}},
+  \href{https://doi.org/10.1103/PhysRevD.75.123518}{\emph{Phys. Rev. D}
+  {\bfseries 75} (2007) 123518}
+  [\href{https://arxiv.org/abs/gr-qc/0612013}{{\ttfamily gr-qc/0612013}}].
+
+\bibitem{Baumann}
+D.~Baumann, P.J.~Steinhardt, K.~Takahashi and K.~Ichiki, \emph{{Gravitational
+  Wave Spectrum Induced by Primordial Scalar Perturbations}},
+  \href{https://doi.org/10.1103/PhysRevD.76.084019}{\emph{Phys. Rev. D}
+  {\bfseries 76} (2007) 084019}
+  [\href{https://arxiv.org/abs/hep-th/0703290}{{\ttfamily hep-th/0703290}}].
+
+\bibitem{Kohri}
+K.~Kohri and T.~Terada, \emph{{Semianalytic calculation of gravitational wave
+  spectrum nonlinearly induced from primordial curvature perturbations}},
+  \href{https://doi.org/10.1103/PhysRevD.97.123532}{\emph{Phys. Rev. D}
+  {\bfseries 97} (2018) 123532}
+  [\href{https://arxiv.org/abs/1804.08577}{{\ttfamily 1804.08577}}].
+
+\bibitem{Domenech}
+G.~Dom{\`e}nech, \emph{{Scalar Induced Gravitational Waves Review}},
+  \href{https://doi.org/10.3390/universe7110398}{\emph{Universe} {\bfseries 7}
+  (2021) 398} [\href{https://arxiv.org/abs/2109.01398}{{\ttfamily
+  2109.01398}}].
+
+\bibitem{NG15np}
+{\scshape NANOGrav} collaboration, \emph{{The NANOGrav 15 yr Data Set: Search
+  for Signals from New Physics}},
+  \href{https://doi.org/10.3847/2041-8213/acdc91}{\emph{Astrophys. J. Lett.}
+  {\bfseries 951} (2023) L11}
+  [\href{https://arxiv.org/abs/2306.16219}{{\ttfamily 2306.16219}}].
+
+\bibitem{FPRS23}
+D.G.~Figueroa, M.~Pieroni, A.~Ricciardone and P.~Simakachorn,
+  \emph{{Cosmological Background Interpretation of Pulsar Timing Array Data}},
+  \href{https://doi.org/10.1103/PhysRevLett.132.171002}{\emph{Phys. Rev. Lett.}
+  {\bfseries 132} (2024) 171002}
+  [\href{https://arxiv.org/abs/2307.02399}{{\ttfamily 2307.02399}}].
+
+\bibitem{Ellis23}
+J.~Ellis, M.~Fairbairn, G.~Franciolini, G.~H{\"u}tsi, A.~Iovino, M.~Lewicki
+  et~al., \emph{{What is the source of the PTA GW signal?}},
+  \href{https://doi.org/10.1103/PhysRevD.109.023522}{\emph{Phys. Rev. D}
+  {\bfseries 109} (2024) 023522}
+  [\href{https://arxiv.org/abs/2308.08546}{{\ttfamily 2308.08546}}].
+
+\bibitem{FIVT23}
+G.~Franciolini, A.~Iovino, Junior., V.~Vaskonen and H.~Veermae, \emph{{Recent
+  Gravitational Wave Observation by Pulsar Timing Arrays and Primordial Black
+  Holes: The Importance of Non-Gaussianities}},
+  \href{https://doi.org/10.1103/PhysRevLett.131.201401}{\emph{Phys. Rev. Lett.}
+  {\bfseries 131} (2023) 201401}
+  [\href{https://arxiv.org/abs/2306.17149}{{\ttfamily 2306.17149}}].
+
+\bibitem{Iovino24}
+A.J.~Iovino, G.~Perna, A.~Riotto and H.~Veerm{\"a}e, \emph{{Curbing PBHs with
+  PTAs}}, \href{https://doi.org/10.1088/1475-7516/2024/10/050}{\emph{JCAP}
+  {\bfseries 10} (2024) 050}
+  [\href{https://arxiv.org/abs/2406.20089}{{\ttfamily 2406.20089}}].
+
+\bibitem{LCH23}
+L.~Liu, Z.-C.~Chen and Q.-G.~Huang, \emph{{Implications for the non-Gaussianity
+  of curvature perturbation from pulsar timing arrays}},
+  \href{https://doi.org/10.1103/PhysRevD.109.L061301}{\emph{Phys. Rev. D}
+  {\bfseries 109} (2024) L061301}
+  [\href{https://arxiv.org/abs/2307.01102}{{\ttfamily 2307.01102}}].
+
+\bibitem{WZLZ23}
+S.~Wang, Z.-C.~Zhao, J.-P.~Li and Q.-H.~Zhu, \emph{{Implications of pulsar
+  timing array data for scalar-induced gravitational waves and primordial black
+  holes: Primordial non-Gaussianity fNL considered}},
+  \href{https://doi.org/10.1103/PhysRevResearch.6.L012060}{\emph{Phys. Rev.
+  Res.} {\bfseries 6} (2024) L012060}
+  [\href{https://arxiv.org/abs/2307.00572}{{\ttfamily 2307.00572}}].
+
+\bibitem{CIPVV26}
+B.~Carr, A.J.~Iovino, G.~Perna, V.~Vaskonen and H.~Veerm{\"a}e,
+  \emph{{Primordial black holes: constraints, potential evidence and
+  prospects}}, \href{https://doi.org/10.1007/s40766-026-00080-z}{\emph{Riv.
+  Nuovo Cim.} {\bfseries 49} (2026) 225}
+  [\href{https://arxiv.org/abs/2601.06024}{{\ttfamily 2601.06024}}].
+
+\bibitem{SS99}
+M.~Shibata and M.~Sasaki, \emph{{Black hole formation in the Friedmann
+  universe: Formulation and computation in numerical relativity}},
+  \href{https://doi.org/10.1103/PhysRevD.60.084002}{\emph{Phys. Rev. D}
+  {\bfseries 60} (1999) 084002}
+  [\href{https://arxiv.org/abs/gr-qc/9905064}{{\ttfamily gr-qc/9905064}}].
+
+\bibitem{Harada15}
+T.~Harada, C.-M.~Yoo, T.~Nakama and Y.~Koga, \emph{{Cosmological
+  long-wavelength solutions and primordial black hole formation}},
+  \href{https://doi.org/10.1103/PhysRevD.91.084057}{\emph{Phys. Rev. D}
+  {\bfseries 91} (2015) 084057}
+  [\href{https://arxiv.org/abs/1503.03934}{{\ttfamily 1503.03934}}].
+
+\bibitem{Young19}
+S.~Young, I.~Musco and C.T.~Byrnes, \emph{{Primordial black hole formation and
+  abundance: contribution from the non-linear relation between the density and
+  curvature perturbation}},
+  \href{https://doi.org/10.1088/1475-7516/2019/11/012}{\emph{JCAP} {\bfseries
+  11} (2019) 012} [\href{https://arxiv.org/abs/1904.00984}{{\ttfamily
+  1904.00984}}].
+
+\bibitem{DeLuca19}
+V.~De~Luca, G.~Franciolini, A.~Kehagias, M.~Peloso, A.~Riotto and C.~{\"U}nal,
+  \emph{{The Ineludible non-Gaussianity of the Primordial Black Hole
+  Abundance}}, \href{https://doi.org/10.1088/1475-7516/2019/07/048}{\emph{JCAP}
+  {\bfseries 07} (2019) 048}
+  [\href{https://arxiv.org/abs/1904.00970}{{\ttfamily 1904.00970}}].
+
+\bibitem{Ferrante}
+G.~Ferrante, G.~Franciolini, A.~Iovino, Junior. and A.~Urbano,
+  \emph{{Primordial non-Gaussianity up to all orders: Theoretical aspects and
+  implications for primordial black hole models}},
+  \href{https://doi.org/10.1103/PhysRevD.107.043520}{\emph{Phys. Rev. D}
+  {\bfseries 107} (2023) 043520}
+  [\href{https://arxiv.org/abs/2211.01728}{{\ttfamily 2211.01728}}].
+
+\bibitem{Ianniccari}
+A.~Ianniccari, A.J.~Iovino, A.~Kehagias, D.~Perrone and A.~Riotto,
+  \emph{{Primordial black hole abundance: The importance of broadness}},
+  \href{https://doi.org/10.1103/PhysRevD.109.123549}{\emph{Phys. Rev. D}
+  {\bfseries 109} (2024) 123549}
+  [\href{https://arxiv.org/abs/2402.11033}{{\ttfamily 2402.11033}}].
+
+\bibitem{BBKS}
+J.M.~Bardeen, J.R.~Bond, N.~Kaiser and A.S.~Szalay, \emph{{The Statistics of
+  Peaks of Gaussian Random Fields}},
+  \href{https://doi.org/10.1086/164143}{\emph{Astrophys. J.} {\bfseries 304}
+  (1986) 15}.
+
+\bibitem{Yoo18}
+C.-M.~Yoo, T.~Harada, J.~Garriga and K.~Kohri, \emph{{Primordial black hole
+  abundance from random Gaussian curvature perturbations and a local density
+  threshold}}, \href{https://doi.org/10.1093/ptep/pty120}{\emph{PTEP}
+  {\bfseries 2018} (2018) 123E01}
+  [\href{https://arxiv.org/abs/1805.03946}{{\ttfamily 1805.03946}}].
+
+\bibitem{Yoo20}
+C.-M.~Yoo, T.~Harada, S.~Hirano and K.~Kohri, \emph{{Abundance of Primordial
+  Black Holes in Peak Theory for an Arbitrary Power Spectrum}},
+  \href{https://doi.org/10.1093/ptep/ptaa155}{\emph{PTEP} {\bfseries 2021}
+  (2021) 013E02} [\href{https://arxiv.org/abs/2008.02425}{{\ttfamily
+  2008.02425}}].
+
+\bibitem{GS20}
+C.~Germani and R.K.~Sheth, \emph{{Nonlinear statistics of primordial black
+  holes from Gaussian curvature perturbations}},
+  \href{https://doi.org/10.1103/PhysRevD.101.063520}{\emph{Phys. Rev. D}
+  {\bfseries 101} (2020) 063520}
+  [\href{https://arxiv.org/abs/1912.07072}{{\ttfamily 1912.07072}}].
+
+\bibitem{Pi25}
+S.~Pi, M.~Sasaki, V.~Takhistov and J.~Wang, \emph{{Primordial Black Hole
+  formation from power spectrum with finite-width}},
+  \href{https://doi.org/10.1088/1475-7516/2025/09/045}{\emph{JCAP} {\bfseries
+  09} (2025) 045} [\href{https://arxiv.org/abs/2501.00295}{{\ttfamily
+  2501.00295}}].
+
+\bibitem{Kushwaha}
+A.~Kushwaha and T.~Suyama, \emph{{Revisiting Constraints on Primordial
+  Curvature Power Spectrum from PBH Abundances}},
+  \href{https://arxiv.org/abs/2603.23025}{{\ttfamily 2603.23025}}.
+
+\bibitem{ColeFumagalli}
+P.S.~Cole and J.~Fumagalli, \emph{{pbhstat: A Python Package for Calculating
+  the Primordial Black Hole Abundance}},
+  \href{https://doi.org/10.3390/universe11090322}{\emph{Universe} {\bfseries
+  11} (2025) 322} [\href{https://arxiv.org/abs/2509.14326}{{\ttfamily
+  2509.14326}}].
+
+\bibitem{Young22}
+S.~Young, \emph{{Peaks and primordial black holes: the~effect of
+  non-Gaussianity}},
+  \href{https://doi.org/10.1088/1475-7516/2022/05/037}{\emph{JCAP} {\bfseries
+  05} (2022) 037} [\href{https://arxiv.org/abs/2201.13345}{{\ttfamily
+  2201.13345}}].
+
+\bibitem{Kitajima}
+N.~Kitajima, Y.~Tada, S.~Yokoyama and C.-M.~Yoo, \emph{{Primordial black holes
+  in peak theory with a non-Gaussian tail}},
+  \href{https://doi.org/10.1088/1475-7516/2021/10/053}{\emph{JCAP} {\bfseries
+  10} (2021) 053} [\href{https://arxiv.org/abs/2109.00791}{{\ttfamily
+  2109.00791}}].
+
+\bibitem{Inui}
+R.~Inui, C.~Joana, H.~Motohashi, S.~Pi, Y.~Tada and S.~Yokoyama,
+  \emph{{Primordial black holes and induced gravitational waves from
+  logarithmic non-Gaussianity}},
+  \href{https://doi.org/10.1088/1475-7516/2025/03/021}{\emph{JCAP} {\bfseries
+  03} (2025) 021} [\href{https://arxiv.org/abs/2411.07647}{{\ttfamily
+  2411.07647}}].
+
+\bibitem{AGM19}
+V.~Atal, J.~Garriga and A.~Marcos-Caballero, \emph{{Primordial black hole
+  formation with non-Gaussian curvature perturbations}},
+  \href{https://doi.org/10.1088/1475-7516/2019/09/073}{\emph{JCAP} {\bfseries
+  09} (2019) 073} [\href{https://arxiv.org/abs/1905.13202}{{\ttfamily
+  1905.13202}}].
+
+\bibitem{YGY19}
+C.-M.~Yoo, J.-O.~Gong and S.~Yokoyama, \emph{{Abundance of primordial black
+  holes with local non-Gaussianity in peak theory}},
+  \href{https://doi.org/10.1088/1475-7516/2019/09/033}{\emph{JCAP} {\bfseries
+  09} (2019) 033} [\href{https://arxiv.org/abs/1906.06790}{{\ttfamily
+  1906.06790}}].
+
+\bibitem{Riccardi}
+F.~Riccardi, M.~Taoso and A.~Urbano, \emph{{Solving peak theory in the presence
+  of local non-gaussianities}},
+  \href{https://doi.org/10.1088/1475-7516/2021/08/060}{\emph{JCAP} {\bfseries
+  08} (2021) 060} [\href{https://arxiv.org/abs/2102.04084}{{\ttfamily
+  2102.04084}}].
+
+\bibitem{Gow21}
+A.D.~Gow, C.T.~Byrnes, P.S.~Cole and S.~Young, \emph{{The power spectrum on
+  small scales: Robust constraints and comparing PBH methodologies}},
+  \href{https://doi.org/10.1088/1475-7516/2021/02/002}{\emph{JCAP} {\bfseries
+  02} (2021) 002} [\href{https://arxiv.org/abs/2008.03289}{{\ttfamily
+  2008.03289}}].
+
+\bibitem{IPV25}
+A.~Iovino, Junior., G.~Perna and H.~Veerm{\"a}e, \emph{{The impact of
+  non-Gaussianity when searching for Primordial Black Holes with LISA}},
+  \href{https://doi.org/10.1088/1475-7516/2026/05/027}{\emph{JCAP} {\bfseries
+  05} (2026) 027} [\href{https://arxiv.org/abs/2512.13648}{{\ttfamily
+  2512.13648}}].
+
+\bibitem{GTV25}
+Y.~Gouttenoire, S.~Trifinopoulos and M.~Vanvlasselaer, \emph{{Implications for
+  pulsar timing arrays of sub-solar black hole detections: from LVK to Einstein
+  Telescope and Cosmic Explorer}},
+  \href{https://doi.org/10.1088/1475-7516/2026/02/072}{\emph{JCAP} {\bfseries
+  02} (2026) 072} [\href{https://arxiv.org/abs/2508.19328}{{\ttfamily
+  2508.19328}}].
+
+\bibitem{CPS19}
+R.-g.~Cai, S.~Pi and M.~Sasaki, \emph{{Gravitational Waves Induced by
+  non-Gaussian Scalar Perturbations}},
+  \href{https://doi.org/10.1103/PhysRevLett.122.201101}{\emph{Phys. Rev. Lett.}
+  {\bfseries 122} (2019) 201101}
+  [\href{https://arxiv.org/abs/1810.11000}{{\ttfamily 1810.11000}}].
+
+\bibitem{Unal19}
+C.~Unal, \emph{{Imprints of Primordial Non-Gaussianity on Gravitational Wave
+  Spectrum}}, \href{https://doi.org/10.1103/PhysRevD.99.041301}{\emph{Phys.
+  Rev. D} {\bfseries 99} (2019) 041301}
+  [\href{https://arxiv.org/abs/1811.09151}{{\ttfamily 1811.09151}}].
+
+\bibitem{ALW21}
+P.~Adshead, K.D.~Lozanov and Z.J.~Weiner, \emph{{Non-Gaussianity and the
+  induced gravitational wave background}},
+  \href{https://doi.org/10.1088/1475-7516/2021/10/080}{\emph{JCAP} {\bfseries
+  10} (2021) 080} [\href{https://arxiv.org/abs/2105.01659}{{\ttfamily
+  2105.01659}}].
+
+\bibitem{Escriva26}
+A.~Escriv{\`a}, \emph{{The statistics of curvature-profile dispersion in
+  primordial black hole formation}},
+  \href{https://arxiv.org/abs/2607.08738}{{\ttfamily 2607.08738}}.
+
+\bibitem{Germani25}
+C.~Germani, M.A.~Gorji, M.~Uwabo-Niibo and M.~Yamaguchi, \emph{{Peaks
+  sphericity of non-Gaussian random fields}},
+  \href{https://doi.org/10.1088/1475-7516/2025/09/052}{\emph{JCAP} {\bfseries
+  09} (2025) 052} [\href{https://arxiv.org/abs/2503.05434}{{\ttfamily
+  2503.05434}}].
+
+\bibitem{SVW06}
+M.~Sasaki, J.~Valiviita and D.~Wands, \emph{{Non-Gaussianity of the primordial
+  perturbation in the curvaton model}},
+  \href{https://doi.org/10.1103/PhysRevD.74.103003}{\emph{Phys. Rev. D}
+  {\bfseries 74} (2006) 103003}
+  [\href{https://arxiv.org/abs/astro-ph/0607627}{{\ttfamily
+  astro-ph/0607627}}].
+
+\bibitem{EC94}
+C.R.~Evans and J.S.~Coleman, \emph{{Observation of critical phenomena and
+  selfsimilarity in the gravitational collapse of radiation fluid}},
+  \href{https://doi.org/10.1103/PhysRevLett.72.1782}{\emph{Phys. Rev. Lett.}
+  {\bfseries 72} (1994) 1782}
+  [\href{https://arxiv.org/abs/gr-qc/9402041}{{\ttfamily gr-qc/9402041}}].
+
+\bibitem{NJ98}
+J.C.~Niemeyer and K.~Jedamzik, \emph{{Near-critical gravitational collapse and
+  the initial mass function of primordial black holes}},
+  \href{https://doi.org/10.1103/PhysRevLett.80.5481}{\emph{Phys. Rev. Lett.}
+  {\bfseries 80} (1998) 5481}
+  [\href{https://arxiv.org/abs/astro-ph/9709072}{{\ttfamily
+  astro-ph/9709072}}].
+
+\bibitem{MM13}
+I.~Musco and J.C.~Miller, \emph{{Primordial black hole formation in the early
+  universe: critical behaviour and self-similarity}},
+  \href{https://doi.org/10.1088/0264-9381/30/14/145009}{\emph{Class. Quant.
+  Grav.} {\bfseries 30} (2013) 145009}
+  [\href{https://arxiv.org/abs/1201.2379}{{\ttfamily 1201.2379}}].
+
+\bibitem{Musco19}
+I.~Musco, \emph{{Threshold for primordial black holes: Dependence on the shape
+  of the cosmological perturbations}},
+  \href{https://doi.org/10.1103/PhysRevD.100.123524}{\emph{Phys. Rev. D}
+  {\bfseries 100} (2019) 123524}
+  [\href{https://arxiv.org/abs/1809.02127}{{\ttfamily 1809.02127}}].
+
+\bibitem{EGS20}
+A.~Escriv{\`a}, C.~Germani and R.K.~Sheth, \emph{{Universal threshold for
+  primordial black hole formation}},
+  \href{https://doi.org/10.1103/PhysRevD.101.044022}{\emph{Phys. Rev. D}
+  {\bfseries 101} (2020) 044022}
+  [\href{https://arxiv.org/abs/1907.13311}{{\ttfamily 1907.13311}}].
+
+\bibitem{Musco21}
+I.~Musco, V.~De~Luca, G.~Franciolini and A.~Riotto, \emph{{Threshold for
+  primordial black holes. II. A simple analytic prescription}},
+  \href{https://doi.org/10.1103/PhysRevD.103.063538}{\emph{Phys. Rev. D}
+  {\bfseries 103} (2021) 063538}
+  [\href{https://arxiv.org/abs/2011.03014}{{\ttfamily 2011.03014}}].
+
+\bibitem{Blas26}
+D.~Blas, J.W.~Foster, Y.~Gouttenoire, A.J.~Iovino, I.~Musco, S.~Trifinopoulos
+  et~al., \emph{{The dark side of the moon: listening to scalar-induced
+  gravitational waves}},
+  \href{https://doi.org/10.1016/j.physletb.2026.140635}{\emph{Phys. Lett. B}
+  {\bfseries 879} (2026) 140635}
+  [\href{https://arxiv.org/abs/2602.12252}{{\ttfamily 2602.12252}}].
+
+\bibitem{KMR19}
+A.~Kehagias, I.~Musco and A.~Riotto, \emph{{Non-Gaussian Formation of
+  Primordial Black Holes: Effects on the Threshold}},
+  \href{https://doi.org/10.1088/1475-7516/2019/12/029}{\emph{JCAP} {\bfseries
+  12} (2019) 029} [\href{https://arxiv.org/abs/1906.07135}{{\ttfamily
+  1906.07135}}].
+
+\bibitem{ETYY22}
+A.~Escriv{\`a}, Y.~Tada, S.~Yokoyama and C.-M.~Yoo, \emph{{Simulation of
+  primordial black holes with large negative non-Gaussianity}},
+  \href{https://doi.org/10.1088/1475-7516/2022/05/012}{\emph{JCAP} {\bfseries
+  05} (2022) 012} [\href{https://arxiv.org/abs/2202.01028}{{\ttfamily
+  2202.01028}}].
+
+\bibitem{FGGS25}
+J.~Fumagalli, J.~Garriga, C.~Germani and R.K.~Sheth, \emph{{Unexpected shape of
+  the primordial black hole mass function}},
+  \href{https://doi.org/10.1103/k75n-3qz4}{\emph{Phys. Rev. D} {\bfseries 111}
+  (2025) 123518} [\href{https://arxiv.org/abs/2412.07709}{{\ttfamily
+  2412.07709}}].
+
+\bibitem{Espinosa}
+J.R.~Espinosa, D.~Racco and A.~Riotto, \emph{{A Cosmological Signature of the
+  SM Higgs Instability: Gravitational Waves}},
+  \href{https://doi.org/10.1088/1475-7516/2018/09/012}{\emph{JCAP} {\bfseries
+  09} (2018) 012} [\href{https://arxiv.org/abs/1804.07732}{{\ttfamily
+  1804.07732}}].
+
+\bibitem{Saikawa}
+K.~Saikawa and S.~Shirai, \emph{{Precise WIMP Dark Matter Abundance and
+  Standard Model Thermodynamics}},
+  \href{https://doi.org/10.1088/1475-7516/2020/08/011}{\emph{JCAP} {\bfseries
+  08} (2020) 011} [\href{https://arxiv.org/abs/2005.03544}{{\ttfamily
+  2005.03544}}].
+
+\bibitem{Lamb}
+W.G.~Lamb, S.R.~Taylor and R.~van Haasteren, \emph{{Rapid refitting techniques
+  for Bayesian spectral characterization of the gravitational wave background
+  using pulsar timing arrays}},
+  \href{https://doi.org/10.1103/PhysRevD.108.103019}{\emph{Phys. Rev. D}
+  {\bfseries 108} (2023) 103019}
+  [\href{https://arxiv.org/abs/2303.15442}{{\ttfamily 2303.15442}}].
+
+\bibitem{PTArcade}
+A.~Mitridate, D.~Wright, R.~von Eckardstein, T.~Schr{\"o}der, J.~Nay, K.~Olum
+  et~al., \emph{{PTArcade}},
+  \href{https://arxiv.org/abs/2306.16377}{{\ttfamily 2306.16377}}.
+
+\bibitem{AD21}
+V.~Atal and G.~Dom{\`e}nech, \emph{{Probing non-Gaussianities with the high
+  frequency tail of induced gravitational waves}},
+  \href{https://doi.org/10.1088/1475-7516/2021/06/001}{\emph{JCAP} {\bfseries
+  06} (2021) 001} [\href{https://arxiv.org/abs/2103.01056}{{\ttfamily
+  2103.01056}}].
+
+\bibitem{GPRW22}
+S.~Garcia-Saenz, L.~Pinol, S.~Renaux-Petel and D.~Werth, \emph{{No-go theorem
+  for scalar-trispectrum-induced gravitational waves}},
+  \href{https://doi.org/10.1088/1475-7516/2023/03/057}{\emph{JCAP} {\bfseries
+  03} (2023) 057} [\href{https://arxiv.org/abs/2207.14267}{{\ttfamily
+  2207.14267}}].
+
+\bibitem{Perna24}
+G.~Perna, C.~Testini, A.~Ricciardone and S.~Matarrese, \emph{{Fully
+  non-Gaussian Scalar-Induced Gravitational Waves}},
+  \href{https://doi.org/10.1088/1475-7516/2024/05/086}{\emph{JCAP} {\bfseries
+  05} (2024) 086} [\href{https://arxiv.org/abs/2403.06962}{{\ttfamily
+  2403.06962}}].
+
+\bibitem{MJY23}
+I.~Musco, K.~Jedamzik and S.~Young, \emph{{Primordial black hole formation
+  during the QCD phase transition: Threshold, mass distribution, and
+  abundance}}, \href{https://doi.org/10.1103/PhysRevD.109.083506}{\emph{Phys.
+  Rev. D} {\bfseries 109} (2024) 083506}
+  [\href{https://arxiv.org/abs/2303.07980}{{\ttfamily 2303.07980}}].
+
+\bibitem{FMPU22}
+G.~Franciolini, I.~Musco, P.~Pani and A.~Urbano, \emph{{From inflation to black
+  hole mergers and back again: Gravitational-wave data-driven constraints on
+  inflationary scenarios with a first-principle model of primordial black holes
+  across the QCD epoch}},
+  \href{https://doi.org/10.1103/PhysRevD.106.123526}{\emph{Phys. Rev. D}
+  {\bfseries 106} (2022) 123526}
+  [\href{https://arxiv.org/abs/2209.05959}{{\ttfamily 2209.05959}}].
+
+\bibitem{ATU21}
+K.T.~Abe, Y.~Tada and I.~Ueda, \emph{{Induced gravitational waves as a
+  cosmological probe of the sound speed during the QCD phase transition}},
+  \href{https://doi.org/10.1088/1475-7516/2021/06/048}{\emph{JCAP} {\bfseries
+  06} (2021) 048} [\href{https://arxiv.org/abs/2010.06193}{{\ttfamily
+  2010.06193}}].
+
+\bibitem{BDF23}
+S.~Balaji, G.~Dom{\`e}nech and G.~Franciolini, \emph{{Scalar-induced
+  gravitational wave interpretation of PTA data: the role of scalar fluctuation
+  propagation speed}},
+  \href{https://doi.org/10.1088/1475-7516/2023/10/041}{\emph{JCAP} {\bfseries
+  10} (2023) 041} [\href{https://arxiv.org/abs/2307.08552}{{\ttfamily
+  2307.08552}}].
+
+\bibitem{Carr10}
+B.J.~Carr, K.~Kohri, Y.~Sendouda and J.~Yokoyama, \emph{{New cosmological
+  constraints on primordial black holes}},
+  \href{https://doi.org/10.1103/PhysRevD.81.104019}{\emph{Phys. Rev. D}
+  {\bfseries 81} (2010) 104019}
+  [\href{https://arxiv.org/abs/0912.5297}{{\ttfamily 0912.5297}}].
+
+\bibitem{CK20}
+B.~Carr and F.~Kuhnel, \emph{{Primordial Black Holes as Dark Matter: Recent
+  Developments}},
+  \href{https://doi.org/10.1146/annurev-nucl-050520-125911}{\emph{Ann. Rev.
+  Nucl. Part. Sci.} {\bfseries 70} (2020) 355}
+  [\href{https://arxiv.org/abs/2006.02838}{{\ttfamily 2006.02838}}].
+
+\end{thebibliography}\endgroup

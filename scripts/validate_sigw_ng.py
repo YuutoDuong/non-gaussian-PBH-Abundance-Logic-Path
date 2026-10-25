@@ -26,7 +26,7 @@ import numpy as np
 from ngpbh.sigw_ng import disconnected_terms, mc_term
 from ngpbh.spectra import LogNormal
 
-from make_figures import AXIS, CATEGORICAL, GRID, INK2, SURFACE, plt
+from make_figures import AXIS, CATEGORICAL, GRID, SURFACE, TEXTWIDTH, plt, save
 from pta_tension import SHAPES
 
 URL = "https://arxiv.org/e-print/2105.01659v3"
@@ -137,22 +137,22 @@ def external(curves, xs, n_log2=15, n_rand=8):
 
 
 def figure(curves, ours, xs, out):
-    fig, axes = plt.subplots(3, 2, figsize=(8.0, 8.2), sharex=True)
+    fig, axes = plt.subplots(3, 2, figsize=(0.84 * TEXTWIDTH, 5.4), sharex=True, layout="constrained")
     for r, row in enumerate(PANELS):
         for c, term in enumerate(row):
             ax = axes[r, c]
             for k, sigma in enumerate(("1/5", "1/10")):
                 col = CATEGORICAL[k]
                 ref = curves[(term, sigma)]
-                ax.plot(ref[:, 0], ref[:, 1], color=col, linewidth=1.6, alpha=0.55,
-                        label=f"ALW21, $\\sigma={sigma}$" if (r, c) == (0, 0) else None)
+                ax.plot(ref[:, 0], ref[:, 1], color=col, linewidth=1.4, alpha=0.55,
+                        label=f"Adshead et al., $\\Delta={sigma}$" if (r, c) == (0, 0) else None)
                 val, err = ours[(term, sigma)][:, 0], ours[(term, sigma)][:, 1]
-                ax.errorbar(xs, val, yerr=err, fmt="o" if k == 0 else "s", markersize=3.6, color=col,
-                            markeredgecolor=SURFACE, markeredgewidth=0.5, elinewidth=0.8, linestyle="none",
-                            label=f"ngpbh, $\\sigma={sigma}$" if (r, c) == (0, 0) else None)
+                ax.errorbar(xs, val, yerr=err, fmt="o" if k == 0 else "s", markersize=2.8, color=col,
+                            markeredgecolor=SURFACE, markeredgewidth=0.4, elinewidth=0.7, linestyle="none",
+                            label=f"ngpbh, $\\Delta={sigma}$" if (r, c) == (0, 0) else None)
             ax.axhline(0.0, color=AXIS, linewidth=0.8, zorder=0)
             ax.set_xscale("log")
-            ax.grid(True, color=GRID, linewidth=0.6)
+            ax.grid(True, color=GRID, linewidth=0.5)
             ax.set_axisbelow(True)
             for side in ("top", "right"):
                 ax.spines[side].set_visible(False)
@@ -160,12 +160,8 @@ def figure(curves, ours, xs, out):
             ax.set_title(f"{term}: $\\Omega_{{GW}}/{power}$", loc="left")
             if r == 2:
                 ax.set_xlabel("$k/k_*$")
-    axes[0, 0].legend(loc="upper left", fontsize=7)
-    fig.suptitle("NG terms of the SIGW spectrum, lognormal peak: ngpbh (markers) vs Adshead et al. 2021 Fig. 4 (lines)",
-                 x=0.01, ha="left", fontsize=9, color=INK2)
-    fig.tight_layout(rect=(0, 0, 1, 0.97))
-    fig.savefig(out, dpi=200)
-    plt.close(fig)
+    axes[0, 0].legend(loc="upper left", fontsize=6.0)
+    save(fig, out)
 
 
 def main():
