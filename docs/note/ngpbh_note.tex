@@ -48,7 +48,7 @@ result; the Gaussian-peak approximation, which imposes the peak condition on the
 component, miscounts peaks by up to 18\%. The required
 amplitude ratio $R=A_*^{\rm peaks}/A_*^{\rm threshold}$ is 0.74--0.82 for $|\fnl|\le2$ and
 lognormal widths $0.1\le\Delta\le2$. The NG dependence cancels almost completely in
-$R/R_{\rm Gauss}$, to within $\pm4\%$ (16\% for a strong ultra-slow-roll tail). Propagated to
+$R/R_{\rm Gauss}$, to about 4\% (16\% for a strong ultra-slow-roll tail). Propagated to
 the NANOGrav 15-year data, peaks theory strengthens the exclusion of a scalar-induced
 gravitational-wave explanation by 0.2--0.8$\sigma$ (0.4$\sigma$ in the BBKS normalisation), for
 every NG template and spectral shape we consider. This is smaller than the effect of NG itself
@@ -103,7 +103,7 @@ the statistics.
 of the PBH-overproduction tension for NANOGrav 15, with every analysis choice stated and varied.
 \item \textbf{NG in the induced GWs} (Sec.~\ref{sec:ngsigw}). We add the primordial-NG corrections to
 the GW spectrum \cite{CPS19,Unal19,ALW21}, which 2306.17149 neglect.
-\item \textbf{Two pitfalls.} The second appears widely in the literature.
+\item \textbf{Two conventions that matter.} The second is widespread in the literature.
   \begin{itemize}
   \item The collapse threshold of 2306.17149 follows Musco et al.'s superhorizon smoothing, in
   effect without a transfer function. Their formula is written with the horizon-crossing transfer
@@ -125,6 +125,14 @@ $F=-\frac2\beta\ln(1-\frac\beta2\zg)$ of 2306.17149 with $\mu_*=2/\beta$ and has
 at second order;
 \item the sudden-decay curvaton, $\zeta=\ln X(r_{\rm dec},\zg)$ \cite{SVW06,Ferrante}.
 \end{itemize}
+We use two spectral shapes for $\Pz$, a lognormal of width $\Delta$ and the broken power law
+BPL($\alpha,\beta,\gamma$) of 2306.17149:
+\begin{equation}
+\Pz=\frac{A}{\sqrt{2\pi}\,\Delta}\exp\Big[-\frac{\ln^2(k/k_*)}{2\Delta^2}\Big],\qquad
+\Pz=A\,\frac{(\alpha+\beta)^\gamma}{\big[\beta(k/k_*)^{-\alpha/\gamma}+\alpha(k/k_*)^{\beta/\gamma}\big]^\gamma}.
+\end{equation}
+$A$ is the integrated power of the lognormal and the peak value of the BPL. The BPL slopes
+$\alpha,\beta$ and width $\gamma$ are not the mass fraction and the critical exponent used below.
 At smoothing scale $r$ (the scale that re-enters the horizon at formation, $k=1/r$), define the
 Gaussian fields
 \begin{align}
@@ -301,7 +309,8 @@ better than 1\% in the double ratio $R/R_{\rm Gauss}$.
 \item \textbf{The double ratio:} it stays within 0.958--1.036 for $|\fnl|\le2$. The strongly
 non-perturbative USR tail $\mu_*=5/6$ reaches 1.05--1.16, the largest value at $\Delta=2$.
 \item \textbf{True NG peaks vs the Gaussian-peak approximation:} the amplitudes differ by
-$A^{\rm 3b}_*/A^{\rm 3a}_*=0.983$--1.000. The 18\% miscount of peaks moves $A_*$ by at most
+$A_*^{(\Cl)}/A_*^{(\Cg)}=0.983$--1.000, where the superscript says whose maxima are counted. The
+18\% miscount of peaks moves $A_*$ by at most
 1.7\%, because $\delta\ln A_*\simeq\delta\ln n/|\ln\beta|$.
 \item \textbf{The UV cut:} removing the cut $kr<4.49$, or moving it to $kr=3.5$, 6 or 7.7 (the
 second zero of $W$), changes $R$ by at most 1.2\% and the double ratio by at most 0.8\%
@@ -335,7 +344,7 @@ USR $\mu_*=5/2$ & 0.779 & 0.785 & 0.789 & 0.797 & 0.809\\
 \includegraphics[width=\textwidth]{fig_phase3_ratio.png}
 \caption{Left and middle: $R$ for the quadratic and logarithmic templates; solid lines are peaks
 of $\Cl$ \eqref{eq:3b}, dashed lines are the Gaussian-peak approximation \eqref{eq:3a}. Right:
-$A_*^{\rm 3b}/A_*^{\rm 3a}$.}
+$A_*^{(\Cl)}/A_*^{(\Cg)}$, the ratio of the amplitudes from maxima of $\Cl$ and of $\Cg$.}
 \label{fig:R}
 \end{figure}
 
@@ -473,8 +482,9 @@ USR $\mu_*=5/2$ & 3.53\,$\to$\,$>4$ & 3.49\,$\to$\,3.91 & $>4$ & $>4$\\
 $\fnl\ge+1$, USR $\mu_*\le5/6$ & $>4$ & $>4$ & $>4$ & $>4$\\
 \bottomrule
 \end{tabular}
-\caption{Exclusion of the PBH-allowed region by NANOGrav 15, $\sigma_P$, threshold statistics
-$\to$ peaks of $\Cl$ \eqref{eq:3b}, $\fpbh=1$. Conventions of 2306.17149 (threshold without the
+\caption{Exclusion of the PBH-allowed region by NANOGrav 15: $\sigma_P$, the one-sided Gaussian
+equivalent of the posterior mass in the allowed region, for threshold statistics $\to$ peaks of
+$\Cl$ \eqref{eq:3b}, $\fpbh=1$. Conventions of 2306.17149 (threshold without the
 transfer function, their $\fpbh$ normalisation); fixed spectral shape in both the line and the
 posterior.}
 \label{tab:pta}
@@ -613,8 +623,9 @@ USR $\mu_*=5/2$ & Gaussian & 3.53\,$\to$\,$>4$ & 3.49\,$\to$\,3.91 & $>4$\\
  & with NG & 3.51\,$\to$\,4.00 & 3.47\,$\to$\,3.90 & 3.99\,$\to$\,$>4$\\
 \bottomrule
 \end{tabular}
-\caption{$\sigma_P$ for threshold statistics $\to$ peaks of $\Cl$ with the Gaussian induced GW
-spectrum (as in Table~\ref{tab:pta}) and with its primordial-NG corrections (each template with
+\caption{$\sigma_P$, the one-sided Gaussian equivalent of the posterior mass in the PBH-allowed
+region, for threshold statistics $\to$ peaks of $\Cl$ with the Gaussian induced GW spectrum (as in
+Table~\ref{tab:pta}) and with its primordial-NG corrections (each template with
 its own posterior). $\fpbh=1$, conventions of 2306.17149. The other templates are beyond
 $4\sigma$ with either spectrum.}
 \label{tab:ngsigw}
@@ -683,9 +694,12 @@ and uniformly.
 \begin{itemize}
 \item Peaks theory lowers the overproduction line by about 0.1 dex for every NG template. This
 strengthens the exclusion by $\simeq0.4\sigma$, or 0.2--0.8$\sigma$ depending on the peak
-normalisation.
-\item The NG dependence of the gap cancels almost completely: the double ratio stays within
-$\pm4\%$. NG and the choice of statistics therefore add rather than interact.
+normalisation. In the framing of Ref.~\cite{Iovino24} the same effect relaxes the PTA bound on
+$\fpbh$: at fixed $A$ peaks theory predicts more PBHs, so the PTA bound on $A$ allows a larger
+$\fpbh$, while the line $\fpbh=1$ moves down into the PTA posterior. Their high-peak
+normalisation ($R\approx0.6$--0.67) enlarges both effects.
+\item The NG dependence of the gap cancels almost completely: the double ratio is 1 to about 4\%.
+NG and the choice of statistics therefore add rather than interact.
 \item Negative $\fnl$ and the curvaton remain the ways to relieve the tension, but peaks theory
 takes back 0.3--0.5$\sigma$ of the relief.
 \item NG in the induced GWs adds power at fixed $A$. It relieves the tension by up to
@@ -709,7 +723,8 @@ profile, as the literature we compare with does; profile dispersion can matter f
 \cite{Escriva26}. The collapse threshold follows from the power spectrum and is the same for
 every NG template, although NG also deforms the typical profile and hence the threshold
 \cite{KMR19,ETYY22}. Each scale is counted separately, without a cloud-in-cloud correction. We
-neglect QCD effects on the formation parameters and on the GW spectrum, truncate the NG series of
+neglect QCD effects on the formation parameters \cite{MJY23,FMPU22} and on the GW spectrum
+\cite{ATU21,BDF23}, truncate the NG series of
 the GW spectrum at $A^3$ for the curvaton and USR maps, use the free-spectrum refit rather than
 the full PTA likelihood, and ignore an astrophysical foreground. A
 supermassive-black-hole-binary component would relax every tension quoted here.
@@ -771,14 +786,23 @@ The Monte Carlo bounds the remainder at 0.85\% at the most extreme node tested, 
 
 After formation at temperature $T$, the PBH number per entropy is conserved, so
 $\rho_{\rm PBH,0}=\frac34\beta\,(g_*/g_{*s})\,T\,s_0$. Here $s_0=\frac{2\pi^2}{45}g_{*s}^0T_0^3$ and
-$\beta$ is the mass fraction at formation (including $\mathcal K(C-C_{\rm th})^\gamma$). With
+$\beta(M_H)$ is the fraction of the energy density at formation that collapses into PBHs, weighted by
+$M/M_H=\mathcal K(C-C_{\rm th})^\gamma$ as in eq.~\eqref{eq:betath}. With
 $M_H=4\pi M_P^2/H$ and $H=\pi(g_*/90)^{1/2}T^2/M_P$ this gives
 \begin{equation}
 \fpbh=\frac{1}{\Omega_{\rm DM}}\int\dd\ln M_H\Big(\frac{M_H}{\Mo}\Big)^{-1/2}
 \Big(\frac{g_*}{106.75}\Big)^{3/4}\Big(\frac{g_{*s}}{106.75}\Big)^{-1}\frac{\beta(M_H)}{1.0\times10^{-8}},
 \end{equation}
-in agreement with Carr et al.\ \cite{Carr10} to 2\%. The constant $7.9\times10^{-10}$ in eq.~(14)
-of 2306.17149 makes $\fpbh$ 12.7 times larger. The form $(M_{\rm eq}/M_H)^{1/2}\beta/\Omega_{\rm DM}$
+for $h=0.674$ and $\Omega_{\rm DM}h^2=0.12$. It agrees with Carr et al.\ \cite{Carr10} to 2\%, and
+with the exact expression of Ref.~\cite{CK20} (their eq.~II.3, written in terms of $M_H$) to
+1.5\%.
+
+The constant $7.9\times10^{-10}$ in eq.~(14) of 2306.17149 makes $\fpbh$ 12.7 times larger. It
+equals $[2.4\,(M_{\rm eq}/\Mo)^{1/2}]^{-1}$ with $M_{\rm eq}=2.8\times10^{17}\,\Mo$, the
+normalisation of the approximation $\fpbh\simeq2.4\,\beta\,(M_{\rm eq}/M)^{1/2}$ of
+Ref.~\cite{CK20}, which is already a fraction of the dark matter. Dividing it by $\Omega_{\rm DM}$
+once more gives a factor 3.8, and the approximation itself exceeds the entropy-conserving result by
+3.4 when $M$ is identified with $M_H$. The form $(M_{\rm eq}/M_H)^{1/2}\beta/\Omega_{\rm DM}$
 drops the factor $\Omega_m$ and the heating of the radiation by $g_{*s}$ changes after formation,
 and is 3--5 times larger. Both lower the amplitude for $\fpbh=1$ by
 $\ln(\text{factor})/|\ln\beta|$, i.e.\ 8--12\% at $|\ln\beta|\simeq21$.
@@ -904,7 +928,12 @@ downloaded with an MD5 check.
 \bibitem{Perna24} G.~Perna, C.~Testini, A.~Ricciardone, S.~Matarrese, JCAP 05 (2024) 086, arXiv:2403.06962.
 \bibitem{KMR19} A.~Kehagias, I.~Musco, A.~Riotto, JCAP 12 (2019) 029, arXiv:1906.07135.
 \bibitem{ETYY22} A.~Escriv\`a, Y.~Tada, S.~Yokoyama, C.-M.~Yoo, JCAP 05 (2022) 012, arXiv:2202.01028.
+\bibitem{MJY23} I.~Musco, K.~Jedamzik, S.~Young, Phys.\ Rev.\ D 109, 083506 (2024), arXiv:2303.07980.
+\bibitem{FMPU22} G.~Franciolini, I.~Musco, P.~Pani, A.~Urbano, Phys.\ Rev.\ D 106, 123526 (2022), arXiv:2209.05959.
+\bibitem{ATU21} K.~T.~Abe, Y.~Tada, I.~Ueda, JCAP 06 (2021) 048, arXiv:2010.06193.
+\bibitem{BDF23} S.~Balaji, G.~Dom\`enech, G.~Franciolini, JCAP 10 (2023) 041, arXiv:2307.08552.
 \bibitem{Carr10} B.~J.~Carr, K.~Kohri, Y.~Sendouda, J.~Yokoyama, Phys.\ Rev.\ D 81, 104019 (2010), arXiv:0912.5297.
+\bibitem{CK20} B.~Carr, F.~K\"uhnel, Ann.\ Rev.\ Nucl.\ Part.\ Sci.\ 70, 355 (2020), arXiv:2006.02838.
 \end{thebibliography}
 
 \end{document}

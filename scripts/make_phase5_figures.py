@@ -27,7 +27,7 @@ NG_LABELS = {
     "USR beta=3": r"USR $\beta=3$", "USR mu=5/6": r"USR $\mu_*=5/6$", "USR mu=5/2": r"USR $\mu_*=5/2$",
     "curvaton r=0.9": r"curvaton $r=0.9$",
 }
-STAT_STYLE = {"threshold": ("-", "o", "threshold"), "peaks_3a": (":", "^", "peaks 3a"), "peaks_3b": ("--", "s", "peaks 3b")}
+STAT_STYLE = {"threshold": ("-", "o", "threshold"), "peaks_3a": (":", "^", "Gaussian-peak approx."), "peaks_3b": ("--", "s", "peaks of $C_\\ell$")}
 POST_FILL = ["#d6e6f8", "#9cc3ef", "#5b9be2"]  # 99.7, 95.4, 68.3% HPD, one sequential hue
 
 
@@ -125,7 +125,7 @@ def fig_sigma(tension, out, variant="base", f=1.0, cap=4.0):
     handles = [plt.Line2D([], [], marker=mk, linestyle="", color=INK2, markerfacecolor=INK2 if st != "peaks_3a" else SURFACE,
                           label=slab) for st, (_, mk, slab) in STAT_STYLE.items()]
     fig.legend(handles=handles, loc="upper right", ncol=3, fontsize=7.5)
-    fig.suptitle("NG15 exclusion of the PBH-allowed region per statistic (posterior mass; 2306.17149 conventions)",
+    fig.suptitle("NG15 exclusion of the PBH-allowed region (2306.17149 conventions)",
                  x=0.01, ha="left", fontsize=9.5, color=INK2)
     fig.tight_layout(rect=(0, 0, 1, 0.95))
     fig.savefig(out, dpi=200)
@@ -260,7 +260,7 @@ def fig_ngsigw(lines, post, out, path="results/phase5_ngsigw_tension.csv", npz="
     handles = [plt.Line2D([], [], marker="s", linestyle="", color=c, label=s.replace("D=", "Δ="))
                for s, c in SHAPE_COLOURS.items()]
     handles += [plt.Line2D([], [], marker="o", linestyle="", color=INK2, label="threshold"),
-                plt.Line2D([], [], marker="s", linestyle="", color=INK2, label="peaks 3b"),
+                plt.Line2D([], [], marker="s", linestyle="", color=INK2, label="peaks of $C_\\ell$"),
                 plt.Line2D([], [], marker="o", linestyle="", color=INK2, markerfacecolor=SURFACE,
                            label=f"beyond {cap:.0f}σ")]
     ax.legend(handles=handles, loc="upper center", bbox_to_anchor=(0.45, -0.16), fontsize=6.8, ncol=4)

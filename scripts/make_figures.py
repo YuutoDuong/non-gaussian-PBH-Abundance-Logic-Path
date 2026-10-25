@@ -182,7 +182,7 @@ def fig_ratio(rows, out):
         end_labels(ax, [(ratio(rows, t, "peaks_3b")[0][-1], ratio(rows, t, "peaks_3b")[1][-1], LABELS[t])
                         for t in labelled])
     axes[0].set_ylabel(r"$R=A_*^{\rm peaks}/A_*^{\rm threshold}$")
-    axes[0].text(0.98, 0.03, "solid: maxima of $C_\\ell$ (3b)   dashed: maxima of $C_g$ (3a)",
+    axes[0].text(0.98, 0.03, "solid: maxima of $C_\\ell$\ndashed: maxima of $C_g$ (Gaussian-peak approx.)",
                  transform=axes[0].transAxes, fontsize=7, color=MUTED, ha="right")
     ax = axes[2]
     # the two families reuse blue, so the logarithmic one is dashed with square markers here
@@ -197,10 +197,10 @@ def fig_ratio(rows, out):
     style(ax)
     ax.set_xlim(0.085, 3.4)
     ax.set_title(r"True NG peaks vs Gaussian-peak approximation", loc="left")
-    ax.set_ylabel(r"$A_*^{\rm 3b}/A_*^{\rm 3a}$")
+    ax.set_ylabel(r"$A_*^{(C_\ell)}/A_*^{(C_g)}$")
     ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.17), ncol=4, fontsize=7)
     fig.suptitle(
-        "Phase 3: peaks vs threshold statistics, same threshold, window, transfer function and cut",
+        "Peaks vs threshold statistics: same threshold, window, transfer function and cut",
         fontsize=9, color=INK2, x=0.01, ha="left",
     )
     fig.tight_layout()
@@ -213,8 +213,8 @@ def fig_lattice(rows, out):
     cases = [("gaussian", GAUSS, "Gaussian (grid calibration)"), ("fNL=-2", DIVERGING["fNL=-2"], LABELS["fNL=-2"]),
              ("fNL=+2", DIVERGING["fNL=+2"], LABELS["fNL=+2"]), ("mu=5/6", CATEGORICAL[2], r"$\mu_*=5/6$")]
     fig, axes = plt.subplots(1, 2, figsize=(8.6, 3.7), sharey=True)
-    for ax, key, title in ((axes[0], "3b", "Phase 3b: maxima of $C_\\ell$"),
-                           (axes[1], "3a", "Phase 3a: maxima of $C_g$ (Gaussian-peak approx.)")):
+    for ax, key, title in ((axes[0], "3b", "prediction: maxima of $C_\\ell$"),
+                           (axes[1], "3a", "prediction: maxima of $C_g$ (Gaussian-peak approx.)")):
         for i, (case, c, label) in enumerate(cases):
             sel = [r for r in rows if r["case"] == case]
             nu = [float(r["nu"]) + 0.03 * (i - 1.5) for r in sel]

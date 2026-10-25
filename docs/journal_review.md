@@ -1,6 +1,6 @@
 # Journal-readiness review: "Peaks or thresholds?"
 
-State reviewed: `docs/note/ngpbh_note.pdf` of 25 Oct 2026 (19 pages, 61 references), code
+State reviewed: `docs/note/ngpbh_note.pdf` of 25 Oct 2026 (19 pages, then 61 references), code
 `ngpbh` v0.6.0 (doi:10.5281/zenodo.23643762, 96 tests). Written the way a referee for
 Phys. Rev. D or JCAP would read it.
 
@@ -120,7 +120,7 @@ Effort: S = hours, M = a day or so of work plus compute, L = more.
   find. IPTA DR3 is described but I found no public GWB free spectrum; the InPTA DR2 search
   (2608.02808) appeared in Aug 2026. Say so; an EPTA DR2 cross-check is optional.
 
-### 5. Make contact with Iovino et al. 2024 (S)
+### 5. Make contact with Iovino et al. 2024 (S) — done
 
 * **The issue:** "Curbing PBHs with PTAs" compares threshold statistics and Gaussian peaks for
   NANOGrav 15. It finds that peaks relax the PTA constraints on f_PBH by a few orders of
@@ -129,6 +129,7 @@ Effort: S = hours, M = a day or so of work plus compute, L = more.
   strengthens. Readers will meet opposite words for one effect.
 * **Action:** add one sentence reconciling the two framings, and one on their high-peak formula
   against our normalisation.
+* **Done (25 Oct 2026):** both sentences are in the Discussion.
 
 ### 6. Presentation (M)
 
@@ -141,8 +142,10 @@ Effort: S = hours, M = a day or so of work plus compute, L = more.
 * **Actions:**
   * rewrite the introduction, Secs. 4–6 and the discussion in prose; keep lists for genuine
     enumerations;
-  * write "Ref. [12]" or "Franciolini et al.", and "conventions that matter" instead of "pitfalls";
-  * rename 3a/3b in the text and figures, e.g. "Gaussian-peak approximation" and "NG peaks";
+  * write "Ref. [12]" or "Franciolini et al." (still to do), and "conventions that matter" instead
+    of "pitfalls" (done);
+  * rename 3a/3b in the text and figures (done: A*^(C_ℓ)/A*^(C_g), "peaks of C_ℓ",
+    "Gaussian-peak approx.");
   * add one conventions table: window, transfer function, cut, K and γ, threshold, f_PBH
     normalisation, bins and priors;
   * make the figures vector PDF with larger fonts, consistent styles and self-contained captions;
@@ -150,7 +153,7 @@ Effort: S = hours, M = a day or so of work plus compute, L = more.
   * use the journal class (revtex4-2 for PRD, jcappub for JCAP) and a BibTeX bibliography with
     DOIs, generated from INSPIRE.
 
-### 7. Appendix B will be checked first (S)
+### 7. Appendix B will be checked first (S) — done
 
 * **The issue:** it claims that eq. (14) of 2306.17149 overstates f_PBH by 12.7, and the M_eq form
   by 3–5. It criticises a prominent group's paper, so a referee will check it.
@@ -159,11 +162,21 @@ Effort: S = hours, M = a day or so of work plus compute, L = more.
   * show the numerical cross-check explicitly: Carr et al. 2010, f = 4.11×10⁸ β′(M/M⊙)^{−1/2},
     against our 1.0×10⁻⁸ with the same Ω_CDM h²;
   * say in one line where the larger constants come from, if that can be pinned down.
+* **Done (25 Oct 2026):**
+  * β is defined as the energy fraction weighted by M/M_H;
+  * the result agrees with Carr et al. 2010 to 2% and with the exact eq. II.3 of Carr & Kühnel 2020
+    to 1.5%;
+  * 7.9×10⁻¹⁰ = [2.4 (M_eq/M⊙)^{1/2}]⁻¹ is the normalisation of the approximation
+    f_PBH ≈ 2.4 β (M_eq/M)^{1/2} of Carr & Kühnel, which is already a dark-matter fraction;
+    dividing it by Ω_DM again gives 3.8, and the approximation is 3.4 times the exact result,
+    together 12.7.
 
 ## Minor comments
 
+Done on 25 Oct 2026 unless marked optional:
+
 * Write "about 4%" instead of "to within ±4%": the double ratio spans 0.958–1.036, which is −4.2%.
-* Repeat the definitions of σ_P and σ_HPD in the table captions.
+* Repeat the definition of σ_P in the table captions.
 * In the QCD limitation, cite the QCD-era works:
   * on the threshold: Musco, Jedamzik & Young 2023; Franciolini et al. 2022;
   * on the SIGW: Abe, Tada & Ueda 2021; Balaji, Domènech & Franciolini 2023.
@@ -172,8 +185,9 @@ Effort: S = hours, M = a day or so of work plus compute, L = more.
     covers the formula there;
   * the full non-perturbative SIGW for the USR template (Perna et al. 2024) would replace the
     A³ truncation.
-* Notation: use P_ζ consistently, give k* in Mpc⁻¹ and f in nHz throughout, and define "BPL(4,3,1)"
-  at first use.
+* Notation: the lognormal and BPL spectra are now written out (Sec. 2.1), with their
+  normalisations, and the clash of the BPL's β, γ with the mass fraction and the critical exponent
+  is flagged.
 
 ## Journal choice
 
@@ -199,12 +213,10 @@ Both journals accept papers already posted on arXiv or Zenodo.
 
 ## Suggested order of work
 
-1. **Quick fixes (S):**
+1. **Quick fixes (S) — done on 25 Oct 2026, before the Zenodo preprint:**
    * items 5 and 7;
    * the wording in the minor comments;
    * the 3a/3b jargon in the text and figure labels.
-
-   These are worth doing before the Zenodo preprint.
 2. **Computations (M):**
    * item 4 (foreground);
    * item 3 (threshold ±5%);

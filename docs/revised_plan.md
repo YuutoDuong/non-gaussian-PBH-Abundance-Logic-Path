@@ -229,7 +229,10 @@ the assessment), so that peaks and threshold statistics differ only by the peak 
   * ~~re-running the INSPIRE scan~~: re-run 25 Oct 2026 (records to 20 Oct), nothing closes the
     gap; repeat just before the arXiv submission;
   * optional: a pbhstat PR with the NG threshold statistics and peaks.
-  * for a journal: the improvements in `docs/journal_review.md`.
+  * for a journal: the improvements in `docs/journal_review.md`. Its quick fixes are done (25 Oct
+    2026): the Iovino et al. framing, Appendix B (origin of the 12.7, cross-checks), the spectra
+    written out, σ_P in the table captions, QCD references, and descriptive labels instead of
+    "3a/3b" in the text and figures (66 references, 19 pages).
 
 ## Pitfalls, confirmed or added
 
