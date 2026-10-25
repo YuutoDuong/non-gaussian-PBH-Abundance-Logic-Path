@@ -25,7 +25,7 @@ spectra and the pulsar-timing-array tension},pdfauthor={Duong Ngoc Khoa}}
 \Large Non-Gaussian primordial black hole abundances for broad spectra\\
 and the pulsar-timing-array tension}
 \author{Duong Ngoc Khoa\thanks{Phenikaa Institute for Advanced Study. ORCID 0009-0009-9409-3298.
-Version of 25 October 2026. The code \texttt{ngpbh} (version 0.6.0) and every number below are
+E-mail: \href{mailto:yuutoduong@gmail.com}{\texttt{yuutoduong@gmail.com}}. Version of 25 October 2026. The code \texttt{ngpbh} (version 0.6.0) and every number below are
 archived at Zenodo, \href{https://doi.org/10.5281/zenodo.23624506}{doi:10.5281/zenodo.23624506}.}}
 \date{}
 
@@ -42,7 +42,8 @@ the same threshold, window, transfer function and cut-off. The maxima of the non
 compaction $\Cl=F'(\zr)\Cg$ are the BBKS maxima of the Gaussian field $\Cg+\lambda\zr$ with
 $\lambda=\Cl F''/F'^2$, times a rank-one Hessian factor that we compute exactly to first order.
 An independent Monte Carlo and counts of maxima on $256^3$ Gaussian random fields confirm the
-result; the Gaussian-peak approximation used so far miscounts peaks by up to 18\%. The required
+result; the Gaussian-peak approximation, which imposes the peak condition on the Gaussian
+component, miscounts peaks by up to 18\%. The required
 amplitude ratio $R=A_*^{\rm peaks}/A_*^{\rm threshold}$ is 0.74--0.82 for $|\fnl|\le2$ and
 lognormal widths $0.1\le\Delta\le2$. The NG dependence cancels almost completely in
 $R/R_{\rm Gauss}$, to within $\pm4\%$ (16\% for a strong ultra-slow-roll tail). Propagated to
@@ -52,14 +53,10 @@ every NG template and spectral shape we consider. This is smaller than the effec
 for $|\fnl|\gtrsim1$. We also add the primordial-NG corrections to the induced GW spectrum. We
 include all seven terms for local NG, validated against Adshead et al. They lower the significance
 by up to $0.26\sigma$ for $|\fnl|\le2$ and leave the gap between the statistics unchanged. The
-gap is comparable to three analysis choices that are rarely stated:
-\begin{itemize}
-\item when the transfer function acts in the collapse threshold;
-\item the normalisation of $\fpbh$ (the expression in common use overestimates $\fpbh$ by a
-factor of 3--13);
-\item the frequency range of the PTA fit.
-\end{itemize}
-We quantify all three.
+gap is comparable to three analysis choices that are rarely stated, and which we quantify: when
+the transfer function acts in the collapse threshold, the normalisation of $\fpbh$ (the
+expression in common use overestimates $\fpbh$ by a factor of 3--13), and the frequency range of
+the PTA fit.
 \end{abstract}
 
 \section{Introduction}
@@ -133,8 +130,10 @@ Gaussian fields
 \zr(\bm x;r)&=\int\!\frac{\dd^3k}{(2\pi)^3}e^{i\bm k\cdot\bm x}\,W_s(kr)T(kr)\,\zg(\bm k),
 \end{align}
 with the top-hat $W(y)=3(\sin y-y\cos y)/y^3$, the shell $W_s(y)=\sin y/y$, the radiation transfer
-function $T(y)=W(y/\sqrt3)$ and $\Phi=2/3$. All moments use a hard cut $kr<4.49$, which the
-peak moments need for broad spectra; it changes threshold-statistics amplitudes by $\le2\%$. For
+function $T(y)=W(y/\sqrt3)$ and $\Phi=2/3$. All moments use a hard cut $kr<4.49$, the first zero
+of $W$, as in \texttt{pbhstat} \cite{ColeFumagalli}. With the transfer function the moments of the
+spectra used here also converge without it; the cut changes threshold-statistics amplitudes by
+$\le2.3\%$ and hardly affects the ratio between the statistics (Sec.~\ref{sec:R}). For
 a spherical configuration $\Cg=-2\Phi r\zg'$, $\zr=\zg(r)$, and the linear and full compaction of
 $\zeta=F(\zg)$ are \cite{Young19,DeLuca19,Ferrante,Young22}
 \begin{equation}
@@ -302,6 +301,9 @@ non-perturbative USR tail $\mu_*=5/6$ reaches 1.05--1.16, the largest value at $
 \item \textbf{True NG peaks vs the Gaussian-peak approximation:} the amplitudes differ by
 $A^{\rm 3b}_*/A^{\rm 3a}_*=0.983$--1.000. The 18\% miscount of peaks moves $A_*$ by at most
 1.7\%, because $\delta\ln A_*\simeq\delta\ln n/|\ln\beta|$.
+\item \textbf{The UV cut:} removing the cut $kr<4.49$, or moving it to $kr=3.5$, 6 or 7.7 (the
+second zero of $W$), changes $R$ by at most 1.2\% and the double ratio by at most 0.8\%
+(lognormal $\Delta=0.5$--2, Gaussian and $\fnl=\pm2$).
 \end{itemize}
 For comparison, NG moves the threshold-statistics amplitude itself by factors of 0.2--2 over the
 same grid.
@@ -700,14 +702,21 @@ question (to 0.04$\sigma$), although it miscounts peaks by up to 18\%.
 
 \textbf{Limitations.}
 \begin{itemize}
-\item As in the literature we compare with, we assume spherical symmetry for the compaction of a
-peak \cite{Young22}, use the mean profile (profile dispersion can matter for negative NG
-\cite{Escriva26}), neglect QCD effects on the formation parameters and on the GW spectrum,
-truncate the NG series of the GW spectrum at $A^3$ for the curvaton and USR maps, use
-the free-spectrum refit rather than the full PTA likelihood, and ignore an astrophysical
-foreground. A supermassive-black-hole-binary component would relax every tension quoted here.
-\item The comparison between statistics is like-for-like, since all of these limitations affect
-both statistics in the same way.
+\item We assume spherical symmetry for the compaction of a peak \cite{Young22} and use the mean
+profile, as the literature we compare with does; profile dispersion can matter for negative NG
+\cite{Escriva26}. The collapse threshold follows from the power spectrum and is the same for
+every NG template, although NG also deforms the typical profile and hence the threshold
+\cite{KMR19,ETYY22}. Each scale is counted separately, without a cloud-in-cloud correction. We
+neglect QCD effects on the formation parameters and on the GW spectrum, truncate the NG series of
+the GW spectrum at $A^3$ for the curvaton and USR maps, use the free-spectrum refit rather than
+the full PTA likelihood, and ignore an astrophysical foreground. A
+supermassive-black-hole-binary component would relax every tension quoted here.
+\item These choices are common to both statistics, so the comparison between them is
+like-for-like.
+\item \textbf{Which peaks.} $R$ refers to BBKS maxima of the compaction at fixed scale, the
+prescription that differs from threshold statistics only by the peak condition. Peaks of $\zeta$
+with typical profiles \cite{Yoo18,Yoo20,Kitajima} and the non-linear statistics of
+Ref.~\cite{GS20} define the abundance differently; we have not computed $R$ for them.
 \item The absolute numbers carry the systematics of Table~\ref{tab:robust}.
 \end{itemize}
 
@@ -792,7 +801,7 @@ there. Their plotted $\alpha_s$ for the BPL is not the one behind their plotted 
 through eq.~(S6). For the lognormal both curves agree with ours. Their thresholds are therefore
 Musco et al.'s, and the conclusions of 2306.17149 do not depend on the notation.
 
-\begin{figure}[h]
+\begin{figure}[ht]
 \centering
 \includegraphics[width=\textwidth]{fig_threshold_check.png}
 \caption{$\delta_{\rm th}$ of Fig.~S3 of 2306.17149 (wide gray), read from its vector paths,
@@ -890,6 +899,8 @@ downloaded with an MD5 check.
 \bibitem{AD21} V.~Atal, G.~Dom\`enech, JCAP 06 (2021) 001; Erratum ibid.\ 10 (2023) E01, arXiv:2103.01056.
 \bibitem{GPRW22} S.~Garcia-Saenz, L.~Pinol, S.~Renaux-Petel, D.~Werth, JCAP 03 (2023) 057, arXiv:2207.14267.
 \bibitem{Perna24} G.~Perna, C.~Testini, A.~Ricciardone, S.~Matarrese, JCAP 05 (2024) 086, arXiv:2403.06962.
+\bibitem{KMR19} A.~Kehagias, I.~Musco, A.~Riotto, JCAP 12 (2019) 029, arXiv:1906.07135.
+\bibitem{ETYY22} A.~Escriv\`a, Y.~Tada, S.~Yokoyama, C.-M.~Yoo, JCAP 05 (2022) 012, arXiv:2202.01028.
 \bibitem{Carr10} B.~J.~Carr, K.~Kohri, Y.~Sendouda, J.~Yokoyama, Phys.\ Rev.\ D 81, 104019 (2010), arXiv:0912.5297.
 \end{thebibliography}
 

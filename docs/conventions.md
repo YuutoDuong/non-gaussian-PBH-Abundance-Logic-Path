@@ -33,7 +33,11 @@ W(x) = 3(sin x − x cos x)/x³ (top hat), W_s = sin x/x (shell), T(x) = W(x/√
 horizon crossing of r (τ = r). Optional hard cut W → 0 for x > 4.49 (pbhstat). The peak
 moments s₂² do not converge for broad spectra without the cut (the plan's "peaks need a
 cut-off" pitfall), so **runs that compare statistics apply the cut to both**; it changes the
-threshold-statistics A_* by ≤ 2% for Δ ≤ 2.
+threshold-statistics A_* by ≤ 2.3% for Δ ≤ 2. With the transfer function the moments of these
+spectra also converge without it, and R hardly depends on it: removing the cut, or moving it to
+3.5, 6 or 7.725 (the second zero of W), changes R by ≤ 1.2% and R/R_Gauss by ≤ 0.8% for
+lognormal Δ = 0.5–2, Gaussian and f_NL = ±2 (`scripts/cut_sensitivity.py`,
+`results/r_cut_sensitivity.csv`).
 
 ## Threshold (`threshold.py`)
 

@@ -197,6 +197,22 @@ the assessment), so that peaks and threshold statistics differ only by the peak 
   * "Draft" removed; the note cites the concept DOI and version 0.6.0; an acknowledgement
     discloses the use of an AI assistant (required by arXiv and most journals);
   * version 0.6.0 prepared (`pyproject.toml`, `CITATION.cff`, `.zenodo.json`, README).
+* **Mock referee review (25 Oct 2026).** Not a substitute for an independent expert read; the
+  points a referee would most likely raise, and what was done:
+  * the UV cut kr < 4.49 of the peak moments: R changes by ≤ 1.2% (R/R_Gauss ≤ 0.8%) when the
+    cut is removed or moved to 3.5, 6 or 7.725 (`scripts/cut_sensitivity.py`); now in Sec. 4;
+  * which peaks: R is defined for BBKS maxima of the compaction at fixed scale; typical-profile
+    peaks of ζ (Yoo et al.) and the Germani–Sheth statistics are not computed — now stated in
+    the limitations (still open, see Phase 3);
+  * the threshold is the same for every NG template (NG deforms the profile: Kehagias, Musco &
+    Riotto 1906.07135; Escrivà et al. 2202.01028), and scales are counted without a
+    cloud-in-cloud correction — both common to the two statistics, now stated;
+  * the typeset induced-GW formula integrates to 0.8222436 A² for a flat spectrum, as Kohri &
+    Terada; "≤ 2%" for the cut in threshold statistics corrected to ≤ 2.3%;
+  * the abstract is plain prose (arXiv and journals need it), and "used so far" is replaced by
+    what the Gaussian-peak approximation does;
+  * still a referee risk: App. B (f_PBH normalisation, factor 12.7 against eq. 14 of
+    2306.17149) — be ready to defend it; profile dispersion for f_NL < 0 (Escrivà 2607.08738).
 * **Remaining (your decisions or actions):**
   * ~~a tagged release and the Zenodo DOI~~: done, tag `astro` (commit 692dc2c),
     DOI 10.5281/zenodo.23624507 (all versions: 10.5281/zenodo.23624506);

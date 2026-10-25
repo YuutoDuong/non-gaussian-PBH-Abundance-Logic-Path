@@ -44,6 +44,7 @@ python -m venv .venv && .venv/bin/pip install -e ".[dev]"
 | `convention_spread.py` | `phase1_convention_spread.csv`: Gaussian R under four normalisation conventions |
 | `double_ratio_conventions.py` | (printed) R(NG)/R(Gaussian) under three conventions: they cancel to < 0.01 |
 | `scan_amplitudes.py` | `phase2_amplitudes.csv`: A_* over width × NG template × {threshold, peaks 3a, peaks 3b} (~20 min on 4 cores) |
+| `cut_sensitivity.py` | `r_cut_sensitivity.csv`: R against the UV cut of the moments (~8 min on 4 cores) |
 | `lattice_peaks.py` | `phase3b_lattice.csv`: maxima of C_l counted on 256³ Gaussian random fields vs the 3a and 3b predictions |
 | `pta_validate.py` | `phase5_validation.md`: the NG15 likelihood against NANOGrav's power-law fits and 2306.17149's SIGW fit |
 | `digitize_2306_17149.py` | `digitized_2306.17149_fig3.csv`: their f_PBH bands and NG15 contours, read from the vector figure (needs PyMuPDF) |
@@ -75,6 +76,7 @@ statistics when comparing them.
 ```bash
 .venv/bin/python scripts/compare_pbhstat.py          # Phase 1 exit check (needs pbhstat)
 .venv/bin/python scripts/scan_amplitudes.py          # R map, ~20 min on 4 cores
+.venv/bin/python scripts/cut_sensitivity.py          # R against the UV cut, ~8 min on 4 cores
 .venv/bin/python scripts/lattice_peaks.py            # 3b vs 256^3 lattices (tens of minutes)
 .venv/bin/python scripts/fetch_ng15.py               # NANOGrav 15-yr free spectrum
 .venv/bin/python scripts/pta_validate.py             # likelihood checks, ~3 min
