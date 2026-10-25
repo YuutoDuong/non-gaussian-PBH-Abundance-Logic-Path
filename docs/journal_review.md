@@ -243,8 +243,8 @@ Both journals accept papers already posted on arXiv or Zenodo.
 * [ ] funding acknowledgement, if any
 * [ ] INSPIRE scan re-run just before submission
 * [ ] arXiv first (endorser needed), then the journal with the arXiv number
-* [ ] a new release (v0.7.0) once the journal version adds computations, so the archive matches
-  (metadata prepared on 25 Oct 2026; the note cites the concept DOI until the version DOI exists)
+* [x] a new release (v0.7.0) once the journal version adds computations, so the archive matches:
+  doi:10.5281/zenodo.23646957
 
 ## Suggested order of work
 

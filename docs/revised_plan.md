@@ -234,13 +234,12 @@ the assessment), so that peaks and threshold statistics differ only by the peak 
     written out, σ_P in the table captions, QCD references, and descriptive labels instead of
     "3a/3b" in the text and figures (66 references, 19 pages). Its computations are done too
     (see below);
-  * a release `v0.7.0` (GitHub release, which Zenodo archives): the note now quotes numbers that
-    v0.6.0 does not contain; send the new version DOI so the note can cite it.
+  * ~~a release `v0.7.0`~~: done, DOI 10.5281/zenodo.23646957; the note cites it.
 
 ## Journal computations — done (25 Oct 2026)
 
-Items 1–4 of `docs/journal_review.md`, now in the note. They need code version 0.7.0 (prepared;
-the release and its DOI are still to come).
+Items 1–4 of `docs/journal_review.md`, now in the note, with code version 0.7.0
+(doi:10.5281/zenodo.23646957).
 
 * **R_Gauss and the factorisation** (`scripts/r_gauss_fit.py`):
   * lognormal, 0.1 ≤ Δ ≤ 2: R_Gauss = 0.783 + 0.0066 ln Δ, to 0.002;
