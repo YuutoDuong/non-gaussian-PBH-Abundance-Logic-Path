@@ -216,8 +216,9 @@ the assessment), so that peaks and threshold statistics differ only by the peak 
 * **Remaining (your decisions or actions):**
   * ~~a tagged release and the Zenodo DOI~~: done, tag `astro` (commit 692dc2c),
     DOI 10.5281/zenodo.23624507 (all versions: 10.5281/zenodo.23624506);
-  * **a release `v0.6.0`** from this branch. The `astro` archive predates the threshold check
-    (Appendix C) and the `eta_over_rm` option, so it cannot reproduce the whole note;
+  * ~~a release `v0.6.0`~~: done, tag `v0.6.0` (commit 401f560), DOI 10.5281/zenodo.23643762;
+    the note cites it, and the affiliation is now Phenikaa Institute for Advanced Study,
+    Phenikaa University, Hanoi, Vietnam;
   * read the AI-use acknowledgement in the note and adjust the wording;
   * the note on Zenodo as a preprint: a separate record (Publication → Preprint, CC BY 4.0),
     related identifier "is supplemented by" 10.5281/zenodo.23624506;
@@ -228,6 +229,7 @@ the assessment), so that peaks and threshold statistics differ only by the peak 
   * ~~re-running the INSPIRE scan~~: re-run 25 Oct 2026 (records to 20 Oct), nothing closes the
     gap; repeat just before the arXiv submission;
   * optional: a pbhstat PR with the NG threshold statistics and peaks.
+  * for a journal: the improvements in `docs/journal_review.md`.
 
 ## Pitfalls, confirmed or added
 

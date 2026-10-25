@@ -9,6 +9,9 @@ identifiers:
     value: 10.5281/zenodo.23624506
     description: "All versions (concept DOI); resolves to the latest version"
   - type: doi
+    value: 10.5281/zenodo.23643762
+    description: "Version 0.6.0 (25 Oct 2026), used in the note"
+  - type: doi
     value: 10.5281/zenodo.23624507
     description: "Version astro (24 Oct 2026), before the threshold check of the note's Appendix C"
 license: MIT
@@ -22,6 +25,6 @@ keywords:
 authors:
   - family-names: "Duong"
     given-names: "Ngoc Khoa"
-    affiliation: "Phenikaa Institute for Advanced Study"
+    affiliation: "Phenikaa Institute for Advanced Study, Phenikaa University, Hanoi, Vietnam"
     orcid: "https://orcid.org/0009-0009-9409-3298"
     alias: "YuutoDuong"
