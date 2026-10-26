@@ -1,6 +1,6 @@
 {
   "title": "ngpbh: threshold statistics and peaks theory for the PBH abundance with local non-Gaussianity",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "upload_type": "software",
   "description": "Threshold statistics and peaks theory (including maxima of the non-Gaussian compaction function) for the primordial black hole abundance with local non-Gaussianity and broad spectra; scalar-induced gravitational waves with their primordial non-Gaussian corrections and the NANOGrav 15-year free-spectrum likelihood; scripts reproducing every table and figure of the accompanying note (docs/note), including the R map and the PTA tension per statistic.",
   "license": "MIT",

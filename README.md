@@ -109,7 +109,9 @@ statistics when comparing them.
 Duong Ngoc Khoa (Phenikaa Institute for Advanced Study, Phenikaa University, Hanoi, Vietnam; ORCID 0009-0009-9409-3298). The code is
 archived at Zenodo: doi:[10.5281/zenodo.23624506](https://doi.org/10.5281/zenodo.23624506) for
 all versions (it resolves to the latest). The note was produced with version 0.7.0,
-doi:[10.5281/zenodo.23646957](https://doi.org/10.5281/zenodo.23646957); version 0.6.0,
+doi:[10.5281/zenodo.23646957](https://doi.org/10.5281/zenodo.23646957), and the journal version
+(`docs/paper`) with version 0.7.1, doi:[10.5281/zenodo.23661308](https://doi.org/10.5281/zenodo.23661308);
+version 0.6.0,
 doi:[10.5281/zenodo.23643762](https://doi.org/10.5281/zenodo.23643762), precedes the SMBHB,
 threshold and R_Gauss computations. The first
 archived version (tag `astro`,

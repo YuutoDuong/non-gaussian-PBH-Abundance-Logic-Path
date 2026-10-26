@@ -290,8 +290,11 @@ the archived preprint.
   * the funding acknowledgement, if any;
   * a cover letter and suggested referees;
   * the INSPIRE scan again;
-  * a release that contains `docs/paper` and the figure scripts, whose DOI the paper should then
-    cite.
+  * ~~a release that contains `docs/paper` and the figure scripts~~: done, tag `v0.7.1` (commit
+    9c773f6), DOI 10.5281/zenodo.23661308, cited in the paper. Its Zenodo record shows "version
+    0.7.0" because `.zenodo.json` was not bumped before tagging; the label can be corrected on
+    Zenodo (Edit → Version → Publish) without a new DOI, and the repository now says 0.7.1;
+  * a cover letter and suggested referees: drafted (26 Oct 2026), kept out of the public repository.
 
 ## Pitfalls, confirmed or added
 

@@ -253,16 +253,16 @@ Both journals accept papers already posted on arXiv or Zenodo.
 ## Submission checklist
 
 * [x] journal class; BibTeX bibliography with DOIs (`docs/paper`)
-* [ ] cover letter (Claude can draft it)
-* [ ] suggested referees: experts in peaks theory with NG and in PBH thresholds who are not
-  authors of 2306.17149, e.g. the authors of the works cited for peaks with NG and for the
-  Gaussian comparisons
+* [x] cover letter: drafted 26 Oct 2026 (kept out of the public repository)
+* [x] suggested referees: drafted 26 Oct 2026, six and three alternates, none of them authors of
+  2306.17149 (kept out of the public repository, since referee suggestions are confidential)
 * [x] data availability (Code and data) and the AI-use acknowledgement
 * [ ] funding acknowledgement, if any
 * [ ] INSPIRE scan re-run just before submission
 * [ ] arXiv first (endorser needed), then the journal with the arXiv number
 * [x] a new release (v0.7.0) once the journal version adds computations, so the archive matches:
-  doi:10.5281/zenodo.23646957
+  doi:10.5281/zenodo.23646957; the journal version is archived as v0.7.1,
+  doi:10.5281/zenodo.23661308
 
 ## Suggested order of work
 
