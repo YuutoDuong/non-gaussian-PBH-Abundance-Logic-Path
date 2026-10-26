@@ -259,7 +259,8 @@ Both journals accept papers already posted on arXiv or Zenodo.
 * [x] data availability (Code and data) and the AI-use acknowledgement
 * [ ] funding acknowledgement, if any
 * [ ] INSPIRE scan re-run just before submission
-* [ ] arXiv first (endorser needed), then the journal with the arXiv number
+* [ ] arXiv first (endorser needed), then the journal with the arXiv number. The arXiv version is
+  ready in `docs/arxiv` (PRIMEarxiv template; upload the `.tex`, `.bbl`, `.sty` and `media/`)
 * [x] a new release (v0.7.0) once the journal version adds computations, so the archive matches:
   doi:10.5281/zenodo.23646957; the journal version is archived as v0.7.1,
   doi:10.5281/zenodo.23661308

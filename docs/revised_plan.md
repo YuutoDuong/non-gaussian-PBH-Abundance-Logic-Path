@@ -294,7 +294,10 @@ the archived preprint.
     9c773f6), DOI 10.5281/zenodo.23661308, cited in the paper. Its Zenodo record shows "version
     0.7.0" because `.zenodo.json` was not bumped before tagging; the label can be corrected on
     Zenodo (Edit → Version → Publish) without a new DOI, and the repository now says 0.7.1;
-  * a cover letter and suggested referees: drafted (26 Oct 2026), kept out of the public repository.
+  * a cover letter and suggested referees: drafted (26 Oct 2026), kept out of the public repository;
+  * ~~an arXiv version~~: `docs/arxiv` (PRIMEarxiv template, unsrt bibliography with arXiv numbers),
+    generated from the JCAP source by `scripts/make_arxiv_version.py`, with the same numbers,
+    citations and labels as the JCAP version.
 
 ## Pitfalls, confirmed or added
 

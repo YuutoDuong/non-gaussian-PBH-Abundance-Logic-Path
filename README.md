@@ -17,6 +17,9 @@ PBH overproduction disfavours a scalar-induced GW explanation of the PTA signal?
   `refs.bib` from INSPIRE, vector figures in `docs/paper/figures`). Build it with
   `pdflatex ngpbh_paper && bibtex ngpbh_paper && pdflatex ngpbh_paper && pdflatex ngpbh_paper` in
   that directory.
+* `docs/arxiv/ngpbh_arxiv.tex` (and `.pdf`) — the same paper in the PRIMEarxiv template for arXiv,
+  generated from `docs/paper` by `scripts/make_arxiv_version.py` (edit only the JCAP source). The
+  arXiv upload is `ngpbh_arxiv.tex`, `ngpbh_arxiv.bbl`, `PRIMEarxiv.sty` and `media/`.
 * `docs/conventions.md` — every formula the code implements, with sources.
 
 ## Package `ngpbh`
