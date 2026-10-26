@@ -258,7 +258,11 @@ Both journals accept papers already posted on arXiv or Zenodo.
   2306.17149 (kept out of the public repository, since referee suggestions are confidential)
 * [x] data availability (Code and data) and the AI-use acknowledgement
 * [ ] funding acknowledgement, if any
-* [ ] INSPIRE scan re-run just before submission
+* [x] INSPIRE scan re-run just before submission: 26 Oct 2026, covering submissions up to 23 Oct
+  (`docs/phase0_gap_assessment.md`, fourth pass). Nothing closes the gap and no reference has
+  changed. One new paper is cited: Dai, Zaldarriaga & Ali-Haïmoud 2610.28739, on the prior-volume
+  effect of the pulsar red-noise priors, in section 5.6, the discussion and the limitations. The
+  bibliography now has 68 references. Re-run it if the submission slips by more than a week.
 * [ ] arXiv first (endorser needed), then the journal with the arXiv number. The arXiv version is
   ready in `docs/arxiv` (PRIMEarxiv template; upload the `.tex`, `.bbl`, `.sty` and `media/`)
 * [x] a new release (v0.7.0) once the journal version adds computations, so the archive matches:

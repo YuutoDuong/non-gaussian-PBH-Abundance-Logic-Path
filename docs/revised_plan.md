@@ -18,8 +18,8 @@ conventions to < 0.01, while the Gaussian R itself moves by 0.07 between them
 
 * Gap open in the narrower form stated in the assessment. Add 2406.20089, 2607.08738,
   2503.05434, 2603.23025, 2501.00295 and 2512.13648 to the reading list.
-* INSPIRE scan done (23 Oct 2026, 193 citing records): nothing closes the gap; re-run it before
-  submission.
+* INSPIRE scan done (23 Oct 2026, 193 citing records): nothing closes the gap. It was re-run on
+  25 and 26 Oct 2026, the last time covering submissions up to 23 Oct, and the gap is still open.
 * **You still need to:** email Cole & Fumagalli (mention the PS factor 2 and the peaks σ₀/2
   normalisation in pbhstat v0.0.6, and ask about NG plans); write and date your prediction
   before opening the scan results.
@@ -227,7 +227,7 @@ the assessment), so that peaks and threshold statistics differ only by the peak 
     facts (their Fig. S3, eq. 14 and the code comparison settle them); you decided against them
     on 25 Oct 2026;
   * ~~re-running the INSPIRE scan~~: re-run 25 Oct 2026 (records to 20 Oct), nothing closes the
-    gap; repeat just before the arXiv submission;
+    gap; repeated 26 Oct 2026 before the submission (see the journal version below);
   * optional: a pbhstat PR with the NG threshold statistics and peaks.
   * for a journal: the improvements in `docs/journal_review.md`. Its quick fixes are done (25 Oct
     2026): the Iovino et al. framing, Appendix B (origin of the 12.7, cross-checks), the spectra
@@ -282,14 +282,21 @@ Items 1–4 of `docs/journal_review.md`, now in the note, with code version 0.7.
 the archived preprint.
 * Text: prose, a conventions table, the SMBHB background as section 5.6, and "Franciolini et al."
   instead of the arXiv number. No number changes; this was checked by script against the note.
-* Bibliography: `refs.bib`, 67 INSPIRE records with DOIs, style `JHEP.bst`.
+* Bibliography: `refs.bib`, 68 INSPIRE records with DOIs, style `JHEP.bst`. There were 67 until
+  the fourth scan added Dai et al. 2610.28739.
 * Figures: vector PDFs at print size in `docs/paper/figures`, written by the figure scripts. The
   PNGs in `results/` now use the same style.
 * Before submission:
   * your read of the whole text;
   * the funding acknowledgement, if any;
-  * a cover letter and suggested referees;
-  * the INSPIRE scan again;
+  * ~~the INSPIRE scan again~~: done 26 Oct 2026, covering submissions up to 23 Oct
+    (`docs/phase0_gap_assessment.md`, fourth pass). Nothing closes the gap, and all 67 earlier
+    references are unchanged on INSPIRE. Dai, Zaldarriaga & Ali-Haïmoud 2610.28739 is now cited
+    in section 5.6, the discussion and the limitations. They show that the log-uniform priors on
+    the pulsars' red noise inflate the PTA background, and that the Bayes factor of
+    scalar-induced waves over SMBHBs falls to order unity without them. The code-availability
+    paragraph no longer says the archive holds this paper's source, which has changed since
+    v0.7.1;
   * ~~a release that contains `docs/paper` and the figure scripts~~: done, tag `v0.7.1` (commit
     9c773f6), DOI 10.5281/zenodo.23661308, cited in the paper. Its Zenodo record shows "version
     0.7.0" because `.zenodo.json` was not bumped before tagging; the label can be corrected on

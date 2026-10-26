@@ -1,4 +1,4 @@
-# Phase 0: is the gap open? (checked 23 Oct 2026)
+# Phase 0: is the gap open? (checked 23 Oct 2026, re-checked 25 and 26 Oct)
 
 ## Verdict
 
@@ -88,6 +88,56 @@ citation trees scanned:
 
 Both impose the peak condition on the Gaussian component, which the abstract of the note already
 covers ("or with the peak condition imposed on a Gaussian field"). The gap stands.
+
+Fourth pass (26 Oct 2026, just before submission), for records since 15 Oct:
+
+* the citers of 26 seed papers: the 13 above, plus the closest works the paper compares with
+  (1906.06790, 2102.04084, 1905.13202, 2008.03289, 2211.01728, 2011.03014, 1906.07135,
+  2202.01028, 2105.01659, 2306.16219, 1912.07072, 2412.07709, 2602.12252);
+* six INSPIRE keyword queries: titles with peak(s) theory or statistics; the full text with
+  "threshold statistics", "peak theory" and "non-Gaussian"; titles on PBHs and PTAs; "compaction
+  function" in the abstract; titles on induced GWs and NG; titles on PBH abundances or mass
+  functions and NG. Each was checked to return hits over all years, so that a zero is not a
+  parse failure;
+* every INSPIRE record with "primordial black hole(s)" in the title;
+* three arXiv API searches: PBHs with peaks, NG, thresholds, PTAs or the compaction function;
+  induced GWs with NG; PTAs with priors, new physics or induced GWs.
+
+Both INSPIRE and the arXiv API had indexed submissions up to 23 Oct, the latest arXiv
+announcement. Twelve records came back: eight from the citation trees and four from the title
+search. The keyword queries found none, and the arXiv searches found nothing new. None is on
+peaks theory, threshold statistics or NG abundances:
+
+* Dai, Zaldarriaga, Ali-Haïmoud [2610.28739](https://arxiv.org/abs/2610.28739) (20 Oct): the
+  log-uniform priors on the intrinsic red noise of the pulsars inflate the amplitude of the
+  background through a prior-volume effect. Priors uniform in power, or informed by the pulsar
+  population, lower the amplitude by 1–2σ, into agreement with SMBHBs. They recompute the Bayes
+  factor of NANOGrav's Gaussian SIGW template over SMBHBs with a factorised free-spectrum refit,
+  the method we use, and it falls from 57 to 0.50–4.6 (their table II). This does not touch R,
+  but it bears on the PTA side, so the paper now cites it in three places:
+  * where it quotes Bayes factors (section 5.6);
+  * in the discussion of the absolute tension, since it acts in the same direction as the SMBHB
+    background;
+  * in the limitations, since our refit inherits NANOGrav's priors on the red noise.
+* Not relevant to the gap:
+  * Braglia et al. 2610.26669, mean-field backreaction in single-field inflation;
+  * Lorenzoni et al., PRD 114 L081306, PBH formation with a light spectator field;
+  * Carr et al. 2610.28723, Poisson clustering of PBHs;
+  * Hütsi 2610.23806, clustering of little red dots;
+  * Jenks 2610.24067, GW and 21 cm probes;
+  * Aldecoa-Tamayo 2610.26482, braneworld PBHs;
+  * Minotti et al. 2610.27082, cosmic birefringence;
+  * Morales-Zapien et al. 2610.30510, microlensing bounds;
+  * Munoz et al. 2610.23218, gauge choices in simulations of dust collapse;
+  * Singhal & Banerjee 2610.21658, bounces and magnetic fields;
+  * Branco & Rosa 2610.21951, axion capture;
+  * also checked, from just before the window: Yang, Wang & Li 2610.18460, the reheating
+    history from PTA data.
+
+All 67 earlier references were compared with their current INSPIRE records (journal, volume,
+page, year, errata, withdrawals): none has changed. The gap stands. If the submission slips by
+more than about a week, re-run the same queries (a few minutes). The citers of 2306.16219,
+2406.20089 and 2601.06024, together with the title search, caught all twelve records.
 
 ## Papers that state the gap explicitly
 

@@ -7,6 +7,7 @@
 \hypersetup{pdftitle={Peaks or thresholds? Non-Gaussian primordial black hole abundances for broad
 spectra and the pulsar-timing-array tension},pdfauthor={Duong Ngoc Khoa}}
 \graphicspath{{figures/}}
+\urlstyle{same}  % DOIs in the text font, breakable at / and .
 \setlength{\emergencystretch}{1.5em}
 
 \newcommand{\Cg}{C_{\rm g}}
@@ -723,7 +724,11 @@ $\rho_j^2\to\rho_j^2+A_B^2(f_j/f_{\rm yr})^{3-\gamma_B}/(12\pi^2f_j^3T)$, with N
 astrophysical prior on $(\log_{10}A_B,\gamma_B)$, a two-dimensional Gaussian with mean
 $(-15.6,4.7)$ \cite{NG15np}, and marginalise over it. SIGW plus SMBHB is preferred over the SMBHB
 alone by Bayes factors of 94--105 for BPL(4,3,1) and the lognormals with $\Delta\le1$, and 38 for
-$\Delta=2$, of the same order as NANOGrav's 23--59 for their SIGW templates \cite{NG15np}.
+$\Delta=2$, of the same order as NANOGrav's 23--59 for their SIGW templates \cite{NG15np}. These
+Bayes factors, like NANOGrav's, rest on log-uniform priors for the intrinsic red noise of the
+pulsars, which inflate the amplitude of the background through a prior-volume effect: with priors
+uniform in power or informed by the pulsar population, the preference for scalar-induced waves over
+SMBHBs falls to order unity \cite{DZA26}.
 
 The PBH-allowed region now contains the solutions in which the SMBHB alone explains the signal.
 As a result $\sigma_P$ is capped at 2.3--2.8$\sigma$ for every template, or 2.0--2.5$\sigma$ if
@@ -755,9 +760,12 @@ quantified.
 
 For an absolute statement about the PTA tension, the larger uncertainties lie elsewhere. The
 largest is an astrophysical SMBHB background: with NANOGrav's prior it caps every exclusion at
-2.3--2.8$\sigma$ and reduces the statistics shift to 0.04--0.39$\sigma$. Among the analysis
-choices, the frequency range of the fit, the treatment of the collapse threshold and the $\fpbh$
-normalisation each move the significance by about as much as the choice of statistics, or more.
+2.3--2.8$\sigma$ and reduces the statistics shift to 0.04--0.39$\sigma$. The priors on the red
+noise of the pulsars act in the same direction: those behind the free-spectrum densities we use
+inflate the amplitude of the background \cite{DZA26}, and priors that avoid this effect would move
+the posterior towards the PBH-allowed region. Among the analysis choices, the frequency range of
+the fit, the treatment of the collapse threshold and the $\fpbh$ normalisation each move the
+significance by about as much as the choice of statistics, or more.
 All three are rarely stated, and we recommend quoting them with any PBH bound on the PTA signal,
 together with the peak normalisation when peaks theory is used. On the theory side, the
 Gaussian-peak approximation is adequate for the PTA question (to $0.04\sigma$), although it
@@ -771,9 +779,9 @@ and hence the threshold \cite{KMR19,ETYY22}; a $\pm5\%$ change moves $\sigma_P$ 
 $0.54\sigma$ and $R$ by $\le0.3\%$ ($\le6\%$ for the curvaton, section~\ref{sec:R}). Each scale is
 counted separately, without a cloud-in-cloud correction. We neglect QCD effects on the formation
 parameters \cite{MJY23,FMPU22} and on the GW spectrum \cite{ATU21,BDF23}, truncate the NG series of
-the GW spectrum at $A^3$ for the curvaton and USR maps, and use the free-spectrum refit rather
-than the full PTA likelihood; the SMBHB background is a power law with NANOGrav's prior. These
-choices are common to both statistics, so the comparison between them is like-for-like, while the
+the GW spectrum at $A^3$ for the curvaton and USR maps, and use the free-spectrum refit, with
+NANOGrav's priors on the red noise of the pulsars, rather than the full PTA likelihood; the SMBHB
+background is a power law with NANOGrav's prior. These choices are common to both statistics, so the comparison between them is like-for-like, while the
 absolute numbers carry the systematics of table~\ref{tab:robust}. Finally, $R$ refers to BBKS
 maxima of the compaction at fixed scale, the prescription that differs from threshold statistics
 only by the peak condition. Peaks of $\zeta$ with typical profiles \cite{Yoo18,Yoo20,Kitajima}
@@ -893,14 +901,14 @@ responsible for the content of this paper.
 
 \section*{Code and data availability}
 
-The code \texttt{ngpbh} (MIT licence) and the source of this paper are archived at Zenodo, version
-0.7.1, \href{https://doi.org/10.5281/zenodo.23661308}{doi:10.5281/zenodo.23661308};
-\href{https://doi.org/10.5281/zenodo.23624506}{doi:10.5281/zenodo.23624506} resolves to the latest
-version. The archive contains the scripts that produce every table and figure
+The code \texttt{ngpbh} (MIT licence) is archived at Zenodo. Version 0.7.1,
+\href{https://doi.org/10.5281/zenodo.23661308}{\nolinkurl{doi:10.5281/zenodo.23661308}},
+contains the scripts that produce every number, table and figure of this paper
 (\texttt{README.md}), 96 unit tests, the digitised figures~3 and S3 of ref.~\cite{FIVT23} and
 figure~4 of ref.~\cite{ALW21}, and the tables of the NG terms of the induced GW spectrum per
-spectral shape. The NANOGrav 15 free-spectrum densities are those of PTArcade (Zenodo record
-10495907) and are downloaded with an MD5 check.
+spectral shape; \href{https://doi.org/10.5281/zenodo.23624506}{\nolinkurl{doi:10.5281/zenodo.23624506}}
+resolves to the latest version. The NANOGrav 15 free-spectrum densities are those of PTArcade (Zenodo record 10495907)
+and are downloaded with an MD5 check.
 
 \bibliographystyle{JHEP}
 \bibliography{refs}

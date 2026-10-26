@@ -82,6 +82,7 @@ preamble = r"""\documentclass{article}
 \usepackage{graphicx}       % graphics
 \usepackage{orcidlink}      % ORCID logo
 \graphicspath{{media/}}     % the figures are under media/
+\urlstyle{same}             % DOIs in the text font, breakable at / and .
 \hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue,
   pdftitle={Peaks or thresholds? Non-Gaussian primordial black hole abundances for broad spectra and
   the pulsar-timing-array tension},pdfauthor={Duong Ngoc Khoa}}
